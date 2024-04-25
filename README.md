@@ -60,3 +60,9 @@ cp .env.example .env
     ServerName marketplace.test
  </VirtualHost>
 ```
+
+## All Set
+You may start your web application now with xampp control panel
+![image](https://github.com/khoo04/Student-Marketplace/assets/50954737/318e7dab-26a3-4efb-8d51-d5f1fca61ebb)
+
+Open your browser, go to 'http://marketplace.test/' , you may see the default page of laravel.
