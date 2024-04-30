@@ -1,0 +1,201 @@
+
+/* Override the layout */
+#list > li > a > i.fa-solid.fa-right-from-bracket{
+    transform: scale(-1);
+}
+
+/* Generic Class for Edit Button and Delete Button */
+.edit-btn{
+    background-color: transparent;
+    color: #091AD7;
+}
+
+.edit-btn:hover{
+    color: #3B4BF7;
+}
+
+.edit-btn:active{
+    color: #061188;
+}
+
+.delete-btn{
+    background-color: transparent;
+    color: #FF0909;
+}
+
+.delete-btn:hover{
+    color: #FF2C2C;
+}
+
+.delete-btn:active{
+    color: #C20000;
+}
+
+/* Profile Section */
+
+#profile-section{
+    width: 88%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Navigate button style for general */
+#navigate{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    flex-basis: 20%;
+}
+
+#navigate > button{
+    font-size: 1.5rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: bold;
+    background-color: rgba(217, 217, 217,1);
+    cursor: pointer;
+}
+
+#navigate > button:hover{
+    background-color: rgba(217, 217, 217,0.5);
+    border: 1px solid black;
+}
+
+#navigate > button:active{
+    background-color: rgba(217, 217, 217,0.8);
+}
+
+#navigate > button[data-active]
+{
+    background-color: rgb(190,190,190);
+}
+
+/* Navigate button style for specific button */
+
+#navigate > #my-profile{
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+#navigate > #logout{
+    color: red;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+/* Title Container */
+.title-container{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Control Panel */
+.control-panel{
+    display: none;
+    flex-basis: 75%;
+    background-color: #F4F4F4;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid #D9D9D9;
+}
+
+
+.control-panel[data-active]{
+    display: block;
+}
+
+.control-container{
+    display: block;
+}
+/* Control for Each Page */
+
+/* My Profile */
+
+/*General Form Design */
+
+/* Profile Container */
+.profile-container{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.form-section label{
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.form-section input[type="submit"]
+{
+    padding: 10px 20px;
+    background-color: rgb(0, 130, 255);
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.form-section input[type="submit"]:hover
+{
+    padding: 10px 20px;
+    background-color: rgba(0, 132, 255,0.8);
+    color: white;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.form-section input[type="submit"]:active{
+    background-color: rgb(0, 120, 255);
+}
+
+/* Information Section */
+#change-information-section{
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+#change-information-section input:not([type="submit"]){
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+
+/* Password Section */
+#change-password-section{
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+#change-password-section > h1{
+    margin-top: 0.491rem;
+    margin-bottom: 1.25rem;
+}
+
+#change-password-section input:not([type="submit"]){
+    width: 100%;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.23rem;
+}
