@@ -1,0 +1,362 @@
+/* Cart-Button */
+#cart-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    text-decoration: none;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0.5rem;
+    z-index: 10;
+}
+
+#cart-button > i {
+    margin-right: 1rem;
+    font-size: 1.3rem;
+}
+
+#cart-button:hover{
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Product Details */
+#product-details{
+    display: flex;
+    justify-content: space-between;
+    width: 88%;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 0.5rem;
+    height: 60vh;
+    margin-bottom: 1.5rem;
+}
+
+/* Carousel Slider */
+
+#carousel{
+    width: 48%;
+    height: 100%;
+    position: relative;
+}
+
+#carousel > ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+} 
+
+.slide{
+    position: absolute;
+    border: 1px solid black;
+    margin: 1rem;
+    inset: 0;
+    opacity: 0;
+}
+
+.slide > img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Set opacity to 1 for which slide have data-active attribute*/
+.slide[data-active]{
+    opacity: 1;
+}
+
+.carousel-button{
+    position: absolute;
+    background: none;
+    border: none;
+    font-size: 4rem;
+    top: 50%;
+    z-index: 2;                 
+    transform: translateY(-50%);
+    color:rgba(255, 255, .5);
+    cursor: pointer;
+    border-radius: .25rem;
+    padding: 0 .5rem;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.carousel-button:hover,
+.carousel-button:focus{
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.carousel-button:focus{
+    outline: 1px solid black;
+}
+
+.carousel-button.prev{
+    left: 1rem;
+}
+
+.carousel-button.next{
+    right: 1rem;
+}
+
+/* Details */
+#details{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: start;
+    width: 50%;
+    padding: 1rem;
+    height: auto;
+}
+
+#details > h1{
+    padding: 0 0.2rem;
+    flex-basis: auto;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#details > p {
+    flex-basis: auto;
+    padding: 0 0.2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+}
+
+
+/* Rating */
+details > .rating{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    flex: 1 1 auto;
+}
+
+.stars-outer {
+    display: inline-block;
+    position: relative;
+    font-family: FontAwesome;
+    font-size: 2rem;
+}
+  
+.stars-outer::before {
+    content: "\f006 \f006 \f006 \f006 \f006";
+}
+  
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+  
+.stars-inner::before {
+    content: "\f005 \f005 \f005 \f005 \f005";
+    color: #f8ce0b;
+}
+
+/* Action Button */
+#action-btn-container{
+    flex-basis: auto;
+    margin: 1.5rem 0;
+    display: flex;
+}
+
+.action-btn{
+    font-size: 2rem;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.action-btn:hover{
+    background-color: rgb(0, 0, 0,0.6);
+}
+
+#buy-now{
+    margin-right: 1.5rem;
+}
+
+/* Generic Class for each section */
+.section-container{
+    margin: 0 auto;
+    width: 88%;
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/*Contact Section*/
+#contact-section > h1{
+    margin-bottom: 0.5rem;
+    text-decoration: underline;
+}
+.contact-card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-card > ul{
+    list-style: none;
+}
+
+.contact-card > ul > li{
+    padding: 0.25rem 0;
+}
+
+.contact-card > ul > #seller-name{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+/* Description */
+#description-section > h1{
+    margin-bottom: 1rem;
+    text-decoration: underline;
+}
+
+#description-section > p {
+    white-space: pre-wrap;
+}
+
+/* Comments Section */
+#comments-section > h1{
+    margin-bottom: 0.5rem;
+    text-decoration: underline;
+}
+
+/* Comment Card */
+.comment-card{
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.2);
+    margin-bottom: 1.5rem;
+}
+
+.comment-card > h3{
+    font-size: 1.5rem;
+}
+
+.comment-card > .rating > .stars-outer{
+    font-size: 1rem;
+}
+
+.comment-card > .comment{
+    white-space: pre-wrap;
+    margin-bottom: 0.5rem;
+}
+
+.comment-card > .date{
+    font-size: 0.8rem;
+    color: rgba(0,0,0,0.3);
+}
+
+
+
+/* RESPONSIVE DESIGN */
+@media (width < 1360px) {
+    .slide > img{
+        object-fit: contain;
+    }
+    .action-btn{
+        font-size: 1.2rem;
+    }
+
+    #details > h1{
+        font-size: 1.8rem;
+    }
+}
+
+@media (width < 992px) {
+    #product-details{
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 80vh;
+    }
+    #details{
+        justify-content: flex-start;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    #carousel {
+        width: 100%;
+    }
+    #details > h1{
+        height: 4.2rem;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .stars-outer{
+        font-size: 1.4rem;
+    }
+
+    #details > p{
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+}
+
+/* RESPONSIVE DESIGN FOR SMALL SCREEN */
+@media (width < 576px) {
+    #action-btn-container{
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #action-btn-container button{
+        font-size: 1rem;
+    }
+
+    #cart-button{
+        right:1rem;
+        bottom: 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .contact-card{
+        flex-direction: column;
+    }
+
+    .contact-card > ul{
+        align-self: flex-start;
+        margin-bottom: 1rem;
+    }
+}
+
+@media (width < 400px)
+{
+    #action-btn-container{
+        flex-direction: column;
+        margin: 0.5rem 0;
+    }
+    #action-btn-container form{
+        width: 100%;
+    }
+    #action-btn-container button{
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* RESPONSIVE DESIGN FOR LANDSCAPE SCREEN */
+@media (height < 500px)
+{
+    #product-details{
+        height: 500px;
+    }
+}
