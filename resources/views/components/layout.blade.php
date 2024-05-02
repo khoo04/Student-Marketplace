@@ -12,7 +12,7 @@
     <title>Student Marketplace</title>
 </head>
 <body>
-    <nav>
+    <nav id="myNav">
         <div id="navigation-bar">
             <div id="logo">
                 <a href="/">
@@ -22,8 +22,7 @@
             </div>
 
             <div id="search-bar">
-                <!--//TODO: Add Action to this search-->
-                <form method="get" action="">
+                <form method="" action="/">
                     <i class="fa-solid fa-search"></i>
                     <input type="search" name="search" placeholder="Search something"/>
                     <input type="submit" hidden/>
@@ -39,9 +38,12 @@
                 </li>
 
                 <li>
-                    <a href="">
-                        <i class="fa-solid fa-right-from-bracket"></i> Log out
-                    </a>
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <button type="submit">
+                            <i class="fa-solid fa-right-from-bracket"></i> Log out
+                        </button>
+                    </form>
                 </li>
                 @else
                 <li>
@@ -72,7 +74,12 @@
                     </li>
                     <li>
                         <!--//TODO: Add LOG OUT ROUTE -->
-                        <a href="">Log out</a>
+                        <form method="POST" action="/logout">
+                            @csrf
+                            <button type="submit">
+                                Log out
+                            </button>
+                        </form>
                     </li>
                     @else
                     <li>
@@ -87,7 +94,7 @@
 
             <dialog id="search-area">
                 <!--//TODO: Add Action to this search-->
-                <form action="" method="get">
+                <form action="/" method="get">
                     <i class="fa-solid fa-search"></i>
                     <input type="search" name="search" placeholder="Search something"/>
                     <input type="submit" hidden/>

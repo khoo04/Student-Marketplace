@@ -6,42 +6,79 @@
 
 @section('content')
 <div class="form-container">
-    <h2 class="form-title">Create an Account</h2>
-    <form onsubmit="return validatePasswords()">
+  <h2 class="form-title">Create an Account</h2>
+  <form method="POST" action="/register" id="register-form">
+    @csrf
+    <div class="field-container">
+      <label for="first_name">First name </label>
+      <input type="text" id="first_name" name="first_name" required>
+    </div>
+    @error('fname')
+      <p>{{$message}}</p>
+    @enderror
 
-      <label for="fname">First name*</label>
-      <input type="text" id="fname" name="fname" required>
+    <div class="field-container">
+      <label for="last_name">Last name*</label>
+      <input type="text" id="last_name" name="last_name" required>
+    </div>
+    @error('lname')
+      <p>{{$message}}</p>
+    @enderror
 
-      <label for="lname">Last name*</label>
-      <input type="text" id="lname" name="lname" required>
-
+    <div class="field-container">
       <label for="email">Email*</label>
       <input type="email" id="email" name="email" required>
-      <br>
+    </div>
+    @error('email')
+    <p>{{$message}}</p>
+    @enderror
+  
+    <div class="field-container">
+      <label for="phone_num">Phone Number</label>
+      <input type="text" id="phone_num" name="phone_num" required>
+    </div>
+    @error('phone_num')
+    <p>{{$message}}</p>
+    @enderror
 
-      <label for="pwd">Password*</label>
-      <input type="password" id="pwd" name="pwd" required>
-      <input type="checkbox" onclick="showPass1() ">Show Password
-      <br><br>
+    <div class="field-container">
+      <label for="password">Password*</label>
+      <input type="password" id="pasword" name="password" required>
+      <input type="checkbox" onclick="showPass1()" id="pwd1">
+      <label for="pwd1" class="checkboxLabel">Show Password</label>
+    </div>
+    @error('password')
+    <p>{{$message}}</p>
+    @enderror
 
-      <label for="cpwd">Confirm password*</label>
-      <input type="password" id="cpwd" name="cpwd" required>
-      <input type="checkbox" onclick="showPass2()">Show Password
-
-      <br><br>
-      <label>Sign me up as *:</label>
+    <div class="field-container">
+      <label for="password_confirmation">Confirm password*</label>
+      <input type="password" id="password_confirmation" name="password_confirmation" required>
+      <input type="checkbox" onclick="showPass2()" id="pwd2">
+      <label for="pwd2" class="checkboxLabel">Show Password</label>
+    </div>
+    @error('password_confirmation')
+      <p>{{$message}}</p>
+    @enderror
+    <div class="sign-up-container">
+      <p>Sign me up as:</p>
       <div class="radio-container">
-        <input type="radio" id="buyer" name="account" value="buyer" checked>
-        <label for="buyer">Buyer</label>
-        <input type="radio" id="seller" name="account" value="seller">
-        <label for="seller">Seller</label>
+        <div class="buyer-radio-container">
+          <input type="radio" id="buyer" name="types" value="buyer">
+          <label for="buyer">Buyer</label>
+        </div>
+        <div class="seller-radio-container">
+          <input type="radio" id="seller" name="types" value="seller">
+          <label for="seller">Seller</label>
+        </div>
       </div>
+    </div>
+    @error('types')
+    <p>{{$message}}</p>
+    @enderror
+    <button type="submit" class="submit-btn">CONFIRM AND CONTINUE</button>
+    <p>Already have an account? <a href="/login">Login</a></p>
 
-      <input type="submit" value="CONFIRM AND CONTINUE">
-
-      <hr>
-      <a href="test2.html">&nbsp;&nbsp;Already have an account? Login</a>
-
-    </form>
-  </div>
+  </form>
+</div>
 @endsection

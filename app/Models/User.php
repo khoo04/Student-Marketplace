@@ -12,6 +12,9 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ACCOUNT_BUYER = 'buyer';
+    const ACCOUNT_SELLER = 'seller';
+
     /**
      * The attributes that are mass assignable.
      *
