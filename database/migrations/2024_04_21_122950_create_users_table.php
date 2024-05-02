@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_num')->unique();
             $table->enum('types',['buyer','seller']);
-            $table->timestamp('created_at')->nullable(); // Corrected timestamp definition
-            $table->timestamp('updated_at')->nullable(); // Corrected timestamp definition
+            $table->timestamp('created_at')->nullable(); 
+            $table->timestamp('updated_at')->nullable(); 
         });
     }
 

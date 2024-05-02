@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +16,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Default Entry Point of Website
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [PageController::class,'index']);
 
 
-Route::get('/register', function () {
-    return view('register');
+Route::middleware('guest')->group(function(){
+    Route::get('/register', [UserController::class,'create']);
+    Route::post('/register',[UserController::class,'store']);
+
+    Route::get('/login', [UserController::class,'login']);
+
+    Route::post('/login',[UserController::class,'authenticate']);
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::post('/logout',[UserController::class,'logout']);
 
 Route::get('/product',function(){
     return view('product');

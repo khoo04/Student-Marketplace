@@ -19,8 +19,9 @@ return new class extends Migration
             $table->decimal('price',total: 8, places: 2);
             $table->double('rating')->nullable()->default(0)->comment('Rating value from 0 to 5');
             $table->enum('condition',['used','new']);
-            $table->string('images');
-            
+            $table->string('images')->nullable();
+            $table->timestamp('created_at')->nullable(); 
+            $table->timestamp('updated_at')->nullable(); 
             //Foreign Key
             $table->unsignedBigInteger("category_id");
             $table->unsignedBigInteger("user_id");
