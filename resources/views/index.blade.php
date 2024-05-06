@@ -23,10 +23,6 @@
         <h1>Latest Product</h1>
 
         <div id="card-container">
-
-            @foreach ($products as $product)
-                <x-product-card :product=$product />
-            @endforeach
         </div>
     </div>
 
@@ -34,13 +30,10 @@
         <i class="fa-solid fa-cart-shopping"></i><h2>My Cart</h2>
     </a>
 
-    <div>{{$products->links()}}</div>
+    <div id="pagination"></div>
 @endsection
 
 
 @section('js')
-<script>
-    const productRatings = @json($ratings);
-</script>
 <script src="{{ asset('js/index.js') }}""></script>
 @endsection
