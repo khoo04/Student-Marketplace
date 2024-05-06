@@ -33,3 +33,5 @@ Route::post('/logout',[UserController::class,'logout']);
 Route::get('/product',function(){
     return view('product');
 });
+
+Route::get('/product_data',[PageController::class,'paginateData']);

@@ -199,19 +199,18 @@ main{
     list-style: none;
 }
 
-.paginator > li:first-child span, .paginator > li:first-child a{
+ .paginator > li:first-child button{
     border-left: 1px solid #dee2e6;
     border-top-left-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
 }
 
-.paginator >li:last-child span,.paginator > li:last-child a{
-    border-color: 
-    border-top-right-radius 0.25rem;
+.paginator > li:last-child button{
+    border-top-right-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
 }
 
-.paginator> li > a{
+.paginator> li > button{
     display: block;
     padding: 0.5rem 0.75rem;
     text-decoration: none;
@@ -222,34 +221,25 @@ main{
     border-bottom: 1px solid #dee2e6;
 }
 
-.paginator > li > span{
-    display: block;
-    padding: 0.5rem 0.75rem;
-    color: #FFFFFF;
-    text-decoration: none;
-    background-color: #007bff;
-    border-right: 1px solid #dee2e6;
-    border-top: 1px solid #dee2e6;
-    border-bottom: 1px solid #dee2e6;
-}
-
-.paginator > li:hover > a{
+.paginator > li:hover > button{
     color:#0056b3;
     background-color: #e9ecef;
     border-color: #dee2e6;
     cursor: pointer;
 }
 
-.paginator li.disabled > span{
+.paginator li.disabled > button{
     color: #6c757d;
     cursor: auto;
     background-color: #fff;
     border-color: #dee2e6;
 }
 
-.paginator li.active > span{
+.paginator li.active > button{
     background-color: #007bff;
+    color: #FFFFFF;
     border-color: #007bff;
+    cursor: auto;
 }
 
 .pageIndicator{

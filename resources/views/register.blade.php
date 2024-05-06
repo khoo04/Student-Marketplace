@@ -48,7 +48,7 @@
       <label for="pwd1" class="checkboxLabel">Show Password</label>
     </div>
     @error('password')
-    <p>{{$message}}</p>
+    <p class="error-message">{{$message}}</p>
     @enderror
 
     <div class="field-container">
@@ -74,7 +74,7 @@
       </div>
     </div>
     @error('types')
-    <p>{{$message}}</p>
+    <p class="error-message">{{$message}}</p>
     @enderror
     <button type="submit" class="submit-btn">CONFIRM AND CONTINUE</button>
     <p>Already have an account? <a href="/login">Login</a></p>
