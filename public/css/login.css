@@ -3,6 +3,11 @@ nav{
     position: relative;
 }
 
+/*For MS Edge Browser */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
 main{
     margin-top: 0;
@@ -70,4 +75,9 @@ main{
 .register-link {
     margin-bottom: 20px;
     text-align: center;
+}
+
+ /* Override the dropdown navigation bar height in layout.css*/
+ .dropdown-nav-bar.open{
+    height: 90px;
 }

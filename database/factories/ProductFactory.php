@@ -20,7 +20,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $categoryIds = DB::table('category')->pluck('id')->toArray();
+        $categoryIds = DB::table('categories')->pluck('id')->toArray();
 
         return [
             'name' => $this->faker->sentence(3),

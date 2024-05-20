@@ -32,4 +32,16 @@ class Product extends Model
             $query->where('name','like','%' . request('search') . '%');
         }
     }
+
+    public function seller(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class,'product_id');
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id');
+    }
 }

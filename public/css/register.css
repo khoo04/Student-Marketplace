@@ -3,6 +3,11 @@
     position: relative;
 }
 
+/*For MS Edge Browser */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
 main{
     margin-top: 0;
@@ -42,7 +47,6 @@ main{
 .field-container input[type="email"],
 .field-container input[type="password"] {
     display: block;
-    margin: 5px 0;
     width: 100%;
     height: 15pt;
 }
@@ -67,6 +71,36 @@ main{
 .form-container button[type="submit"]:hover{
    opacity: 0.8;
 }
+
+/* CSS for the input box */
+
+.input-box i{
+    font-size: 1rem;
+    cursor: pointer;
+    display: none;
+}
+
+.input-box.focused i{
+    display: block;
+}
+
+.input-box i:hover{
+    opacity: 0.65;
+}
+
+.input-box{
+    margin-top: 5px;
+    background: #ffffff;
+    display: flex;
+    padding: 4px 4px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.input-box.focused{
+    border: 1px solid black;
+}
+
 
 /* CSS for the title of the box */
 .form-title {

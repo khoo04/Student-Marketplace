@@ -13,8 +13,11 @@ $(document).ready(function(){
 
 function paginate(page) {
   $.ajax({
-      url: '/product_data?page=' + page,
+      url: '/product_data',
       type: 'GET',
+      data:{
+        page: page,
+      },
       success: function(response) {
           // Update product container with new products
           $('#card-container').html(response.products_cards);

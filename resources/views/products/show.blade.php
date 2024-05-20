@@ -1,9 +1,17 @@
 @extends('components.layout')
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
-    <script src="{{ asset('js/product.js') }}" defer></script>
+@section('title')
+<title>Student Marketplace | {{$product->name}}</title>
 @endsection
+
+@section('styles')
+    <script>
+        const rating_product = {{$product->rating}};
+    </script>
+    <link rel="stylesheet" href="{{asset('css/product.css') }}">
+    <script src="{{asset('js/product.js') }}" defer></script>
+@endsection
+
 @section('content')
     <div id="product-details">
         <div id="carousel" data-carousel>
@@ -23,16 +31,14 @@
         </div>
 
         <div id="details">
-            <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas molestiae, hic dolores, porro laudantium rem
-                ut atque veritatis iure impedit enim, cum voluptatibus distinctio. Velit voluptatum quidem harum dolorum
-                odio!Lorem</h1>
+            <h1>{{$product->name}}</h1>
             <div class="rating">
                 <div class="stars-outer">
                     <div class="stars-inner"></div>
                 </div>
             </div>
-            <p>Price : RM 99.99</p>
-            <p>Quantity Available : 55</p>
+            <p>Price : RM {{$product->price}}</p>
+            <p>Quantity Available : {{$product->quantity_available}}</p>
             <div id="action-btn-container">
                 <form method="post" action="">
                     <button type="submit" class="action-btn" id="buy-now">
@@ -54,59 +60,24 @@
         <div class="contact-card">
             <ul>
                 <li id="seller-name">
-                    Seller Name
+                    {{$seller->first_name . ' ' . $seller->last_name}}
                 </li>
-                <li><i class="fa-solid fa-phone"></i> Phone Number: 012-3456 789</li>
+                <li><i class="fa-solid fa-phone"></i> Phone Number: {{$seller->phone_num}}</li>
                 <li>
-                    <i class="fa-solid fa-envelope"></i> Email: <a href="mailto:test@gmail.com"
-                        title="Seller Contact Email">test@gmail.com</a>
+                    <i class="fa-solid fa-envelope"></i> Email: <a href="mailto:{{$seller->email}}"
+                        title="Seller Contact Email">{{$seller->email}}</a>
                 </li>
             </ul>
-            <a aria-label="Chat on WhatsApp" href="https://wa.me/60xxxxxxxxxx"><img alt="Chat on WhatsApp"
-                    src="images/WhatsAppButtonGreenLarge.svg" />
+            <a aria-label="Chat on WhatsApp" href="https://wa.me/+6{{$seller->phone_num}}"><img alt="Chat on WhatsApp"
+                    src="{{asset('images/WhatsAppButtonGreenLarge.svg')}}" />
             </a>
         </div>
     </div>
 
     <div class="section-container" id="description-section">
         <h1>Description</h1>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id provident optio iste quis ratione voluptate rem
-            consectetur maxime doloremque, sed tenetur perspiciatis! Veniam voluptas nulla vero sed. Atque, maxime
-            voluptate!
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores eaque, nihil at impedit suscipit debitis
-            voluptatum facere inventore nostrum accusantium tenetur aut tempore. Repellat, possimus. Earum recusandae
-            voluptatum inventore nulla lor
-        </p>
+        <p><b>Category:</b> {{$product->category->name}}</p>
+        <p>{{$product->description}}</p>
     </div>
 
     <div class="section-container" id="comments-section">
@@ -191,6 +162,5 @@
         <i class="fa-solid fa-cart-shopping"></i>
         <h2>My Cart</h2>
     </a>
-    
 @endsection
 
