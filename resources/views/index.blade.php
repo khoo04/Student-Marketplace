@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
+@section('title')
+<title>Student Marketplace | Main Page</title>
+@endsection
+
 @section('content')
     <section id="hero">
         <h1>Student <span>Marketplace</span></h1>
@@ -18,7 +22,6 @@
             @endforeach
         </div>
     </div>
-
     <div id="product-section">
         <h1>Latest Product</h1>
 

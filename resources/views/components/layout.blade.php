@@ -10,22 +10,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{{asset('css/layout.css')}}">
 @yield('styles')
-    <title>Student Marketplace</title>
+@yield('title')
 </head>
 <body>
     <nav id="myNav">
         <div id="navigation-bar">
             <div id="logo">
                 <a href="/">
-                    <img src="images/marketplace.png" alt="logo">
+                    <img src="{{asset('images/marketplace.png')}}" alt="logo">
                     <h3>Student Marketplace</h3>
                 </a>
             </div>
-            @if(Route::current()->uri() != "login" && Route::current()->uri() != "register")
+            @if(Route::current()->uri() != "login" && Route::current()->uri() != "register" && Route::current()->uri() != "search")
             <div id="search-bar">
-                <form method="" action="/">
+                <form method="get" action="/search">
                     <i class="fa-solid fa-search"></i>
-                    <input type="search" name="search" placeholder="Search something"/>
+                    <input type="search" name="keyword" placeholder="Search something"/>
                     <input type="submit" hidden/>
                 </form>
             </div>
@@ -67,15 +67,16 @@
 
             <div class="dropdown-nav-bar">
                 <ul>
+                    @if(Route::current()->uri() != "search")
                     <li>
                         <button type="button" title="Search Button" id="nav-search-btn">Search</button>   
                     </li>
+                    @endif
                     @auth
                     <li>
                         <a href="/profile">My Profile</a>
                     </li>
                     <li>
-                        <!--//TODO: Add LOG OUT ROUTE -->
                         <form method="POST" action="/logout">
                             @csrf
                             <button type="submit">
@@ -84,21 +85,24 @@
                         </form>
                     </li>
                     @else
+                    @if(Route::current()->uri() != "register")
                     <li>
                         <a href="/register">Register</a>
                     </li>
+                    @endif
+                    @if(Route::current()->uri() != "login")
                     <li>
                         <a href="/login">Login</a>
                     </li>
+                    @endif
                     @endauth
                 </ul>
             </div>
 
             <dialog id="search-area">
-                <!--//TODO: Add Action to this search-->
-                <form action="/" method="get">
+                <form action="/search" method="get">
                     <i class="fa-solid fa-search"></i>
-                    <input type="search" name="search" placeholder="Search something"/>
+                    <input type="search" name="keyword" placeholder="Search something"/>
                     <input type="submit" hidden/>
                 </form>
             </dialog>

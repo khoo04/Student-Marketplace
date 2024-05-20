@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,8 +32,10 @@ Route::middleware('guest')->group(function(){
 
 Route::post('/logout',[UserController::class,'logout']);
 
-Route::get('/product',function(){
-    return view('product');
-});
-
 Route::get('/product_data',[PageController::class,'paginateData']);
+
+
+//Product Routes
+Route::get('/products/{product}',[ProductController::class,'show']);
+
+Route::get('/search',[SearchController::class,'show']);

@@ -13,31 +13,31 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Men's Fashion"
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Women's Fashion"
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Stationery"
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Gadgets"
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Sport Equipment"
         ]);
         
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Books"
         ]);
 
-        DB::table('category')->insert([
+        DB::table('categories')->insert([
             'name' => "Services"
         ]);
     }

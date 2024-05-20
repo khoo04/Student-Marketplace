@@ -1,5 +1,9 @@
 @extends('components.layout')
 
+@section('title')
+<title>Student Marketplace | Login</title>
+@endsection
+
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 @endsection

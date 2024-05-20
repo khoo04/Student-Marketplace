@@ -45,8 +45,6 @@ comments.forEach(
     }
 );
 
-
-const rating_product = 10/3;
 document.querySelector(`#details > .rating > .stars-outer > .stars-inner`).style.width = calculatePercentageRounded(rating_product);
 
 
