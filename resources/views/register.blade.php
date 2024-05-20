@@ -22,8 +22,6 @@
                     <p class="form-error-message">{{ $message }}</p>
                 @enderror
             </div>
-
-
             <div class="field-container">
                 <label for="last_name">Last name</label>
                 <div class="input-box">
