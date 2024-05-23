@@ -116,7 +116,7 @@
     <footer id="footer">
         <p>Copyright © 2024, All Rights reserved</p>
     </footer>
-    <script src="js/layout.js"></script>
+    <script src="{{asset("js/layout.js")}}"></script>
     @yield('js')
 </body>
 </html>

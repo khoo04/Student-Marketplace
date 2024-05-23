@@ -39,3 +39,6 @@ Route::get('/product_data',[PageController::class,'paginateData']);
 Route::get('/products/{product}',[ProductController::class,'show']);
 
 Route::get('/search',[SearchController::class,'show']);
+
+//Category Routes
+Route::get('/categories/{category}',[PageController::class,'categoryPage']);

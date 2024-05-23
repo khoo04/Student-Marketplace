@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,13 +17,59 @@ class PageController extends Controller
 
     public function paginateData(){
         $products = Product::latest()->paginate(10);
-        $ratings = $products->select('id','rating');
         $productCards = [];
 
         foreach ($products as $product){
             $productCards[] = view('components.product-card',['product' => $product])->render();
         }
         $pagination = $products->links()->toHtml();
-        return response()->json(['products_cards' => $productCards, 'pagination' => $pagination, 'ratings' => $ratings]);
+        return response()->json(['products_cards' => $productCards, 'pagination' => $pagination]);
+    }
+
+
+    public function categoryPage(Request $request, string $categoryId){
+        $category = Category::find($categoryId);
+    
+        if (!$category) {
+            abort(404, 'Category not found');
+        }
+    
+        
+        $productsQuery = $category->products();
+
+        if ($request->ajax()) {
+            // Apply filters
+            $lowerPrice = $request->input('lower');
+            $highestPrice = $request->input('highest');
+            $keyword = $request->input('keyword');
+            $condition = $request->input('condition');
+    
+            if ($lowerPrice != null) {
+                $productsQuery = $productsQuery->where('price', '>=', $lowerPrice);
+            }
+            if ($highestPrice != null) {
+                $productsQuery = $productsQuery->where('price', '<=', $highestPrice);
+            }
+            if ($keyword != null) {
+                $productsQuery = $productsQuery->where('name', 'like', '%' . $keyword . '%');
+            }
+            if ($condition != null) {
+                $productsQuery = $productsQuery->where('condition', '=', $condition);
+            }
+    
+            // Paginate the results
+            $products = $productsQuery->paginate(5);
+            $productCards = [];
+
+            foreach ($products as $product) {
+                $productCards[] = view('components.product-card', ['product' => $product])->render();
+            }
+            $pagination = $products->links()->toHtml();
+            return response()->json(['productCards' => $productCards,'pagination' => $pagination]);
+        } else {
+            // Paginate the results for non-ajax requests
+            $products = $productsQuery->paginate(5);
+            return view('category', ['category' => $category, 'products' => $products]);
+        }
     }
 }

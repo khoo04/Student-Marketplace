@@ -13,7 +13,6 @@
         <h1>Student <span>Marketplace</span></h1>
         <p>Find What Your Love, Sell What You Make.</p>
     </section>
-
     <div id="category-section">
         <h1>Categories</h1>
         <div id="category-container">

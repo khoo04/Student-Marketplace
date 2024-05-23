@@ -11,14 +11,14 @@ toggleBtn.addEventListener("click", () => {
 
 const searchDialog = document.getElementById("search-area")
 const navSearchBtn = document.querySelector('#nav-search-btn')
-navSearchBtn.addEventListener("click", () => {
+navSearchBtn?.addEventListener("click", () => {
     dropdown_navbar.classList.remove('open')
     toggleBtnIcon.classList = 'fa-solid fa-bars'
     searchDialog.showModal()  
 })
 
 
-searchDialog.addEventListener("click", e => {
+searchDialog?.addEventListener("click", e => {
     const dialogDimensions = searchDialog.getBoundingClientRect()
     if (
       e.clientX < dialogDimensions.left ||
