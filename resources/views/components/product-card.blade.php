@@ -1,11 +1,11 @@
 @props(['product'])
-<div class="card" id="product-id-{{$product->id}}">
+<div class="card">
     <div class="image">
         <img src="{{$product->image ? asset("storage/". $product->image) : asset("images/demo.png")}}" alt="No Image Available">
     </div>
     <div class="card-body">
         <h1>{{$product->name}}</h1>
-        <div class="rating">
+        <div class="rating" data-product-rating="{{$product->rating}}">
             <div class="stars-outer">
                 <div class="stars-inner"></div>
             </div>

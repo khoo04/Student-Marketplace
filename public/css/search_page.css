@@ -60,6 +60,23 @@ h4 {
     border: 1px solid black;
 }
 
+.condition-label{
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.reset-filter-btn {
+    background-color: #6C757D;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid white;
+}
+
+.reset-filter-btn:hover {
+    border: 1px solid black;
+}
+
 .search-column {
     padding: 0 1rem;
 }
@@ -261,6 +278,11 @@ h4 {
 /*Override Layout*/
 .dropdown-nav-bar.open {
     height: 90px !important;
+}
+
+/*Override Pagination*/
+#page-nav {
+    width: unset !important;
 }
 
 @media (width < 1360px) {

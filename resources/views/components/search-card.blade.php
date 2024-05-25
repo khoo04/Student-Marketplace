@@ -3,10 +3,10 @@
     <img src="images/demo.png" class="product-image" alt="demo">
     <div class="product-details">
         <h3 class="name">{{$product->name}}</h3>
-        <p class=category>{{$product->category}}</p>
-        <p class="description">${{$product->description}}</p>
+        <p class=category>Category: {{$product->category->name}}</p>
+        <p class="description">{{$product->description}}</p>
     </div>
-    <div class="product-ratings" data-product-id>
+    <div class="product-ratings" data-product-rating="{{$product->rating}}">
         <div class="stars-outer">
             <div class="stars-inner"></div>
         </div>
