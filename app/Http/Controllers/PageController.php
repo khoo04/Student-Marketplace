@@ -17,6 +17,7 @@ class PageController extends Controller
 
     public function paginateData(){
         $products = Product::latest()->paginate(10);
+      
         $productCards = [];
 
         foreach ($products as $product){

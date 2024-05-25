@@ -42,3 +42,4 @@ Route::get('/search',[SearchController::class,'show']);
 
 //Category Routes
 Route::get('/categories/{category}',[PageController::class,'categoryPage']);
+

@@ -45,5 +45,4 @@ class SearchController extends Controller
             return view('search', ['results' => $results, 'keyword' => $keyword, 'categories' => $categories]);
         }
     }
-
 }
