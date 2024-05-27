@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->decimal("total_payment",total: 8, places: 2);
             $table->enum("payment_status",["pending","completed"])->default("pending");
-            $table->timestamp("date");
+            $table->timestamp("created_at")->useCurrent();
+            $table->timestamp("updated_at")->useCurrent();
             $table->unsignedBigInteger("order_id");
             $table->unsignedBigInteger("user_id");
             $table->foreign("order_id")->references("id")->on("orders");

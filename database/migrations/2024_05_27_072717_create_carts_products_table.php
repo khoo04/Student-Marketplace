@@ -16,9 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger("product_id");
             //Order ID and Product ID must be Foreign Key
             $table->primary(['cart_id','product_id']);
-
+            $table->integer("quantity");
             // Foreign key constraints
-            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->foreign('cart_id')->references('id')->on('carts');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts_products');
+        Schema::dropIfExists('cart_product');
     }
 };

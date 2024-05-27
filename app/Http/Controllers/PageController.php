@@ -81,8 +81,17 @@ class PageController extends Controller
             return view('profiles.seller');
         }
         else{
-            return view('profiles.buyer');
+            return view('profiles.buyer',compact('user'));
         }
         
+    }
+
+    public function showProfileControl(){
+        $user = Auth::user();
+        $profileControl = view('components.profiles.profile-control', ['user' => $user])->render();
+        return response()->json(['control' => $profileControl]);
+    }
+
+    public function showAddressControl(){
     }
 }

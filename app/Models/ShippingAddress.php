@@ -25,6 +25,9 @@ class ShippingAddress extends Model
         'user_id',
     ];
 
+    //Disable Timestamp
+    public $timestamps = false;
+
     
     /**
      * Get the user that owns the shipping address.
@@ -34,4 +37,7 @@ class ShippingAddress extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function shipments(){
+        return $this->hasMany(Shipment::class);
+    }
 }

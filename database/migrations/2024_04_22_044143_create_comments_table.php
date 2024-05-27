@@ -16,11 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string("description");
             $table->double("rating");
-            $table->string("email")->unique();
             $table->unsignedBigInteger("product_id");
             $table->unsignedBigInteger("user_id");
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamp('created_at')->useCurrent(); // Set the default value to current timestamp
+            $table->timestamp('updated_at')->useCurrent(); // Set the default value to current timestam
         });
     }
 
