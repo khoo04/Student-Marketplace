@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -71,5 +72,16 @@ class PageController extends Controller
             $products = $productsQuery->paginate(5);
             return view('category', ['category' => $category, 'products' => $products]);
         }
+    }
+
+    public function showProfile(){
+        $user = Auth::user();
+        if ($user->types == 'seller'){
+            return view('profiles.seller');
+        }
+        else{
+            return view('profiles.buyer');
+        }
+        
     }
 }
