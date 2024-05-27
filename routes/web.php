@@ -49,3 +49,14 @@ Route::get('/profile',[PageController::class,'showProfile'])->middleware('auth')
 //Route::get('/payments',[PaymentController::class,'show']);
 
 //Route::get('/payments/pay',[PaymentController::class,'create']);
+
+
+//Profile Routes
+Route::get('/ajax/profile_control',[PageController::class,'showProfileControl'])
+    ->name('ajax.profile-control')
+    ->middleware(['auth','ajax']);
+
+
+ Route::get('/ajax/address_control',[PageController::class,'showAddressControl'])
+     ->name('ajax.address-control')
+     ->middleware(['auth','ajax','buyer_only']);

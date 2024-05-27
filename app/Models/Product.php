@@ -20,18 +20,12 @@ class Product extends Model
         'description',
         'quantity_available',
         'price',
-        'ratings',
+        'rating',
         'condition',
         'images',
         'category_id',
         'user_id',
     ];
-
-    public function scopeFilter($query, $filter){
-        if ($filter ?? false){
-            $query->where('name','like','%' . request('search') . '%');
-        }
-    }
 
     public function seller(){
         return $this->belongsTo(User::class,'user_id');
@@ -43,5 +37,13 @@ class Product extends Model
 
     public function category(){
         return $this->belongsTo(Category::class,'category_id');
+    }
+
+    public function carts(){
+        return $this->belongsToMany(Cart::class);
+    }
+
+    public function orders(){
+        return $this->belongsToMany(Order::class);
     }
 }

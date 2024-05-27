@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->decimal("total_payment",total: 8, places: 2);
-            $table->enum("payment_status",["pending","completed"])->default("pending");
+            $table->unsignedBigInteger('user_id');
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp("updated_at")->useCurrent();
-            $table->unsignedBigInteger("order_id");
-            $table->unsignedBigInteger("user_id");
-            $table->foreign("order_id")->references("id")->on("orders");
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('orders');
     }
 };

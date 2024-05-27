@@ -52,4 +52,28 @@ class User extends Authenticatable
     public function products(){
         return $this->hasMany(Product::class);
     }
+
+    public function addresses(){
+        return $this->hasMany(ShippingAddress::class,'user_id');
+    }
+
+    public function shipments(){
+        return $this->hasMany(Shipment::class,'user_id');
+    }
+
+    public function cart(){
+        return $this->hasOne(Cart::class,'user_id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+    
+    public function payments(){
+        return $this->hasMany(Payment::class);
+    }
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }
