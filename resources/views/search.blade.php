@@ -73,7 +73,6 @@
                             <x-search-card :product=$result />
                         @endforeach
                     @endif
-
                 </div>
             </div>
             <!-- END TABLE RESULT -->
