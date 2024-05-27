@@ -27,7 +27,6 @@
 
     <!--My Profile-->
     <div class="control-panel" data-active>
-
     </div>
 
     <!--My Product List-->

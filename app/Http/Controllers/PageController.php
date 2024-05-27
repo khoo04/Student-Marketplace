@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -83,6 +82,7 @@ class PageController extends Controller
         }
         else{
             return view('profiles.buyer',compact('user'));
+
         }
         
 
