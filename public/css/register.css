@@ -95,6 +95,7 @@ main{
     padding: 4px 4px;
     border-radius: 5px;
     align-items: center;
+    border: 1px solid transparent;
 }
 
 .input-box.focused{

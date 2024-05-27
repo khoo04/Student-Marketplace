@@ -9,6 +9,37 @@ input::-ms-clear {
   display: none;
 }
 
+/* CSS for the input box */
+
+.input-box i{
+    font-size: 1rem;
+    cursor: pointer;
+    display: none;
+}
+
+.input-box.focused i{
+    display: block;
+}
+
+.input-box i:hover{
+    opacity: 0.65;
+}
+
+.input-box{
+    margin-top: 5px;
+    background: #ffffff;
+    display: flex;
+    padding: 4px 4px;
+    border-radius: 5px;
+    align-items: center;
+    border: 1px solid transparent;
+}
+
+.input-box.focused{
+    border: 1px solid black;
+}
+
+
 main{
     margin-top: 0;
     padding-bottom: 3.5rem;
@@ -48,7 +79,6 @@ main{
 
 #email, #password {
     display: block;
-    margin: 5px 0;
     width: 100%;
     height: 15pt;
 }
