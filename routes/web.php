@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,7 @@ Route::middleware('guest')->group(function(){
     Route::get('/register', [UserController::class,'create']);
     Route::post('/register',[UserController::class,'store']);
 
-    Route::get('/login', [UserController::class,'login']);
+    Route::get('/login', [UserController::class,'login'])->name('login');
 
     Route::post('/login',[UserController::class,'authenticate']);
 });
@@ -43,3 +44,8 @@ Route::get('/search',[SearchController::class,'show']);
 //Category Routes
 Route::get('/categories/{category}',[PageController::class,'categoryPage']);
 
+Route::get('/profile',[PageController::class,'showProfile'])->middleware('auth');
+
+//Route::get('/payments',[PaymentController::class,'show']);
+
+//Route::get('/payments/pay',[PaymentController::class,'create']);
