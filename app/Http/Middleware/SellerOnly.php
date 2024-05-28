@@ -18,7 +18,8 @@ class SellerOnly
     {
         $user = Auth::user();
         
-        if ($user && $user->role == 'seller'){
+        if ($user && $user->types == 'seller'){
+
             return $next($request);
         }
         return abort(403, 'Unauthorized Action');

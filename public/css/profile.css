@@ -102,7 +102,7 @@
 
 /* Control Panel */
 .control-panel{
-    display: none;
+    display: block;
     flex-basis: 75%;
     background-color: #F4F4F4;
     margin-bottom: 2rem;
@@ -110,10 +110,6 @@
     border: 1px solid #D9D9D9;
 }
 
-
-.control-panel[data-active]{
-    display: block;
-}
 
 .control-container{
     display: block;

@@ -78,16 +78,14 @@ class PageController extends Controller
     public function showProfile(){
         $user = Auth::user();
         if ($user->types == 'seller'){
-            return view('profiles.seller');
+            return view('profiles.seller',compact('user'));
         }
         else{
             return view('profiles.buyer',compact('user'));
 
         }
-        
 
     }
-
     public function showProfileControl(){
         $user = Auth::user();
         $profileControl = view('components.profiles.profile-control', ['user' => $user])->render();
@@ -95,5 +93,34 @@ class PageController extends Controller
     }
 
     public function showAddressControl(){
+        //TODO: Retrieve Data from DB
+        $user = Auth::user();
+        $addressControl = view('components.profiles.address-control')->render();
+        return response()->json(['control' => $addressControl]);
+    }
+
+    public function showUserOrderControl(){
+        //TODO: Retrieve Data from DB
+        $user = Auth::user();
+        $userOrderControl = view('components.profiles.user-order-control')->render();
+        return response()->json(['control' => $userOrderControl]);
+    }
+
+    public function showProductControl(){
+        $user = Auth::user();
+        $productControl = view('components.profiles.product-control')->render();
+        return response()->json(['control' => $productControl]);
+    }
+
+    public function showManageOrderControl(){
+        $user = Auth::user();
+        $manageOrderControl = view('components.profiles.manage-order-control')->render();
+        return response()->json(['control' => $manageOrderControl]);
+    }
+
+    public function showSalesReportControl(){
+        $user = Auth::user();
+        $salesReportControl = view('components.profiles.sales-report-control')->render();
+        return response()->json(['control' => $salesReportControl]);
     }
 }
