@@ -31,7 +31,7 @@ Route::middleware('guest')->group(function(){
     Route::post('/login',[UserController::class,'authenticate']);
 });
 
-Route::post('/logout',[UserController::class,'logout']);
+Route::post('/logout',[UserController::class,'logout'])->name('logout');
 
 Route::get('/product_data',[PageController::class,'paginateData']);
 
