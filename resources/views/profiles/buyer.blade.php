@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('styles')
+@section('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile_buyer.css') }}">

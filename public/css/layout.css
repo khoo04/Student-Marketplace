@@ -248,6 +248,21 @@ main{
     line-height: 1.25rem;
 }
 
+/*FLASH MESSAGE */
+.flash-message{
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0.75rem 5rem;
+    border-radius:0.25rem;
+}
+
+.flash-message.alert{
+    background-color: red;
+    color: white;
+}
+
 /* RESPONSIVE DESIGN */
 @media (width < 992px) {
     #navigation-bar > #search-bar,
@@ -279,6 +294,11 @@ main{
     }
     .dropdown-nav-bar.open > ul{
         display: block;
+    }
+
+    .flash-message{
+        width: 420px;
+        text-align: center;
     }
 }
 

@@ -25,26 +25,3 @@ buttons.forEach(button => {
 })
 
 
-
-const starTotal = 5;
-
-function calculatePercentageRounded(ratings)
-{
-    starPercentage = (ratings/ starTotal) * 100;
-    starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-    return starPercentageRounded;
-}
-
-//Rating per comment
-const ratings = [4,3,5];
-
-const comments = document.querySelectorAll(".comment-card > .rating > .stars-outer > .stars-inner");
-comments.forEach(
-    function(value,index,arr) {
-        arr[index].style.width = calculatePercentageRounded(ratings[index]);
-    }
-);
-
-document.querySelector(`#details > .rating > .stars-outer > .stars-inner`).style.width = calculatePercentageRounded(rating_product);
-
-

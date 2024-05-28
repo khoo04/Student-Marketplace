@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
@@ -70,4 +71,9 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
     Route::get('/ajax/product_control',[PageController::class,'showProductControl'])->name('ajax.product-control');
     Route::get('/ajax/manage_order_control',[PageController::class,'showManageOrderControl'])->name('ajax.manage-order-control');
     Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
+});
+
+
+Route::middleware(['auth'])->group(function(){
+    Route::post('/orders',[OrderController::class,'store'])->name('order.store');
 });

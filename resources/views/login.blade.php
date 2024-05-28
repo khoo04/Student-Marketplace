@@ -4,11 +4,12 @@
 <title>Student Marketplace | Login</title>
 @endsection
 
-@section('styles')
+@section('head')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 @endsection
 
 @section('content')
+@include('components.flash-message')
 <div class="form-container">
     <h2 class="form-title">Log In</h2>
     <div class="title-line"></div>

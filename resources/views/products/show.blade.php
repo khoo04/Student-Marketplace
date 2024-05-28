@@ -4,7 +4,7 @@
 <title>Student Marketplace | {{$product->name}}</title>
 @endsection
 
-@section('styles')
+@section('head')
     <script>
         const rating_product = {{$product->rating}};
     </script>
@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+    @include('components.flash-message')
     <div id="product-details">
         <div id="carousel" data-carousel>
             <button class="carousel-button prev" data-carousel-button="prev">&#60;</button>
@@ -34,18 +35,21 @@
             <h1>{{$product->name}}</h1>
             <div class="rating">
                 <div class="stars-outer">
-                    <div class="stars-inner"></div>
+                    <div class="stars-inner" style="width: {{round((($product->rating/5) * 100) / 10) * 10}}%"></div>
                 </div>
             </div>
             <p>Price : RM {{$product->price}}</p>
             <p>Quantity Available : {{$product->quantity_available}}</p>
             <div id="action-btn-container">
-                <form method="post" action="">
+                <form method="post" action="{{route('order.store')}}">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
                     <button type="submit" class="action-btn" id="buy-now">
                         <i class="fa-solid fa-money-bill-wave"></i> Buy Now
                     </button>
                 </form>
                 <form method="post" action="">
+                    @csrf
                     <button type="submit" class="action-btn" id="add-to-cart">
                         <i class="fa-solid fa-cart-plus"></i> Add to Cart
                     </button>
@@ -82,80 +86,14 @@
 
     <div class="section-container" id="comments-section">
         <h1>Comments</h1>
-        <div class="comment-card">
-            <h3>Username</h3>
-            <div class="rating">
-                <div class="stars-outer">
-                    <div class="stars-inner"></div>
-                </div>
-            </div>
-            <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at tempor nunc, id aliquet
-                turpis. Ut ac nulla sollicitudin, finibus diam vitae, porttitor tellus. Sed maximus orci non lectus porta,
-                eleifend auctor mauris viverra. Etiam rutrum accumsan magna, rhoncus egestas risus pharetra sit amet.
-                Aliquam sit amet tellus in nisl blandit pulvinar. Ut vehicula sodales velit, eu rutrum eros imperdiet sed.
-                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam luctus,
-                libero malesuada molestie interdum, erat leo pretium dolor, ut posuere nibh dolor nec ante. Aenean a ornare
-                orci. Vivamus et lacus vel eros facilisis euismod.
 
-                Suspendisse congue tortor ut nisi vehicula, non mollis est efficitur. Cras vel porttitor urna. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Praesent rutrum egestas semper. In hac habitasse platea
-                dictumst. Phasellus rhoncus augue purus, nec bibendum arcu dapibus ac. Pellentesque rutrum, tortor vel
-                fringilla vulputate, massa felis finibus lacus, et viverra lorem urna sit amet sapien. Donec aliquet libero
-                vel enim congue suscipit.</p>
-            <p class="date">
-                22/3/2024
-            </p>
-        </div>
-
-        <div class="comment-card">
-            <h3>Username</h3>
-            <div class="rating">
-                <div class="stars-outer">
-                    <div class="stars-inner"></div>
-                </div>
-            </div>
-            <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at tempor nunc, id aliquet
-                turpis. Ut ac nulla sollicitudin, finibus diam vitae, porttitor tellus. Sed maximus orci non lectus porta,
-                eleifend auctor mauris viverra. Etiam rutrum accumsan magna, rhoncus egestas risus pharetra sit amet.
-                Aliquam sit amet tellus in nisl blandit pulvinar. Ut vehicula sodales velit, eu rutrum eros imperdiet sed.
-                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam luctus,
-                libero malesuada molestie interdum, erat leo pretium dolor, ut posuere nibh dolor nec ante. Aenean a ornare
-                orci. Vivamus et lacus vel eros facilisis euismod.
-
-                Suspendisse congue tortor ut nisi vehicula, non mollis est efficitur. Cras vel porttitor urna. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Praesent rutrum egestas semper. In hac habitasse platea
-                dictumst. Phasellus rhoncus augue purus, nec bibendum arcu dapibus ac. Pellentesque rutrum, tortor vel
-                fringilla vulputate, massa felis finibus lacus, et viverra lorem urna sit amet sapien. Donec aliquet libero
-                vel enim congue suscipit.</p>
-            <p class="date">
-                22/3/2024
-            </p>
-        </div>
-
-        <div class="comment-card">
-            <h3>Username</h3>
-            <div class="rating">
-                <div class="stars-outer">
-                    <div class="stars-inner"></div>
-                </div>
-            </div>
-            <p class="comment">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at tempor nunc, id aliquet
-                turpis. Ut ac nulla sollicitudin, finibus diam vitae, porttitor tellus. Sed maximus orci non lectus porta,
-                eleifend auctor mauris viverra. Etiam rutrum accumsan magna, rhoncus egestas risus pharetra sit amet.
-                Aliquam sit amet tellus in nisl blandit pulvinar. Ut vehicula sodales velit, eu rutrum eros imperdiet sed.
-                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam luctus,
-                libero malesuada molestie interdum, erat leo pretium dolor, ut posuere nibh dolor nec ante. Aenean a ornare
-                orci. Vivamus et lacus vel eros facilisis euismod.
-
-                Suspendisse congue tortor ut nisi vehicula, non mollis est efficitur. Cras vel porttitor urna. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Praesent rutrum egestas semper. In hac habitasse platea
-                dictumst. Phasellus rhoncus augue purus, nec bibendum arcu dapibus ac. Pellentesque rutrum, tortor vel
-                fringilla vulputate, massa felis finibus lacus, et viverra lorem urna sit amet sapien. Donec aliquet libero
-                vel enim congue suscipit.</p>
-            <p class="date">
-                22/3/2024
-            </p>
-        </div>
+        @if ($comments->isNotEmpty())
+            @foreach ($comments as $comment)
+                <x-comment-card :comment=$comment />
+            @endforeach
+        @else
+        <p style="text-align: center; padding: 1.5rem 0">No Comment Yet</p>
+        @endif
     </div>
 
     <a href="cart.html" id="cart-button">
