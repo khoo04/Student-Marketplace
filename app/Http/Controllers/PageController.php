@@ -84,10 +84,8 @@ class PageController extends Controller
             return view('profiles.buyer',compact('user'));
 
         }
-        
 
     }
-
     public function showProfileControl(){
         $user = Auth::user();
         $profileControl = view('components.profiles.profile-control', ['user' => $user])->render();
@@ -95,5 +93,14 @@ class PageController extends Controller
     }
 
     public function showAddressControl(){
+        $user = Auth::user();
+        $addressControl = view('components.profiles.address-control')->render();
+        return response()->json(['control' => $addressControl]);
+    }
+
+    public function showUserOrderControl(){
+        $user = Auth::user();
+        $userOrderControl = view('components.profiles.user-order-control')->render();
+        return response()->json(['control' => $userOrderControl]);
     }
 }

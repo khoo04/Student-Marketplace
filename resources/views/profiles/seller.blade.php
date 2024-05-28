@@ -26,22 +26,11 @@
     </div>
 
     <!--My Profile-->
-    <div class="control-panel" data-active>
-    </div>
-
     <!--My Product List-->
-    <div class="control-panel">
-       
-    </div>
-
     <!--Manage Order-->
-    <div class="control-panel">
-       
-    </div>
-
     <!--Sales Report-->
     <div class="control-panel">
-      
+        <x-profiles.profile-control :user=$user />
     </div>
 </div>
 @endsection

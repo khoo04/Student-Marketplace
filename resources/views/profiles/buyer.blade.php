@@ -27,7 +27,7 @@
     <!--My Address-->
     <!--My Order-->
 
-    <div class="control-panel" data-active>
+    <div class="control-panel">
         <x-profiles.profile-control :user=$user />
     </div>
 </div>
@@ -38,8 +38,11 @@
 <script>
     $(document).ready(function () {
         
-        $("#my-profile").on("click",
-            renderProfileControl)
+        $("#my-profile").on("click",renderProfileControl);
+
+        $("#my-address").on("click",renderAddressControl);
+
+        $("#my-order").on("click",renderUserOrderControl);
     });
 
     function renderProfileControl() {
@@ -48,7 +51,7 @@
             url: '{{route("ajax.profile-control")}}',
             success: function (response) {
                 $(".control-panel").html(response.control);
-            }
+            },
             error: function(xhr) {
                 console.error(xhr.responseText);
             }
@@ -61,7 +64,20 @@
             url: '{{route("ajax.address-control")}}',
             success: function (response) {
                 $(".control-panel").html(response.control);
+            },
+            error: function(xhr) {
+                console.error(xhr.responseText);
             }
+        });
+    }
+
+    function renderUserOrderControl(){
+        $.ajax({
+            type: "GET",
+            url: '{{route("ajax.user-order-control")}}',
+            success: function (response) {
+                $(".control-panel").html(response.control);
+            },
             error: function(xhr) {
                 console.error(xhr.responseText);
             }
