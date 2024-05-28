@@ -27,6 +27,7 @@
             <x-profiles.profile-control :user=$user />
         </div>
     </div>
+</div>
 
     <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf

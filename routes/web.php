@@ -61,7 +61,6 @@ Route::get('/ajax/profile_control',[PageController::class,'showProfileControl'])
      ->name('ajax.address-control')
      ->middleware(['auth','ajax','buyer_only']);
 
-
 Route::get('/ajax/user_order_control',[PageController::class,'showUserOrderControl'])
     ->name('ajax.user-order-control')
     ->middleware(['auth','ajax','buyer_only']);
