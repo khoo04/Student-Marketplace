@@ -65,3 +65,9 @@ Route::get('/ajax/profile_control',[PageController::class,'showProfileControl'])
 Route::get('/ajax/user_order_control',[PageController::class,'showUserOrderControl'])
     ->name('ajax.user-order-control')
     ->middleware(['auth','ajax','buyer_only']);
+
+Route::middleware(['auth','ajax','seller_only'])->group(function(){
+    Route::get('/ajax/product_control',[PageController::class,'showProductControl'])->name('ajax.product-control');
+    Route::get('/ajax/manage_order_control',[PageController::class,'showManageOrderControl'])->name('ajax.manage-order-control');
+    Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
+});
