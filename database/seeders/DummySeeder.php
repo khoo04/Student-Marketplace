@@ -27,6 +27,7 @@ class DummySeeder extends Seeder
             'email' => 'buyer@gmail.com',
             'phone_num' => '012-234 3232',
             'password' => bcrypt('buyer12345'),
+            'approve_status' => 'approved',
             'types' => 'buyer',
         ]);
 
@@ -36,6 +37,7 @@ class DummySeeder extends Seeder
             'email' => 'seller@gmail.com',
             'phone_num' => '012-234 3233',
             'password' => bcrypt('seller12345'),
+            'approve_status' => 'approved',
             'types' => 'seller',
         ]);
 
@@ -48,6 +50,7 @@ class DummySeeder extends Seeder
             'condition' => 'new',
             'images' => null,
             'category_id' => 1,
+            'approve_status' => 'approved',
             'user_id' => $seller->id,
         ]);
 
@@ -60,6 +63,7 @@ class DummySeeder extends Seeder
             'condition' => 'used',
             'images' => null,
             'category_id' => 2,
+            'approve_status' => 'approved',
             'user_id' => $seller->id,
         ]);
 
@@ -72,6 +76,7 @@ class DummySeeder extends Seeder
             'condition' => 'new',
             'images' => null,
             'category_id' => 2,
+            'approve_status' => 'approved',
             'user_id' => $seller->id,
         ]);
 
@@ -84,6 +89,7 @@ class DummySeeder extends Seeder
             'condition' => 'new',
             'images' => null,
             'category_id' => 5,
+            'approve_status' => 'approved',
             'user_id' => $seller->id,
         ]);
 
@@ -96,6 +102,7 @@ class DummySeeder extends Seeder
             'condition' => 'used',
             'images' => null,
             'category_id' => 3,
+            'approve_status' => 'approved',
             'user_id' => $seller->id,
         ]);
 
@@ -105,8 +112,19 @@ class DummySeeder extends Seeder
             'city' => 'FAKE CITY',
             'state' => 'FAKE STATE',
             'zip_code' => '12345',
+            'default' => true,
             'user_id' => $buyer->id,
         ]);
+
+        $address2 = ShippingAddress::create([
+            'address_line_1' => "NO JALAN FAKE 2",
+            'address_line_2' => "TAMAN FAKE 2",
+            'city' => 'FAKE CITY 2',
+            'state' => 'FAKE STATE 2',
+            'zip_code' => '12345',
+            'user_id' => $buyer->id,
+        ]);
+
 
         Comment::create([
             'description' => "FAKE DESCRIPTION",

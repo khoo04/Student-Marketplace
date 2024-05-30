@@ -51,8 +51,7 @@ main{
 }
 
 #logo img{
-    width: 48px;
-    height: 48px;
+    width: 200px;
     margin-right: 0.8rem;
 }
 
@@ -248,6 +247,40 @@ main{
     line-height: 1.25rem;
 }
 
+/*FLASH MESSAGE */
+.flash-message{
+    z-index: 20;
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: 0.75rem 5rem;
+    border-radius:0.25rem;
+}
+
+.flash-message.alert{
+    background-color: #DC4C64;
+    color: white;
+}
+
+.alert{
+    color: #DC4C64;
+}
+
+.success{
+    color:#14A44D;
+}
+
+.flash-message.success{
+    background-color: #14A44D;
+    color: white;
+}
+
+.flash-message.info{
+    background-color: #54B4D3;
+    color: white;
+}
+
 /* RESPONSIVE DESIGN */
 @media (width < 992px) {
     #navigation-bar > #search-bar,
@@ -279,6 +312,11 @@ main{
     }
     .dropdown-nav-bar.open > ul{
         display: block;
+    }
+
+    .flash-message{
+        width: 420px;
+        text-align: center;
     }
 }
 

@@ -1,0 +1,139 @@
+hr{
+    display: block;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    unicode-bidi: isolate;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.container{
+    border: 2px solid #ddd;
+    width: 88%;
+    padding: 1rem;
+    margin: auto;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.customer-details{
+    margin-bottom: 1rem;
+}
+
+.customer-details > select{
+    display: block;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+}
+
+.customer-details h2{
+    margin-bottom: 0.5rem;
+}
+.customer-details p{
+    margin-bottom: 0.25rem;
+}
+
+.order-details {
+    width: 100%;
+    border-collapse: collapse; 
+    margin: 1rem 0;
+}
+
+.order-details thead > tr{
+    background-color: beige;
+    border: 1px solid black;
+}
+
+.order-details thead th{
+    padding: 0.5rem 0;
+}
+
+.order-details tbody > tr {
+    padding-bottom: 2rem; 
+    border: 1px solid black;
+}
+
+.order-details td {
+    padding: 1rem; 
+}
+
+.order-details tbody > tr:not(:last-child) td{
+    border-bottom: 1px solid #ddd; 
+}
+.product-image{
+    display: block;
+    height: 200px;
+    margin: auto;
+    object-fit: cover;
+}
+
+.center{
+    text-align: center;
+}
+
+.product-name{
+    max-height: 200px; /* Adjust the maximum width as needed */
+    font-weight: bold;
+    overflow: hidden;
+    line-height: 20px;
+}
+
+.total-details{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.total-details .grand-total-label{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.total-details .grand-total{
+    font-size: 2rem;
+}
+
+.action-section{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.button{
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.primary{
+    background-color: #3B71CA;
+    color: white;
+}
+
+.button.primary:hover{
+    background-color: #175bc9;
+    border: 1px solid black;
+}
+
+.secondary{
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+}
+
+.button.secondary:hover{
+    background-color: #9FA6B2;
+    color: white;
+    border: 1px solid transparent;
+}

@@ -4,7 +4,7 @@
     <title>Student Marketplace | Search</title>
 @endsection
 
-@section('styles')
+@section('head')
     <link rel="stylesheet" href="{{ asset('css/search_page.css') }}">
 @endsection
 

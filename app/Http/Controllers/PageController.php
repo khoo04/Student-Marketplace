@@ -17,7 +17,7 @@ class PageController extends Controller
     }
 
     public function paginateData(){
-        $products = Product::latest()->paginate(10);
+        $products = Product::latest()->where('approve_status', '=', 'approved')->paginate(10);
       
         $productCards = [];
 
@@ -37,7 +37,7 @@ class PageController extends Controller
         }
     
         
-        $productsQuery = $category->products();
+        $productsQuery = $category->products()->where('approve_status','=','approved');
 
         if ($request->ajax()) {
             // Apply filters
@@ -82,7 +82,6 @@ class PageController extends Controller
         }
         else{
             return view('profiles.buyer',compact('user'));
-
         }
 
     }
@@ -108,7 +107,10 @@ class PageController extends Controller
 
     public function showProductControl(){
         $user = Auth::user();
-        $productControl = view('components.profiles.product-control')->render();
+      
+        $products = $user->products;
+        $productControl = view('components.profiles.product-control',compact('products'))->render();
+
         return response()->json(['control' => $productControl]);
     }
 

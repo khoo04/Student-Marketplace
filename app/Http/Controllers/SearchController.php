@@ -11,7 +11,9 @@ class SearchController extends Controller
     public function show(Request $request)
     {
         $keyword = $request->input('keyword');
-        $results = Product::where('name', 'like', '%' . $keyword . '%');
+        $results = Product::where('name', 'like', '%' . $keyword . '%')
+                ->where('approve_status','=','approved');
+                
         if ($request->ajax()) {
             $category = $request->input('cat');
             $condition = $request->input('cond');

@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('styles')
+@section('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile_buyer.css') }}">
@@ -13,10 +13,10 @@
 @section('content')
     <div id="profile-section">
         <div id="navigate">
-            <button id="my-profile" data-index="0" data-active>My Profile</button>
-            <button id="my-address" data-index="1">My Address</button>
-            <button id="my-order" data-index="2">My Order</button>
-            <button id="logout" data-index="3">Log out</button>
+            <button id="my-profile" class="navigation-btn" data-index="0">My Profile</button>
+            <button id="my-address" class="navigation-btn" data-index="1">My Address</button>
+            <button id="my-order" class="navigation-btn" data-index="2">My Order</button>
+            <button id="logout" class="navigation-btn" data-index="3">Log out</button>
         </div>
 
         <!-- My Profile (User / Seller)-->
@@ -24,11 +24,30 @@
         <!--My Order-->
 
         <div class="control-panel">
-            <x-profiles.profile-control :user=$user />
+            @if (session()->has('pageIndex'))
+                @switch($pageIndex)
+                    @case(0)
+                        <x-profiles.profile-control :user=$user />
+                    @break
+
+                    @case(1)
+                        <x-profiles.address-control />
+                    @break
+
+                    @case(2)
+                        <x-profiles.user-order-control />
+                    @break
+
+                    @default
+                        <x-profiles.profile-control />
+                @endswitch
+            @else
+                <x-profiles.profile-control :user=$user />
+            @endif
+
         </div>
     </div>
-</div>
-
+    
     <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
         <button type="submit">Logout</button>
@@ -39,16 +58,34 @@
     <script>
         $(document).ready(function() {
 
-            $("#my-profile").on("click", renderProfileControl);
+            @if (session()->has('pageIndex'))
+            function redirectActivePage(index) {
+            $(".navigation-btn").removeAttr('data-active');
+            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+            }
+            
+            redirectActivePage({{session('pageIndex')}});
+            @endif
 
-            $("#my-address").on("click", renderAddressControl);
-
-            $("#my-order").on("click", renderUserOrderControl);
-
-            $("#logout").on("click", logOut);
+            $(".navigation-btn").click(function() {
+                const dataIndex = $(this).data('index');
+                $(".navigation-btn").removeAttr('data-active');
+                $(this).attr('data-active', '');
+                handleNavigation(dataIndex);
+            });
 
         });
 
+        function activePage(index) {
+            $(".navigation-btn").removeAttr('data-active');
+            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+            handleNavigation(index);
+        }
+
+        function handleNavigation(index) {
+            var pages = [renderProfileControl, renderAddressControl, renderUserOrderControl, logOut];
+            pages[index].call();
+        }
         function renderProfileControl() {
             $.ajax({
                 type: "GET",

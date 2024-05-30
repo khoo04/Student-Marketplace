@@ -23,6 +23,7 @@ class Product extends Model
         'rating',
         'condition',
         'images',
+        'approve_status',
         'category_id',
         'user_id',
     ];
@@ -40,10 +41,10 @@ class Product extends Model
     }
 
     public function carts(){
-        return $this->belongsToMany(Cart::class);
+        return $this->belongsToMany(Cart::class)->withPivot('quantity');;
     }
 
     public function orders(){
-        return $this->belongsToMany(Order::class);
+        return $this->belongsToMany(Order::class)->withPivot('quantity', 'order_status', 'comments_status');
     }
 }

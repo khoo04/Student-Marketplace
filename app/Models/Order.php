@@ -24,10 +24,10 @@ class Order extends Model
     }
 
     public function buyer(){
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(User::class,'user_id');
     }
     
     public function products(){
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'order_status', 'comments_status');
     }
 }

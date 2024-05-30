@@ -206,21 +206,24 @@
     border-bottom: 2px solid #D9D9D9;
 }
 
+.my-order-list > tbody > tr > td{
+    height: 150px;
+}
+
 .my-order-list > tbody > tr > td > img{
     width: 120px;
     height: 120px;
     object-fit: cover;
 }
 
-.my-order-list > tbody > tr > .image-column{
-    width: 150px;
+.product-name-column{
     height: 150px;
 }
 
-.my-order-list > tbody > tr > .product-name-column{
-    width: 200px;
+.product-name-column > p{
+    height: 126px;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 21px;
 }
-
 

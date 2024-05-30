@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('styles')
+@section('head')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/category_page.css')}}">
 @endsection

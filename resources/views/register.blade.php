@@ -4,7 +4,7 @@
     <title>Student Marketplace | Register</title>
 @endsection
 
-@section('styles')
+@section('head')
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 @endsection
 

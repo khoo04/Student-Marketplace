@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-@section('styles')
+@section('head')
 <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
@@ -9,6 +9,7 @@
 @endsection
 
 @section('content')
+@include('components.flash-message')
     <section id="hero">
         <h1>Student <span>Marketplace</span></h1>
         <p>Find What Your Love, Sell What You Make.</p>
