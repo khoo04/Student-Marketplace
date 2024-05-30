@@ -107,8 +107,10 @@ class PageController extends Controller
 
     public function showProductControl(){
         $user = Auth::user();
+      
         $products = $user->products;
         $productControl = view('components.profiles.product-control',compact('products'))->render();
+
         return response()->json(['control' => $productControl]);
     }
 

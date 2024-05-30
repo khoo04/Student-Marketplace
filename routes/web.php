@@ -77,7 +77,6 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
     Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
 });
 
-
 Route::middleware(['auth'])->group(function(){
     Route::post('/orders',[OrderController::class,'store'])->name('order.store');
     Route::delete('/orders',[OrderController::class,'destroy'])->name('order.delete');

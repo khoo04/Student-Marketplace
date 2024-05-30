@@ -86,7 +86,6 @@
             var pages = [renderProfileControl, renderAddressControl, renderUserOrderControl, logOut];
             pages[index].call();
         }
-
         function renderProfileControl() {
             $.ajax({
                 type: "GET",
