@@ -51,8 +51,7 @@ main{
 }
 
 #logo img{
-    width: 48px;
-    height: 48px;
+    width: 200px;
     margin-right: 0.8rem;
 }
 
@@ -250,6 +249,7 @@ main{
 
 /*FLASH MESSAGE */
 .flash-message{
+    z-index: 20;
     position: fixed;
     top: 15%;
     left: 50%;
@@ -259,7 +259,25 @@ main{
 }
 
 .flash-message.alert{
-    background-color: red;
+    background-color: #DC4C64;
+    color: white;
+}
+
+.alert{
+    color: #DC4C64;
+}
+
+.success{
+    color:#14A44D;
+}
+
+.flash-message.success{
+    background-color: #14A44D;
+    color: white;
+}
+
+.flash-message.info{
+    background-color: #54B4D3;
     color: white;
 }
 

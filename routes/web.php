@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Http\Controllers\ProductController;
 */
 
 //Default Entry Point of Website
-Route::get('/', [PageController::class,'index']);
+Route::get('/', [PageController::class,'index'])->name('main');
 
 
 Route::middleware('guest')->group(function(){
@@ -38,21 +39,25 @@ Route::get('/product_data',[PageController::class,'paginateData']);
 
 
 //Product Routes
+Route::get('/products/create',[ProductController::class,'create'])->middleware(['auth','seller_only'])->name('products.create');
+
+Route::post('/products/store',[ProductController::class,'store'])->middleware(['auth','seller_only'])->name('products.store');
+
+Route::delete('/products/delete',[ProductController::class,'destory'])->middleware(['auth','seller_only'])->name('products.destory');
+
+//Note: Wild Card route must be the last one
 Route::get('/products/{product}',[ProductController::class,'show']);
+
 
 Route::get('/search',[SearchController::class,'show']);
 
 //Category Routes
 Route::get('/categories/{category}',[PageController::class,'categoryPage']);
 
-Route::get('/profile',[PageController::class,'showProfile'])->middleware('auth');
-
-//Route::get('/payments',[PaymentController::class,'show']);
-
-//Route::get('/payments/pay',[PaymentController::class,'create']);
-
 
 //Profile Routes
+Route::get('/profile',[PageController::class,'showProfile'])->middleware('auth')->name('profile');
+
 Route::get('/ajax/profile_control',[PageController::class,'showProfileControl'])
     ->name('ajax.profile-control')
     ->middleware(['auth','ajax']);
@@ -76,4 +81,9 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
 
 Route::middleware(['auth'])->group(function(){
     Route::post('/orders',[OrderController::class,'store'])->name('order.store');
+    Route::delete('/orders',[OrderController::class,'destroy'])->name('order.delete');
 });
+
+Route::post('/payments',[PaymentController::class,'create'])->name('payment.create');
+Route::get('/payments/testcallback',[PageController::class,'showTestCallBack']);
+

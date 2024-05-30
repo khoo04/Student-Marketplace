@@ -18,7 +18,7 @@ return new class extends Migration
             $table->primary(['product_id','order_id']);
 
             // Foreign key constraints
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->foreign('order_id')->references('id')->on('orders');
             $table->integer('quantity');
             //TODO: Change the meaningful status

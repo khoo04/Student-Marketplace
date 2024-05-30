@@ -27,13 +27,30 @@ class UserController extends Controller
             ]
         );
 
+        //If buyer the approve status is true
+        if ($formFields['types'] == 'buyer'){
+            $formFields['approve_status'] = true;
+        }
+
         $formFields['password'] = bcrypt($formFields['password']);
 
         $user = User::create($formFields);
 
-        auth()->login($user);
-
-        return redirect('/');
+        if($user->types == 'buyer'){
+            auth()->login($user);
+            return redirect('/')->with([
+                'message' => 'Account created successfully!',
+                'type' => 'success',
+            ]);
+        }
+        //Seller
+        else{
+            return redirect('/')->with([
+                'message' => 'Account created and pending approval',
+                'type' => 'success',
+            ]);
+        }
+        
     }
 
     public function logout(Request $request){
@@ -42,7 +59,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message','You have been logged out!');
+        return redirect('/')->with(['message' => 'You have been logged out!', 'type' => 'success']);
     }
 
     public function login()
@@ -60,8 +77,22 @@ class UserController extends Controller
         );
 
         if (auth()->attempt($formFields)){
-            $request->session()->regenerate();
-            return redirect('/');
+            if (auth()->user()->approve_status == 'approved'){
+                $request->session()->regenerate();
+                return redirect('/')->with(['message' => 'Login successfully!', 'type' => 'success']);
+            }
+            else if (auth()->user()->approve_status == 'pending'){
+                auth()->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()->with(['message' => 'Your account is pending approval','type'=>'alert']);
+            }
+            else{
+                auth()->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return back()->with(['message' => 'Your account registration is rejected','type'=>'alert']);
+            }
         }
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }

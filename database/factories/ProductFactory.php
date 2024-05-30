@@ -29,6 +29,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2,10,500),
             'rating' => $this->faker->randomFloat(1,0,5),
             'condition' => $this->faker->randomElement(['new','used']),
+            'approve_status' => 'pending',
             'category_id' => $this->faker->randomElement($categoryIds),
             'user_id' => 1,
         ];

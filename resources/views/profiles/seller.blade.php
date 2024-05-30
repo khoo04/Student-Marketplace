@@ -14,15 +14,16 @@
     <title>Student Marketplace | My Profile</title>
 @endsection
 
+@include('components.flash-message')
 @section('content')
     <div id="profile-section">
         <!--Side Navigation Bar-->
         <div id="navigate">
-            <button id="my-profile" data-index="0" data-active>My Profile</button>
-            <button id="manage-product" data-index="1">Manage Product</button>
-            <button id="manage-order"" data-index="2">Manage Order</button>
-            <button id="sales-report" data-index="3">Sales Report</button>
-            <button id="logout" data-index="4">Log out</button>
+            <button id="my-profile" class="navigation-btn" data-index="0" data-active>My Profile</button>
+            <button id="manage-product" class="navigation-btn" data-index="1">Manage Product</button>
+            <button id="manage-order"" class="navigation-btn" data-index="2">Manage Order</button>
+            <button id="sales-report" class="navigation-btn" data-index="3">Sales Report</button>
+            <button id="logout" class="navigation-btn" data-index="4">Log out</button>
         </div>
 
         <!--My Profile-->
@@ -30,7 +31,30 @@
         <!--Manage Order-->
         <!--Sales Report-->
         <div class="control-panel">
-            <x-profiles.profile-control :user=$user />
+            @if (session()->has('pageIndex'))
+                @switch(session('pageIndex'))
+                    @case(0)
+                        <x-profiles.profile-control :user=$user />
+                    @break
+
+                    @case(1)
+                        <x-profiles.product-control :products='$user->products'/>
+                    @break
+
+                    @case(2)
+                        <x-profiles.manage-order-control />
+                    @break
+
+                    @case(3)
+                        <x-profiles.sales-report-control />
+                    @break
+
+                    @default
+                        <x-profiles.profile-control :user=$user />
+                @endswitch
+            @else
+                <x-profiles.profile-control :user=$user />
+            @endif
         </div>
     </div>
 
@@ -43,18 +67,30 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            
+            @if (session()->has('pageIndex'))
+            function redirectActivePage(index) {
+            $(".navigation-btn").removeAttr('data-active');
+            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+            }
+            
+            redirectActivePage({{session('pageIndex')}});
+            @endif
 
-            $("#my-profile").on("click", renderProfileControl);
-
-            $("#manage-product").on("click", renderManageProductControl);
-
-            $("#manage-order").on("click", renderManageOrderControl);
-
-            $("#sales-report").on("click", renderSalesReportControl);
-
-            $("#logout").on("click", logOut);
-
+            $(".navigation-btn").click(function() {
+                const dataIndex = $(this).data('index');
+                $(".navigation-btn").removeAttr('data-active');
+                $(this).attr('data-active', '');
+                handleNavigation(dataIndex);
+            });
         });
+
+        function handleNavigation(index) {
+            var pages = [renderProfileControl, renderManageProductControl, renderManageOrderControl,
+                renderSalesReportControl, logOut
+            ];
+            pages[index].call();
+        }
 
         function renderProfileControl() {
             $.ajax({

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->double('rating')->nullable()->default(0)->comment('Rating value from 0 to 5');
             $table->enum('condition',['used','new']);
             $table->string('images')->nullable();
+            $table->enum('approve_status',['approved','pending','rejected'])->default('pending');
             $table->timestamp('created_at')->nullable(); 
             $table->timestamp('updated_at')->nullable(); 
             //Foreign Key

@@ -22,6 +22,7 @@
                 <td>RM 130.00</td>
                 <td>
                    <a href="status.html" title="Shipping Status">Completed</a>
+                   <button type="button" data-productId = title="Shipping Status">Leave Comment</a>
                 </td>
             </tr>
 

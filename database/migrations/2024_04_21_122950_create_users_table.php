@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_num')->unique();
             $table->enum('types',['buyer','seller']);
+            $table->enum('approve_status',['approved','pending','rejected'])->default('pending');
             $table->timestamp('created_at')->nullable(); 
             $table->timestamp('updated_at')->nullable(); 
         });

@@ -13,6 +13,7 @@ class Payment extends Model
 
     protected $fillable = [
         'tota_payment',
+        'transaction_no',
         'payment_status',
         'order_id',
         'user_id',

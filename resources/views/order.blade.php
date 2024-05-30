@@ -14,18 +14,24 @@
         <hr>
         <section class="customer-details">
             <h2>Customer Details</h2>
-            <p><span class="bold">Name: </span> Khoo Zhen Xian</p>
-            <p><span class="bold">Phone Number: </span> 60196043388</p>
+            <p><span class="bold">Name: </span> {{$full_name}}</p>
+            <p><span class="bold">Phone Number: </span> {{$user->phone_num}}</p>
             <p class="bold">Shipping Address</p>
             <select name="address" title="Shipping Address">
-                <option value="address_id">9A, Jalan Ang Seng 3, Brickfields, 50470 Kuala Lumpur, Wilayah
-                    Persekutuan Kuala Lumpur</option>
-                <option value="address_id">9A, Jalan Ang Seng 3, Brickfields, 50470 Kuala Lumpur, Wilayah
-                    Persekutuan Kuala Lumpur</option>
-                <option value="address_id">9A, Jalan Ang Seng 3, Brickfields, 50470 Kuala Lumpur, Wilayah
-                    Persekutuan Kuala Lumpur</option>
-                <option value="address_id">9A, Jalan Ang Seng 3, Brickfields, 50470 Kuala Lumpur, Wilayah
-                    Persekutuan Kuala Lumpur</option>
+                @foreach ($user->addresses as $address)
+                @php
+                    $full_address = $address->address_line_1 . ', ';
+                    $full_address .= ($address->address_line_2 == null) ? '' : $address->address_line_2 . ', ';
+                    $full_address .= $address->zip_code . ' ';
+                    $full_address .= $address->city . ', ';
+                    $full_address .= $address->state;
+                @endphp
+                @if ($address->default)
+                <option value="{{$address->id}}" selected>{{$full_address}}</option>
+                @else
+                <option value="{{$address->id}}">{{$full_address}}</option>
+                @endif
+                @endforeach
             </select>
         </section>
         <hr />
@@ -40,55 +46,46 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($order->products as $product)
+                @php
+                    $images = explode(",",$product->images)
+                @endphp
                 <tr>
-                    <td><img src="images/demo.png" class="product-image"></td>
+                    <td><img src="{{$images[0]}}" class="product-image"></td>
                     <td>
-                        <p class="product-name center">Dummy Product Name Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Atque nobis magni natus quam culpa nostrum dicta vel deserunt quis neque cumque, dolorem
-                            dolores asperiores nisi tempora fugit cum omnis. Nulla! Lorem ipsum dolor sit amet consectetur
-                            adipisicing elit. Eveniet repudiandae amet praesentium autem quis perspiciatis fugiat ratione,
-                            nostrum cum nulla. Facilis in esse iste harum quibusdam non necessitatibus inventore eius. Lorem
-                            ipsum dolor sit amet, consectetur adipisicing elit. Quam velit excepturi molestiae tempore cum
-                            harum assumenda sapiente ut ipsa accusantium ad totam veniam odio perspiciatis doloremque
-                            officia minus, maiores aperiam?</p>
+                        <p class="product-name center">{{$product->name}}</p>
                     </td>
                     <td>
-                        <p class="center">1</p>
+                        <p class="center">{{$product->pivot->quantity}}</p>
                     </td>
                     <td>
-                        <p class="center">RM 15.00</p>
+                        <p class="center">RM {{$product->price}}</p>
                     </td>
                     <td>
-                        <p class="center">RM 15.00</p>
+                        <p class="center">RM {{$product->price * $product->pivot->quantity}}</p>
                     </td>
                 </tr>
-                <tr>
-                    <td><img src="images/demo.png" class="product-image"></td>
-                    <td>
-                        <p class="product-name center">Dummy Product Name 2</p>
-                    </td>
-                    <td>
-                        <p class="center">2</p>
-                    </td>
-                    <td>
-                        <p class="center">RM 10.00</p>
-                    </td>
-                    <td>
-                        <p class="center">RM 20.00</p>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
         <hr />
         <div class="total-details">
             <p class="grand-total-label">Grand Total</p>
-            <p class="grand-total">RM 35.00</p>
+            <p class="grand-total">RM {{$grand_total}}</p>
         </div>
         <div class="action-section">
-            <form>
+            <form method="POST" action="{{route('order.delete')}}">
+                @csrf
+                @method('delete')
+                <input type="hidden" value="{{$order->id}}" name="Oid">
                 <button type="submit" class="button secondary">Cancel Order</button>
             </form>
-            <form>
+            <form method="POST" action="{{route('payment.create')}}">
+                @csrf
+                <input type="hidden" name="name" value="{{$full_name}}">
+                <input type="hidden" name="email" value="{{$email}}">
+                <input type="hidden" name="amount" value="{{$grand_total}}">
+                <input type="hidden" name="Oid" value="{{$order->id}}">
                 <button type="submit" class="button primary">Checkout</button>
             </form>
         </div>

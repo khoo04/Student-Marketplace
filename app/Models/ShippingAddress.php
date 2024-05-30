@@ -22,6 +22,7 @@ class ShippingAddress extends Model
         'city',
         'state',
         'zip_code',
+        'default',
         'user_id',
     ];
 

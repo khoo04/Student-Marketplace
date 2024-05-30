@@ -22,8 +22,7 @@
         <div id="navigation-bar">
             <div id="logo">
                 <a href="/">
-                    <img src="{{asset('images/marketplace.png')}}" alt="logo">
-                    <h3>Student Marketplace</h3>
+                    <img src="{{asset('images/logo.png')}}" alt="logo">
                 </a>
             </div>
             @if(Route::current()->uri() != "login" && Route::current()->uri() != "register" && Route::current()->uri() != "search")
