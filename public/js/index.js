@@ -30,6 +30,7 @@ function paginate(page) {
       },
       error: function(xhr, status, error) {
         $('#card-container').html("<p> Some errors has occured </p>");
+        console.error(xhr.responseText);
       }
   });
 };

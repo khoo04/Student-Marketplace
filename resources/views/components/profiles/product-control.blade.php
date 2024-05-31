@@ -8,8 +8,9 @@
         <thead>
             <tr>
                 <th style="width:10%">No</th>
-                <th style="width:20%">Image</th>
-                <th style="width:25%">Product Name</th>
+                <th style="width:10%">Approval Status</th>
+                <th style="width:15%">Image</th>
+                <th style="width:20%">Product Name</th>
                 <th style="width:12.5%">Quantity</th>
                 <th style="width:12.5%">Price</th>
                 <th style="width:20%">Action</th>
@@ -26,6 +27,7 @@
                 @endphp
                 <tr>
                     <td>{{ $count++ }}</td>
+                    <td><p class="center {{$product->approve_status}}">{{ucfirst($product->approve_status)}}</p></td>
                     <td><img src="{{ $image == null ? asset('images/No-Image-Placeholder.svg') : asset('storage/' . $image) }}"
                             alt="product image"></td>
                     <td>{{ $product->name }}</td>
@@ -33,7 +35,7 @@
                     <td>RM {{ $product->price }}</td>
                     <td>
                         <div class="action-btn-section">
-                            <a href="edit_product.html" title="Edit Product" class="edit-btn"><i
+                            <a href="{{route('products.edit',['product' => $product->id])}}" title="Edit Product" class="edit-btn"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <button title="Delete Product" class="delete-btn"" data-open-modal
                                 data-id="{{ $product->id }}"><i class="fa-solid fa-trash"></i></a>

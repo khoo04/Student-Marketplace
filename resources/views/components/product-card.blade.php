@@ -1,7 +1,19 @@
 @props(['product'])
 <div class="card">
     <div class="image">
-        <img src="{{$product->image ? asset("storage/". $product->image) : asset("images/demo.png")}}" alt="No Image Available">
+        @php
+        if($product->images == null){
+            $imagePaths = null;
+        }else{
+            $imagePaths = explode(',',$product->images);
+        }
+        @endphp
+        @if ($imagePaths != null)
+        <img src="{{asset('storage/'. $imagePaths[0])}}" alt="Product Image">
+        @else
+        <img src="{{asset('images/No-Image-Placeholder.svg')}}" alt="No Image Available">
+        @endif
+        
     </div>
     <div class="card-body">
         <h1>{{$product->name}}</h1>

@@ -20,7 +20,6 @@ buttons.forEach(button => {
         slides.children[newIndex].dataset.active = "" 
         //Delete data-active from previous slide
         delete activeSlide.dataset.active
-        console.log(...slides.children.dataset)
     })
 })
 

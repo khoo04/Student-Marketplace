@@ -39,11 +39,17 @@ Route::get('/product_data',[PageController::class,'paginateData']);
 
 
 //Product Routes
-Route::get('/products/create',[ProductController::class,'create'])->middleware(['auth','seller_only'])->name('products.create');
+Route::middleware(['auth','seller_only'])->group(function () {
+    Route::get('/products',[ProductController::class,'redirectManageProduct'])->name('products');
+    Route::get('/products/create',[ProductController::class,'create'])->name('products.create');
+    Route::get('/products/edit/{product}',[ProductController::class,'edit'])->name('products.edit');
+    Route::put('/products/update/{product}',[ProductController::class,'update'])->name('products.update');
+    Route::put('/products/update/{product}/{index}',[ProductController::class,'updateImage'])->name('products.updateImage');
+    Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
+    Route::delete('/products/delete',[ProductController::class,'destory'])->name('products.destory');
+});
 
-Route::post('/products/store',[ProductController::class,'store'])->middleware(['auth','seller_only'])->name('products.store');
 
-Route::delete('/products/delete',[ProductController::class,'destory'])->middleware(['auth','seller_only'])->name('products.destory');
 
 //Note: Wild Card route must be the last one
 Route::get('/products/{product}',[ProductController::class,'show']);
