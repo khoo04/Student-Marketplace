@@ -13,11 +13,14 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+        'product_id',
+        'address_id',
+        'quantity',
+        'comment_status',
+        'order_status',
+        'tracking_num',
+        'ship_out_date',
     ];
-
-    public function shipment(){
-        return $this->hasOne(Shipment::class);
-    }
 
     public function payment(){
         return $this->hasOne(Payment::class);
@@ -27,7 +30,11 @@ class Order extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     
-    public function products(){
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'order_status', 'comments_status');
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id');
+    }
+
+    public function address(){
+        return $this->belongsTo(ShippingAddress::class);
     }
 }

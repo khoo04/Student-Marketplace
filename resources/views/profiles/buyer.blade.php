@@ -13,7 +13,7 @@
 @section('content')
     <div id="profile-section">
         <div id="navigate">
-            <button id="my-profile" class="navigation-btn" data-index="0">My Profile</button>
+            <button id="my-profile" class="navigation-btn" data-index="0" data-active>My Profile</button>
             <button id="my-address" class="navigation-btn" data-index="1">My Address</button>
             <button id="my-order" class="navigation-btn" data-index="2">My Order</button>
             <button id="logout" class="navigation-btn" data-index="3">Log out</button>
@@ -58,6 +58,8 @@
     <script>
         $(document).ready(function() {
 
+            
+
             @if (session()->has('pageIndex'))
             function redirectActivePage(index) {
             $(".navigation-btn").removeAttr('data-active');
@@ -75,12 +77,6 @@
             });
 
         });
-
-        function activePage(index) {
-            $(".navigation-btn").removeAttr('data-active');
-            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
-            handleNavigation(index);
-        }
 
         function handleNavigation(index) {
             var pages = [renderProfileControl, renderAddressControl, renderUserOrderControl, logOut];

@@ -35,23 +35,3 @@ new Chart(ctx, {
 });
 
 
-//Status Modal
-const openStatusDialogButton = document.querySelectorAll("[data-open-status-dialog")
-const closeStatusDialogButton = document.querySelector("[data-close-status-dialog]")
-const statusDialog = document.querySelector(".delivery-dialog")
-
-
-openStatusDialogButton.forEach(
-  (item) => {
-    item.addEventListener("click", () => {
-      statusDialog.showModal()
-    })
-  }
-)
-
-
-closeStatusDialogButton.addEventListener("click",() => {
-  statusDialog.close()
-})
-
-

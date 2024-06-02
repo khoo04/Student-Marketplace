@@ -14,21 +14,39 @@
 
 @section('content')
     @include('components.flash-message')
+
+    @php
+    if($product->images == null){
+        $imagePaths = [];
+    }else{
+        $imagePaths = explode(',',$product->images);
+    }
+    @endphp
     <div id="product-details">
         <div id="carousel" data-carousel>
+            @if (count($imagePaths) > 1)
             <button class="carousel-button prev" data-carousel-button="prev">&#60;</button>
             <button class="carousel-button next" data-carousel-button="next">&#62;</button>
             <ul data-slides>
+                @for ($i = 0; $i < count($imagePaths); $i++)
+                    @if ($i == 0)
+                        <li class="slide" data-active>
+                            <img src="{{asset('storage/' . $imagePaths[$i])}}" alt="Image {{$i+1}}">
+                        </li>
+                    @else
+                    <li class="slide">
+                        <img src="{{asset('storage/' . $imagePaths[$i])}}" alt="Image {{$i+1}}">
+                    </li>
+                    @endif
+                @endfor
+            </ul>
+            @else
+            <ul data-slides>
                 <li class="slide" data-active>
-                    <img src="images/demo.png" alt="Image 1">
-                </li>
-                <li class="slide">
-                    <img src="images/shoes.jpg" alt="Image 2">
-                </li>
-                <li class="slide">
-                    <img src="images/glasses.jpg" alt="Image 3">
+                    <img src=" {{ $imagePaths == [] ? asset('images/No-Image-Placeholder.svg') : asset('storage/' . $imagePaths[0]) }}" alt="Image 1">
                 </li>
             </ul>
+            @endif
         </div>
 
         <div id="details">
@@ -44,6 +62,7 @@
                 <form method="post" action="{{route('order.store')}}">
                     @csrf
                     <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="quantity" value="1">
                     <button type="submit" class="action-btn" id="buy-now">
                         <i class="fa-solid fa-money-bill-wave"></i> Buy Now
                     </button>

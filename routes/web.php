@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\OrderController;
+use App\Models\Product;
+use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
-use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +40,17 @@ Route::get('/product_data',[PageController::class,'paginateData']);
 
 
 //Product Routes
-Route::get('/products/create',[ProductController::class,'create'])->middleware(['auth','seller_only'])->name('products.create');
+Route::middleware(['auth','seller_only'])->group(function () {
+    Route::get('/products',[ProductController::class,'redirectManageProduct'])->name('products');
+    Route::get('/products/create',[ProductController::class,'create'])->name('products.create');
+    Route::get('/products/edit/{product}',[ProductController::class,'edit'])->name('products.edit');
+    Route::put('/products/update/{product}',[ProductController::class,'update'])->name('products.update');
+    Route::put('/products/update/{product}/{index}',[ProductController::class,'updateImage'])->name('products.updateImage');
+    Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
+    Route::delete('/products/delete',[ProductController::class,'destory'])->name('products.destory');
+});
 
-Route::post('/products/store',[ProductController::class,'store'])->middleware(['auth','seller_only'])->name('products.store');
 
-Route::delete('/products/delete',[ProductController::class,'destory'])->middleware(['auth','seller_only'])->name('products.destory');
 
 //Note: Wild Card route must be the last one
 Route::get('/products/{product}',[ProductController::class,'show']);
@@ -82,6 +89,13 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('/orders',[OrderController::class,'destroy'])->name('order.delete');
 });
 
-Route::post('/payments',[PaymentController::class,'create'])->name('payment.create');
-Route::get('/payments/testcallback',[PageController::class,'showTestCallBack']);
+//Update Order Status Route
+Route::middleware(['auth','seller_only'])->group(function(){
+    Route::put('/orders/updateStatus',[OrderController::class,'updateStatus'])->name('order.updateStatus');
+});
+
+Route::post('/payments',[PaymentController::class,'create'])->name('payments.create');
+Route::get('/payments/testcallback',[PaymentController::class,'showTestCallBack']);
+Route::post('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
+
 

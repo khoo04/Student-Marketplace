@@ -12,11 +12,12 @@ class Payment extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'tota_payment',
+        'total_payment',
         'transaction_no',
         'payment_status',
         'order_id',
         'user_id',
+        'isPaid',
     ];
 
     public function buyer(){
@@ -24,6 +25,6 @@ class Payment extends Model
     }
 
     public function order(){
-        return $this->hasOne(Order::class);
+        return $this->belongsTo(Order::class);
     }
 }

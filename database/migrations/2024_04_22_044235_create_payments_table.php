@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->decimal("total_payment",total: 8, places: 2);
-            $table->enum("payment_status",["pending","completed"])->default("pending");
+            $table->string('transaction_no')->nullable();
+            $table->enum("payment_status",["pending","success","failed"])->default("pending");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp("updated_at")->useCurrent();
             $table->unsignedBigInteger("order_id");
             $table->unsignedBigInteger("user_id");
+            $table->boolean("isPaid")->nullable();
             $table->foreign("order_id")->references("id")->on("orders");
             $table->foreign("user_id")->references("id")->on("users");
         });

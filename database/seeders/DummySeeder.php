@@ -31,11 +31,31 @@ class DummySeeder extends Seeder
             'types' => 'buyer',
         ]);
 
+        $buyer2 = User::create([
+            'first_name' => "Dummy",
+            'last_name' => "Buyer 2",
+            'email' => 'buyer2@gmail.com',
+            'phone_num' => '012-234 3235',
+            'password' => bcrypt('buyer12345'),
+            'approve_status' => 'approved',
+            'types' => 'buyer',
+        ]);
+
         $seller = User::create([
             'first_name' => "Dummy",
             'last_name' => "Seller",
             'email' => 'seller@gmail.com',
             'phone_num' => '012-234 3233',
+            'password' => bcrypt('seller12345'),
+            'approve_status' => 'approved',
+            'types' => 'seller',
+        ]);
+
+        $seller2 = User::create([
+            'first_name' => "Dummy",
+            'last_name' => "Seller2",
+            'email' => 'seller2@gmail.com',
+            'phone_num' => '014-234 3233',
             'password' => bcrypt('seller12345'),
             'approve_status' => 'approved',
             'types' => 'seller',
@@ -97,13 +117,26 @@ class DummySeeder extends Seeder
             'name' => "Product Dummy 5",
             'description' => "Product Dummy Description 5",
             'quantity_available' => 100,
-            'price' => 50.0,
+            'price' => 1.0,
             'rating' => 2,
             'condition' => 'used',
             'images' => null,
             'category_id' => 3,
             'approve_status' => 'approved',
             'user_id' => $seller->id,
+        ]);
+
+        $seller2_product_1 = Product::create([
+            'name' => "Product Dummy 6",
+            'description' => "Product Dummy Description 5",
+            'quantity_available' => 100,
+            'price' => 1.0,
+            'rating' => 2,
+            'condition' => 'used',
+            'images' => null,
+            'category_id' => 3,
+            'approve_status' => 'approved',
+            'user_id' => $seller2->id,
         ]);
 
         $address = ShippingAddress::create([
@@ -125,11 +158,37 @@ class DummySeeder extends Seeder
             'user_id' => $buyer->id,
         ]);
 
+        $address3 = ShippingAddress::create([
+            'address_line_1' => "NO JALAN FAKE BUYER 2",
+            'address_line_2' => "TAMAN FAKE 2",
+            'city' => 'FAKE CITY 2',
+            'state' => 'FAKE STATE 2',
+            'zip_code' => '12345',
+            'user_id' => $buyer2->id,
+        ]);
+
 
         Comment::create([
             'description' => "FAKE DESCRIPTION",
             'rating' => 3,
             'product_id' => $product_1->id,
+            'user_id' => $buyer->id,
+        ]);
+
+        $address2 = ShippingAddress::create([
+            'address_line_1' => "NO JALAN FAKE 2",
+            'address_line_2' => "TAMAN FAKE 2",
+            'city' => 'FAKE CITY 2',
+            'state' => 'FAKE STATE 2',
+            'zip_code' => '12345',
+            'user_id' => $buyer->id,
+        ]);
+
+
+        Comment::create([
+            'description' => "FAKE DESCRIPTION",
+            'rating' => 3,
+            'product_id' => $product_2->id,
             'user_id' => $buyer->id,
         ]);
 
@@ -155,24 +214,32 @@ class DummySeeder extends Seeder
         $cart->products()->attach($product_2->id,["quantity" => 3]);
 
         //Example Make Order 
-        $buyer_order = $buyer->orders()->create();
+        $buyer_order_1 = $buyer->orders()->create(['product_id' => $product_2->id, 'quantity' => 5,'order_status' => 'processing','address_id' => $address->id]);
+        $buyer_order_2 = $buyer->orders()->create(['product_id' => $product_3->id, 'quantity' => 1, 'order_status' => 'shipping','address_id' => $address->id]);
+        $buyer_order_3 = $buyer->orders()->create(['product_id' => $product_5->id, 'quantity' => 2,'order_status' => 'completed','address_id' => $address->id,]);
+        $buyer_order_4 = $buyer->orders()->create(['product_id' => $seller2_product_1->id, 'quantity' => 1, 'order_status' => 'processing', 'address_id' => $address->id,]);
 
-        $buyer->orders[0]->products()->attach($product_3->id,["quantity" => 5]);
-        $buyer->orders[0]->products()->attach($product_5->id,["quantity" => 2]);
+        $buyer2_order_1 = $buyer2->orders()->create(['product_id' => $product_1->id, 'quantity' => 2,  'order_status' => 'processing',
+        'address_id' => $address3->id,]);
 
-
-        Shipment::create([
-            'status' => 'pending',
-            'address_id' => $address->id,
+        Payment::create([
+            'total_payment' => 100.20,
+            'order_id' => $buyer_order_1->id,
             'user_id' => $buyer->id,
-            'order_id' => $buyer_order->id,
         ]);
 
         Payment::create([
             'total_payment' => 100.20,
-            'order_id' => $buyer_order->id,
+            'order_id' => $buyer_order_2->id,
             'user_id' => $buyer->id,
         ]);
 
+        Payment::create([
+            'total_payment' => 100.20,
+            'order_id' => $buyer_order_3->id,
+            'user_id' => $buyer->id,
+            'isPaid' => false,
+            'payment_status' => 'success',
+        ]);
     }
 }
