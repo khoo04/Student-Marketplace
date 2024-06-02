@@ -28,7 +28,7 @@ class ProductController extends Controller
             'productName' => 'required|string|max:255',
             'productDescription' => 'required|string',
             'productQuantity' => 'required|integer|min:1',
-            'productPrice' => 'required|numeric|min:0.01',
+            'productPrice' => 'required|numeric|min:1',
             'productCategory' => 'required',
             'condition' => 'required',
             'productImage1' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120', //5MB

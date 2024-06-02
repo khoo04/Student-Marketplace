@@ -62,6 +62,7 @@
                 <form method="post" action="{{route('order.store')}}">
                     @csrf
                     <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="quantity" value="1">
                     <button type="submit" class="action-btn" id="buy-now">
                         <i class="fa-solid fa-money-bill-wave"></i> Buy Now
                     </button>

@@ -157,7 +157,7 @@
                 <label for="productPrice">Price</label>
                 <div class="price-container">
                     <span>RM</span>
-                    <input type="number" id="productPrice" name="productPrice" min="0.01" step="0.01" required
+                    <input type="number" id="productPrice" name="productPrice" min="1" step="0.01" required
                         placeholder="e.g., 999.99" value="{{old('productPrice')}}">
                 </div>
                 <div class="text-hint">Price of the product in Malaysian Ringgit (RM).</div>

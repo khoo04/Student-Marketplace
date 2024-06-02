@@ -1,13 +1,15 @@
 <?php
 
-use App\Http\Controllers\OrderController;
+use App\Models\Product;
+use App\Models\ShippingAddress;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
-use App\Models\Product;
+use App\Http\Controllers\ShipmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,11 +85,19 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
     Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
 });
 
+
 Route::middleware(['auth'])->group(function(){
     Route::post('/orders',[OrderController::class,'store'])->name('order.store');
     Route::delete('/orders',[OrderController::class,'destroy'])->name('order.delete');
 });
 
-Route::post('/payments',[PaymentController::class,'create'])->name('payment.create');
-Route::get('/payments/testcallback',[PageController::class,'showTestCallBack']);
+//Update Order Status Route
+Route::middleware(['auth','seller_only'])->group(function(){
+    Route::put('/orders/updateStatus',[OrderController::class,'updateStatus'])->name('order.updateStatus');
+});
+
+Route::post('/payments',[PaymentController::class,'create'])->name('payments.create');
+Route::get('/payments/testcallback',[PaymentController::class,'showTestCallBack']);
+Route::post('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
+
 

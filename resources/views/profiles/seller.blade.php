@@ -38,11 +38,19 @@
                     @break
 
                     @case(1)
-                        <x-profiles.product-control :products='$user->products'/>
+                        <x-profiles.product-control :products='$user->products' />
                     @break
 
                     @case(2)
-                        <x-profiles.manage-order-control />
+                        @php
+                            $orders = \App\Models\Order::with(['address', 'product.seller', 'buyer'])
+                                ->whereHas('product.seller', function ($query) {
+                                    $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
+                                })
+                                ->whereNotNull('order_status')
+                                ->get();
+                        @endphp
+                        <x-profiles.manage-order-control :orders=$orders />
                     @break
 
                     @case(3)
@@ -67,14 +75,14 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            
+
             @if (session()->has('pageIndex'))
-            function redirectActivePage(index) {
-            $(".navigation-btn").removeAttr('data-active');
-            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
-            }
-            
-            redirectActivePage({{session('pageIndex')}});
+                function redirectActivePage(index) {
+                    $(".navigation-btn").removeAttr('data-active');
+                    $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+                }
+
+                redirectActivePage({{ session('pageIndex') }});
             @endif
 
             $(".navigation-btn").click(function() {

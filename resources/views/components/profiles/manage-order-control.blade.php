@@ -1,3 +1,4 @@
+@props(['orders'])
 <div class="title-container">
     <h1>Order List</h1>
 </div>
@@ -46,7 +47,7 @@
         <table class="order-list">
             <thead>
                 <tr>
-                    <th>Order ID</th>
+                    <th>No</th>
                     <th>Order Date</th>
                     <th>Customer Name</th>
                     <th>Contact Number</th>
@@ -57,64 +58,71 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>31/3/2024</td>
-                    <td>Noor Hajjah Shah binti Hisammudin</td>
-                    <td>0123456789</td>
-                    <td>Earphone</td>
-                    <td>5</td>
-                    <td data-status="pending">Pending</td>
-                    <td class="action-column">
-                        <button data-open-status-dialog>Arrange Shipment</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>31/3/2024</td>
-                    <td>Noor Hajjah Shah binti Hisammudin</td>
-                    <td>0123456789</td>
-                    <td>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio, molestias.</td>
-                    <td>5</td>
-                    <td data-status="shipping">Shipping</td>
-                    <td class="action-column">
-                        <button data-open-status-dialog>View Details</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>31/3/2024</td>
-                    <td>Noor Hajjah Shah binti Hisammudin</td>
-                    <td>0123456789</td>
-                    <td>Earphone</td>
-                    <td>5</td>
-                    <td data-status="completed">Completed</td>
-                    <td class="action-column">
-                        <button data-open-status-dialog>View Details</button>
-                    </td>
-                </tr>
+                <x-profiles.sub_components.order-list :orders=$orders />
             </tbody>
         </table>
     </div>
 </div>
 <dialog class="delivery-dialog">
-    <form class="shipping-form" method="post" action="">
+    <form class="shipping-form" method="post" action="{{ route('order.updateStatus') }}">
+        @csrf
+        @method('PUT')
         <h2>Arrange Shipment</h2>
-        <p>Order ID: <span class="content">1</span></p>
-        <p>Shipping Method: <span class="content">Delivery</span></p>
-        <p>Customer Name: <span class="content">Noor Hajjah Shah binti Hisammudin</span></p>
-        <p>Contact Number: <span class="content">0123456789</span></p>
-        <p>Shipping Address: <span class="content">Jalan Delima 15, Taman Bukit Melaka, 75450 Bukit Beruang, Melaka</span></p>
+        <p>Order ID: <span class="content" id="orderID">1</span></p>
+        <p>Customer Name: <span class="content" id="customerName">Customer Name</span></p>
+        <p>Contact Number: <span class="content" id="phoneNum">Phone Number</span></p>
+        <p>Shipping Address: <span class="content" id="address">Address</span></p>
         <label for="tracking_num">Tracking Number</label>
         <div class="input-container">
-            <input type="text" id="tracking_num" placeholder="Parcel Tracking Number">
+            <input type="text" id="tracking_num"
+                name="tracking_num" placeholder="Parcel Tracking Number (Can be null)">
         </div>
+        <input type="hidden" name="oID" id="oID">
         <div class="delivery-action-button">
             <button type="button" data-close-status-dialog>Cancel</button>
-            <button type="submit">Submit</button>
+            <button type="submit" class="submit-btn">Submit</button>
         </div>
     </form>
 </dialog>
 
+<dialog class="view-details-dialog">
+    <h2>View Shipment Details</h2>
+    <p>Order ID: <span class="content" id="orderID">1</span></p>
+    <p>Customer Name: <span class="content" id="customerName">Customer Name</span></p>
+    <p>Contact Number: <span class="content" id="phoneNum">Phone Number</span></p>
+    <p>Shipping Address: <span class="content" id="address">Address</span></p>
+    <p>Tracking Number: <span class="content" id="tracking_num">Tracking Number</span></p>
+    <div class="delivery-action-button">
+        <button type="button" data-close-status-dialog>Cancel</button>
+        <button type="submit" class="submit-btn">Submit</button>
+    </div>
+</dialog>
+<script>
+    $(document).ready(function() {
+        const statusDialog = document.querySelector(".delivery-dialog")
+
+        $('.arrange-shipment').click(function() {
+            var json = $(this).closest("tr").data("details");
+            modifyModal(json);
+            statusDialog.showModal();
+        });
+
+        $("[data-close-status-dialog]").click(function() {
+            statusDialog.close();
+        });
+
+        $('.submit-btn').click(function(){
+            if (confirm("Are you confirm to perform this action?") == true){
+                $(".shipping-form").submit();
+            }
+        });
+
+        function modifyModal(json) {
+            $('.shipping-form #orderID').text(json.orderID);
+            $('.shipping-form #customerName').text(json.name);
+            $('.shipping-form #phoneNum').text(json.phone);
+            $('.shipping-form #address').text(json.address);
+            $('.shipping-form #oID').val(json.orderID);
+        }
+    });
+</script>
