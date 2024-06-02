@@ -175,6 +175,16 @@ class DummySeeder extends Seeder
             'user_id' => $buyer->id,
         ]);
 
+        $address2 = ShippingAddress::create([
+            'address_line_1' => "NO JALAN FAKE 2",
+            'address_line_2' => "TAMAN FAKE 2",
+            'city' => 'FAKE CITY 2',
+            'state' => 'FAKE STATE 2',
+            'zip_code' => '12345',
+            'user_id' => $buyer->id,
+        ]);
+
+
         Comment::create([
             'description' => "FAKE DESCRIPTION",
             'rating' => 3,

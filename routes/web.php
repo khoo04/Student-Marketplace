@@ -9,7 +9,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ShipmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +83,6 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
     Route::get('/ajax/manage_order_control',[PageController::class,'showManageOrderControl'])->name('ajax.manage-order-control');
     Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
 });
-
 
 Route::middleware(['auth'])->group(function(){
     Route::post('/orders',[OrderController::class,'store'])->name('order.store');

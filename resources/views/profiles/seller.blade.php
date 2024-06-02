@@ -75,6 +75,15 @@
 @section('js')
     <script>
         $(document).ready(function() {
+            
+            @if (session()->has('pageIndex'))
+            function redirectActivePage(index) {
+            $(".navigation-btn").removeAttr('data-active');
+            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+            }
+            
+            redirectActivePage({{session('pageIndex')}});
+            @endif
 
             @if (session()->has('pageIndex'))
                 function redirectActivePage(index) {
