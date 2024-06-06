@@ -58,10 +58,6 @@ class User extends Authenticatable
         return $this->hasMany(ShippingAddress::class,'user_id');
     }
 
-    public function shipments(){
-        return $this->hasMany(Shipment::class,'user_id');
-    }
-
     public function cart(){
         return $this->hasOne(Cart::class,'user_id');
     }
