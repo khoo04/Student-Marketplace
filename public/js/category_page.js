@@ -18,7 +18,6 @@ $(document).ready(function () {
         highest = $("#highest-value").val().length == 0 ? undefined : $("#highest-value").val();
         keyword = $(".input-field").val().length == 0 ? undefined : $(".input-field").val();
         cond = getSelectedCondition();
-        console.log(cond);
         updateView();
     });
 

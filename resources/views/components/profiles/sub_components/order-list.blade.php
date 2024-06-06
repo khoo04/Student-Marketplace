@@ -51,7 +51,7 @@
             @if ($order->order_status == 'processing')
                 <button data-open-status-dialog class="arrange-shipment">Arrange Shipment</button>
             @else
-                <button data-open-status-dialog class="view-details">View Details</button>
+                <button data-open-details-dialog class="view-details">View Details</button>
             @endif
         </td>
     </tr>

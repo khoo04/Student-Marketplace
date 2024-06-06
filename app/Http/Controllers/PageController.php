@@ -125,17 +125,55 @@ class PageController extends Controller
 
     public function showManageOrderControl()
     {
-        //order.product.seller == order->product->seller
         //Retrieve all record related to the current seller
-        $orders = Order::with(['address', 'product.seller', 'buyer'])
+        $orders = Order::with(['address', 'product.seller', 'buyer', 'payment'])
             ->whereHas('product.seller', function ($query) {
                 $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
             })
+            //Check whether the payment is success or not, only order with success payment will show on seller view
+            ->whereHas('payment', function ($query) {
+                $query->where('payment_status', '=', 'success');
+            })
             ->whereNotNull('order_status')
+            ->orderByRaw('created_at DESC')
             ->get();
 
-       $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
-       return response()->json(['control' => $manageOrderControl]);
+        $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
+        return response()->json(['control' => $manageOrderControl]);
+    }
+
+
+    public function manageOrderFilter(Request $request)
+    {
+        $fromDate = $request->input('order_from_date');
+        $toDate = $request->input('order_to_date');
+        $order_status = $request->input('status');
+        $keyword = $request->input('keyword');
+
+        $orderQuery = Order::with(['address', 'product.seller', 'buyer', 'payment'])
+            ->whereHas('product.seller', function ($query) {
+                $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
+            })
+            //Check whether the payment is success or not, only order with success payment will show on seller view
+            ->whereHas('payment', function ($query) {
+                $query->where('payment_status', '=', 'success');
+            })
+            ->whereNotNull('order_status')
+            ->orderByRaw('created_at DESC');
+
+        if ($fromDate != null){
+            $orderQuery = $orderQuery->where('created_at','>=',$fromDate);
+        }
+        if ($toDate != null){
+            $orderQuery = $orderQuery->where('created_at','<=',$toDate);
+        }
+        if ($order_status != null && $order_status != 'All'){
+            $orderQuery = $orderQuery->where('order_status','=','status');
+        }
+        if
+
+        $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
+        return response()->json(['control' => $manageOrderControl]);
     }
 
     public function showSalesReportControl()

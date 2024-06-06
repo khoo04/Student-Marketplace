@@ -71,7 +71,7 @@
 
 
 /*----------  Manage Order Page  ----------*/
-#manage-order-selector form{
+#manage-order-selector {
     padding: 1rem;
     display: block;
 }
@@ -219,14 +219,18 @@ td[data-status="completed"]{
 .action-column > button{
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid black;
+    border: 1px solid rgb(211, 211, 211);
     border-radius: 0.5rem;
     cursor: pointer;
 }
 
-.action-column > button:focus, .action-column>button:hover{
+.action-column>button:hover{
     background-color: black;
     color: white;
+}
+
+.action-column > button:focus{
+    border: 1px solid black;
 }
 
 /*Shipping Form */
@@ -309,6 +313,34 @@ td[data-status="completed"]{
     min-width: 50%;
     max-width: 90%;
     overflow: auto; /* Add scrollbars if content overflows */
+    padding: 1rem;
+}
+
+.view-details-dialog > h2{
+    margin-bottom: 0.5rem;
+}
+
+.view-details-dialog > p{
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.view-details-dialog content{
+    font-weight: normal;
+}
+
+.view-details-dialog > button{
+    display: inline-block;
+    width: 100%;
+    padding: 6px 8px;
+    color: white;
+    background-color: #6c757d;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.view-details-dialog > button:hover{
+    background-color: #555c63;
 }
 
 

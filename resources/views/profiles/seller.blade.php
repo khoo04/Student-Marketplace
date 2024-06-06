@@ -43,10 +43,15 @@
 
                     @case(2)
                         @php
-                            $orders = \App\Models\Order::with(['address', 'product.seller', 'buyer'])
+                            $orders = \App\Models\Order::with(['address', 'product.seller', 'buyer', 'payment'])
                                 ->whereHas('product.seller', function ($query) {
                                     $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
                                 })
+                                //Check whether the payment is success or not, only order with success payment will show on seller view
+                                ->whereHas('payment', function ($query) {
+                                    $query->where('payment_status', '=', 'success');
+                                })
+                                ->orderByRaw('created_at DESC')
                                 ->whereNotNull('order_status')
                                 ->get();
                         @endphp
@@ -75,14 +80,23 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            
+
             @if (session()->has('pageIndex'))
-            function redirectActivePage(index) {
-            $(".navigation-btn").removeAttr('data-active');
-            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
-            }
-            
-            redirectActivePage({{session('pageIndex')}});
+                function redirectActivePage(index) {
+                    $(".navigation-btn").removeAttr('data-active');
+                    $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+                }
+
+                redirectActivePage({{ session('pageIndex') }});
+            @endif
+
+            @if (session()->has('pageIndex'))
+                function redirectActivePage(index) {
+                    $(".navigation-btn").removeAttr('data-active');
+                    $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+                }
+
+                redirectActivePage({{ session('pageIndex') }});
             @endif
 
             @if (session()->has('pageIndex'))
