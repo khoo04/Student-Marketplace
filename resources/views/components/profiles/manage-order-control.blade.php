@@ -96,7 +96,6 @@
 <script>
     $(document).ready(function() {
         const statusDialog = document.querySelector(".delivery-dialog");
-
         $("#filter-btn").on("click", function() {
             let fromDate = $("#order-form-date").val().length == 0 ? undefined : $("#order-form-date")
                 .val();
@@ -213,4 +212,72 @@
             }
         });
     });
+
+    function updateView(page) {
+        const data = {};
+        if (typeof lower !== 'undefined') data.lower = lower;
+        if (typeof highest !== 'undefined') data.highest = highest;
+        if (typeof keyword !== 'undefined') data.keyword = keyword;
+        if (typeof cond !== 'undefined') data.condition = cond;
+        if (typeof page !== 'undefined') data.page = page;
+        $.ajax({
+            type: "GET",
+            data: data,
+            success: function(response) {
+                $(".result-container").html(response.productCards);
+                $("#pagination").html(response.pagination);
+                renderRatingsStar();
+                console.log(response);
+                console.log("success");
+            }
+        });
+    }
+
+
+    function getSelectedCondition() {
+        let val;
+        $("input[name=condition]").each(
+            function() {
+                if ($(this).prop("checked")) {
+                    val = $(this).val();
+                }
+            }
+        );
+        return val;
+    }
+
+    function resetFilter() {
+        lower = undefined;
+        highest = undefined;
+        keyword = undefined;
+        cond = undefined;
+
+        $("#lower-value").val('');
+        $("#highest-value").val('');
+        $(".input-field").val('');
+        $("input[name=condition]").each(
+            function() {
+                $(this).prop("checked", false);
+            }
+        )
+        updateView();
+    }
+
+    function paginate(page) {
+        updateView(page);
+        renderRatingsStar();
+    }
+
+    const starTotal = 5;
+
+    function renderRatingsStar() {
+        $(".rating").each(
+            function() {
+                const rating = $(this).data('productRating');
+                const starPercentage = (rating / starTotal) * 100;
+                const starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+                $(this).find('.stars-inner').css("width", starPercentageRounded);
+            }
+        );
+    }
 </script>
