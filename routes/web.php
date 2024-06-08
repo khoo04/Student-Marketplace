@@ -83,6 +83,8 @@ Route::middleware(['auth','ajax','seller_only'])->group(function(){
     Route::get('/ajax/manage_order_control',[PageController::class,'showManageOrderControl'])->name('ajax.manage-order-control');
     Route::get('ajax/manage_order_control/filter',[PageController::class, 'manageOrderFilter'])->name('ajax.manage-order-filter');
     Route::get('/ajax/sales_report_control',[PageController::class,'showSalesReportControl'])->name('ajax.sales-report-control');
+    Route::get('/ajax/sales_report/graphData',[PageController::class,'getReportData'])->name('ajax.reportData');
+    Route::get('/ajax/sales_report/tableData',[PageController::class,'getSalesTableData'])->name('ajax.salesTableData');
 });
 
 //Order Route

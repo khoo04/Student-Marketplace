@@ -4,7 +4,6 @@
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profile_seller.css') }}">
 
-    <script src="{{ asset('js/layout.js') }}" defer></script>
     <script src="{{ asset('js/profile.js') }}" defer></script>
     <script src="{{ asset('js/profile_seller.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -59,7 +58,31 @@
                     @break
 
                     @case(3)
-                        <x-profiles.sales-report-control />
+                        @php
+                            $currentUser = Auth::user();
+
+                            $products = auth()->user()->products;
+
+                            $ordersQuery = \App\Models\Order::with(['product', 'payment'])
+                                ->whereHas('product', function ($query) use ($currentUser) {
+                                    $query->where('user_id', $currentUser->id);
+                                })
+                                ->whereHas('payment', function ($query) {
+                                    $query->where('payment_status', 'success');
+                                });
+
+                            // Get the first and last order dates
+                            $firstOrderDate =
+                                $ordersQuery->orderBy('created_at', 'asc')->first()->created_at ?? Carbon::now();
+                            $lastOrderDate =
+                                $ordersQuery->orderBy('created_at', 'desc')->first()->created_at ?? Carbon::now();
+
+                            //Generate the year range
+                            $startYear = $firstOrderDate->year;
+                            $endYear = $lastOrderDate->year;
+                            $years = range($startYear, $endYear);
+                        @endphp
+                        <x-profiles.sales-report-control :products=$products :years=$years />
                     @break
 
                     @default
