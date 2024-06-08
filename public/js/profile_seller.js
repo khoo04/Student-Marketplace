@@ -13,25 +13,5 @@ options.forEach(
 )
 
 //Create Chart
-const ctx = document.getElementById('myChart');
-
-new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Jan','Feb','Mac','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    datasets: [{
-      label: 'Sales',
-      data: [50,30,10,20,100,5,60,10,10,6,200,50],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
 
 

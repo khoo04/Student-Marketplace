@@ -25,14 +25,14 @@
                     <p id="status">Status</p>
                     <select name="status" class="dropdown-box" title="Order Status">
                         <option value="all">All</option>
-                        <option value="pending">Pending</option>
+                        <option value="processing">Processing</option>
                         <option value="shipping">Shipping</option>
                         <option value="completed">Completed</option>
                     </select>
                 </div>
                 <div id="search-container">
                     <p id="search-keyword">Search by Keyword</p>
-                    <input type="search" title="Search Keyword" name="keyword">
+                    <input type="search" title="Search Keyword" name="product_keyword">
                 </div>
             </div>
         </section>
@@ -96,6 +96,18 @@
 <script>
     $(document).ready(function() {
         const statusDialog = document.querySelector(".delivery-dialog");
+        $("#filter-btn").on("click", function() {
+            let fromDate = $("#order-form-date").val().length == 0 ? undefined : $("#order-form-date")
+                .val();
+            let toDate = $("#order-to-date").val().length == 0 ? undefined : $("#order-to-date").val();
+            let status = $('select[name=status]').val().length == 0 ? undefined : $(
+                'select[name=status]').val();
+            let keyword = $("input[name=product_keyword]").val().length == 0 ? undefined : $(
+                "input[name=product_keyword]").val();
+            updateView(fromDate, toDate, status, keyword);
+        });
+
+        $("#reset-btn").on("click", resetFilter);
 
         $('.arrange-shipment').click(function() {
             var json = $(this).closest("tr").data("details");
@@ -157,31 +169,48 @@
 
         dialogBackDropClose(statusDialog);
         dialogBackDropClose(detailsDialog);
-    });
 
-    var lower;
-    var highest;
-    var keyword;
-    var cond;
+        function updateView(fromDate, toDate, status, keyword) {
+            let data = {};
+            if (typeof fromDate !== 'undefined') data.fromDate = fromDate;
+            if (typeof toDate !== 'undefined') data.toDate = toDate;
+            if (typeof status !== 'undefined') data.status = status;
+            if (typeof keyword !== 'undefined') data.keyword = keyword;
+            $.ajax({
+                type: "GET",
+                url: "{{route('ajax.manage-order-filter')}}",
+                data: data,
+                success: function(response) {
+                    console.log(response);
+                    console.log(response.orderList);
+                    $("tbody").html(response.orderList);
+                }
+            });
+        }
 
-    $(document).ready(function() {
-        renderRatingsStar();
+        function resetFilter() {
+ 
+            fromDate = undefined;
+            toDate = undefined;
+            status = 'all';
+            keyword = undefined;
 
-        $(".price-input-box").on("input", function() {
-            //This function is used to only allow number input
-            let inputValue = $(this).val().replace(/\D/g, "");
-            $(this).val(inputValue);
+            $("#order-form-date").val('')
+            $("#order-to-date").val('');
+            $('select[name=status]').val('all');
+            $("input[name=product_keyword]").val('');
+            updateView(fromDate, toDate, status, keyword);
+        }
+
+         // Add event listener to check date validation
+         $("#order-form-date, #order-to-date").on("change", function() {
+            let fromDate = $("#order-form-date").val();
+            let toDate = $("#order-to-date").val();
+            if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                alert("To date must be larger than from date");
+                $(this).val(''); // Clear the incorrect date input
+            }
         });
-
-        $(".apply-filter-btn").on("click", function() {
-            lower = $("#lower-value").val().length == 0 ? undefined : $("#lower-value").val();
-            highest = $("#highest-value").val().length == 0 ? undefined : $("#highest-value").val();
-            keyword = $(".input-field").val().length == 0 ? undefined : $(".input-field").val();
-            cond = getSelectedCondition();
-            updateView();
-        });
-
-        $(".reset-filter-btn").on("click", resetFilter);
     });
 
     function updateView(page) {

@@ -352,7 +352,7 @@ td[data-status="completed"]{
     margin: 1rem auto;
 }
 
-.view-selector > form{
+.view-selector > .filter-container{
     width: 100%;
     display: grid;
     grid-column-gap: 1rem;
@@ -361,7 +361,7 @@ td[data-status="completed"]{
     margin-bottom: 1.5rem;
 }
 
-#report-view-selector > form{
+#report-view-selector > .filter-container{
     grid-template-columns: repeat(6,minmax(60px,1fr));
 }
 
@@ -381,7 +381,7 @@ td[data-status="completed"]{
     grid-column: span 2;
 }
 
-.view-selector > form > .view-button {
+.view-selector > .filter-container> .view-button {
     white-space: nowrap;
 }
 
@@ -390,7 +390,7 @@ td[data-status="completed"]{
     font-size: 1.2rem;
 }
  
-.view-selector > form > .view-button{
+.view-selector > .filter-container > .view-button{
     font-weight: bold;
     white-space: nowrap;
     padding: 0.6rem 1rem;
@@ -434,11 +434,11 @@ td[data-status="completed"]{
     margin-bottom: 1rem;
 }
 
-#graph-view-selector > form{
+#graph-view-selector > .filter-container{
     grid-template-columns: repeat(6,1fr);
 }
 
-#graph-view-selector > form > .view-button{
+#graph-view-selector > .filter-container > .view-button{
     grid-column: 6;
 }
 
@@ -452,7 +452,7 @@ td[data-status="completed"]{
     grid-column: span 2;
 }
 
-#graph-view-selector > form > .dropdown-box{
+#graph-view-selector > .filter-container > .dropdown-box{
     grid-column: span 2;
     width: 100%;
 }

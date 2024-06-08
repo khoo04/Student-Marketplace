@@ -65,7 +65,7 @@
                 </li>
                 @endauth
             </ul>
-            <div id="toggle-btn">
+            <div id="toggle-menu-btn">
                 <i class="fa-solid fa-bars"></i>
             </div>
 
