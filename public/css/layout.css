@@ -1,3 +1,10 @@
+:root{
+    --success: #5cb85c;
+    --success_hover: #4b974b;
+    --danger: #d9534f;
+    --danger_hover: #bd3c37;
+}
+
 *{
     box-sizing: border-box;
     padding: 0;
