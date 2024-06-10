@@ -101,7 +101,8 @@ class PageController extends Controller
     {
         //TODO: Retrieve Data from DB
         $user = Auth::user();
-        $addressControl = view('components.profiles.address-control')->render();
+        $addresses = $user->addresses;
+        $addressControl = view('components.profiles.address-control', ['addresses' => $addresses])->render();
         return response()->json(['control' => $addressControl]);
     }
 
@@ -161,19 +162,19 @@ class PageController extends Controller
             ->whereNotNull('order_status')
             ->orderByRaw('created_at DESC');
 
-        if ($fromDate != null){
-            $orderQuery = $orderQuery->where('created_at','>=',$fromDate);
+        if ($fromDate != null) {
+            $orderQuery = $orderQuery->where('created_at', '>=', $fromDate);
         }
-        if ($toDate != null){
-            $orderQuery = $orderQuery->where('created_at','<=',$toDate);
+        if ($toDate != null) {
+            $orderQuery = $orderQuery->where('created_at', '<=', $toDate);
         }
-        if ($order_status != null && $order_status != 'All'){
-            $orderQuery = $orderQuery->where('order_status','=','status');
+        if ($order_status != null && $order_status != 'All') {
+            $orderQuery = $orderQuery->where('order_status', '=', 'status');
         }
-        if
 
-        $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
-        return response()->json(['control' => $manageOrderControl]);
+
+        // $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
+        //return response()->json(['control' => $manageOrderControl]);
     }
 
     public function showSalesReportControl()

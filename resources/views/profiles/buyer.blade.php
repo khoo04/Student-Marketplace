@@ -31,7 +31,7 @@
                     @break
 
                     @case(1)
-                        <x-profiles.address-control />
+                    <x-profiles.address-control :addresses=$address />
                     @break
 
                     @case(2)
@@ -47,7 +47,7 @@
 
         </div>
     </div>
-    
+
     <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
         <button type="submit">Logout</button>
@@ -58,15 +58,15 @@
     <script>
         $(document).ready(function() {
 
-            
+
 
             @if (session()->has('pageIndex'))
-            function redirectActivePage(index) {
-            $(".navigation-btn").removeAttr('data-active');
-            $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
-            }
-            
-            redirectActivePage({{session('pageIndex')}});
+                function redirectActivePage(index) {
+                    $(".navigation-btn").removeAttr('data-active');
+                    $(".navigation-btn[data-index='" + index + "']").attr('data-active', '');
+                }
+
+                redirectActivePage({{ session('pageIndex') }});
             @endif
 
             $(".navigation-btn").click(function() {
@@ -82,6 +82,7 @@
             var pages = [renderProfileControl, renderAddressControl, renderUserOrderControl, logOut];
             pages[index].call();
         }
+
         function renderProfileControl() {
             $.ajax({
                 type: "GET",
