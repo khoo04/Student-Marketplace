@@ -93,6 +93,7 @@
     <p>Tracking Number: <span class="content" id="tracking_num">Tracking Number</span></p>
     <button type="button" data-close-details-dialog>Cancel</button>
 </dialog>
+
 <script>
     $(document).ready(function() {
         const statusDialog = document.querySelector(".delivery-dialog");

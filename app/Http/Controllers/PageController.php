@@ -87,6 +87,9 @@ class PageController extends Controller
         $user = Auth::user();
         if ($user->types == 'seller') {
             return view('profiles.seller', compact('user'));
+        } else if ($user->types == 'admin') {
+            //Redirect To Admin Page
+            return redirect()->route('admin');
         } else {
             return view('profiles.buyer', compact('user'));
         }
@@ -240,8 +243,8 @@ class PageController extends Controller
             $toDate = Carbon::parse($toDate)->endOfDay();
             $dataQuery = $dataQuery->where('orders.created_at', '<=', $toDate);
         }
-        $data = $dataQuery->groupBy('products.name','products.price')->first();
-        $tableDataView = view('components.profiles.sub_components.sales-data',["data" => $data])->render();
+        $data = $dataQuery->groupBy('products.name', 'products.price')->first();
+        $tableDataView = view('components.profiles.sub_components.sales-data', ["data" => $data])->render();
         return response()->json([
             'html' => $tableDataView
         ]);
@@ -288,5 +291,52 @@ class PageController extends Controller
         // Convert the results to JSON
 
         return response()->json($response);
+    }
+
+
+    public function adminIndex()
+    {
+        if (auth()->user()->types == 'admin'){
+            $usersPendingApprove = User::all()->where('approve_status','pending');
+            return view('admin.index',['usersPendingApprove' => $usersPendingApprove]);
+        }
+        else{
+            return abort(403,'Unauthorized Action');
+        } 
+    }
+
+    public function getAccApprovalPanel(){
+        $usersPendingApprove = User::all()->where('approve_status','pending');
+        $usersPendingApprovePanel = view('components.admin.account-approval-panel',['usersPendingApprove' => $usersPendingApprove])->render();
+        return response()->json(['panel' => $usersPendingApprovePanel]);
+    }
+
+    public function getProductApprovalPanel(){
+        $productsPendingApprove = Product::all()->where('approve_status','pending');
+        $productsPendingApprovePanel = view('components.admin.product-approval-panel',['productsPendingApprove' => $productsPendingApprove])->render();
+        return response()->json(['panel' => $productsPendingApprovePanel]);
+    }
+
+    public function getSalesPaybackPanel(){
+        $paymentToPayData = Order::select(
+            DB::raw('orders.id as order_id'),
+            DB::raw('payments.transaction_no as transaction_no'),
+            DB::raw('products.name as product_name'),
+            DB::raw('products.price as product_unit_price'),
+            DB::raw('orders.quantity as order_quantity'),
+            DB::raw('(products.price * orders.quantity) as amount_to_pay'),
+            DB::raw('users.bank_acc_name as bank_acc_name'),
+            DB::raw('users.bank_name as bank_name'),
+            DB::raw('users.bank_acc_num as bank_acc_num')
+        )
+        ->join('payments','orders.id','=','payments.order_id')
+        ->join('products', 'orders.product_id', '=', 'products.id')
+        ->join('users','products.user_id','=','users.id')
+        ->where('payments.isPaid',false)
+        ->where('payments.payment_status','success')
+        ->where('orders.order_status', 'completed')
+        ->get();
+        $salesPaybackPanel = view('components.admin.sales-payback-panel',['paymentToPayData' => $paymentToPayData])->render();
+        return response()->json(['panel' => $salesPaybackPanel]);
     }
 }

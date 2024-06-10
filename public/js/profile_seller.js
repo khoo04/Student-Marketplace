@@ -10,8 +10,4 @@ options.forEach(
             element.innerHTML = newOption + "..."
         }
     }
-)
-
-//Create Chart
-
-
+);
