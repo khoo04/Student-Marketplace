@@ -15,18 +15,128 @@
 
 </div>
 
-<dialog data-modal class="add-address-dialog">
-    <form class="add-address-form" method="post" action="">
+<dialog class="address-dialog" id="add-address-dialog">
+    <form class="address-form" method="post" action="{{ route('address.create') }}">
         <p>Add New Address</p>
+        @csrf
         <input type=text name="city" placeholder="City, Area">
         <input type="text" name="state" placeholder="State">
         <input type="text" name="postal_code" placeholder="Postal Code">
         <textarea name="address" placeholder="House Number, Building, Street Name"></textarea>
         <div id="checkbox-container">
-            <input type="checkbox" name="default_address" id="set-default"><label for="set-default">Set as
+            <input type="checkbox" name="default_address" id="set-default-add"><label for="set-default-add">Set as
                 Default Address</label>
         </div>
-        <button type="button" data-close-modal id="cancel-btn">Cancel</button>
-        <button type="submit" id="submit-btn">Submit</button>
+        <button type="button" class="cancel-btn" id="close-add-dialog">Cancel</button>
+        <button type="submit" class="submit-btn">Submit</button>
     </form>
 </dialog>
+
+<dialog class="address-dialog" id="edit-address-dialog">
+    <form class="address-form" method="post" action="{{ route('address.update') }}">
+        <p>Edit Address</p>
+        @csrf
+        @method('PUT')
+        <input type="hidden" name="address_id">
+        <input type=text name="city" placeholder="City, Area">
+        <input type="text" name="state" placeholder="State">
+        <input type="text" name="postal_code" placeholder="Postal Code">
+        <textarea name="address" placeholder="House Number, Building, Street Name"></textarea>
+        <button type="button" class="cancel-btn" id="close-edit-dialog">Cancel</button>
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</dialog>
+
+<div class="flash-message">
+    <p id="message"></p>
+</div>
+
+<form id="setAsDefaultForm" action="{{ route('address.setDefault') }}" method="POST">
+    @csrf
+    @method('PUT')
+    <input type="hidden" name="address_id">
+</form>
+
+<script>
+    $(document).ready(function() {
+        const editAddressDialog = document.getElementById("edit-address-dialog");
+        const addAddressDialog = document.getElementById("add-address-dialog");
+        $(".delete-btn").click(function() {
+            if (window.confirm("Do you want to delete this address?")) {
+                addressCard = $(this).closest('.address-card');
+                addressID = addressCard.attr("data-addressID");
+                $.ajax({
+                    type: "delete",
+                    url: "{{ route('address.destroy') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        address_id: addressID,
+                    },
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            addressCard.remove();
+                            showFlashMessage(response.message, 'success');
+                        } else {
+                            showFlashMessage(response.message, 'alert');
+                        }
+                    }
+                });
+            }
+        });
+
+        $(".edit-btn").click(function() {
+            addressCard = $(this).closest('.address-card');
+            addressID = addressCard.attr("data-addressID");
+            $.ajax({
+                type: "GET",
+                url: "{{ route('address.details') }}",
+                data: {
+                    address_id: addressID,
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        $("#edit-address-dialog input[name=address_id]").val(response
+                            .address_id);
+                        $("#edit-address-dialog input[name=city]").val(response.city);
+                        $("#edit-address-dialog input[name=state]").val(response.state);
+                        $("#edit-address-dialog input[name=postal_code]").val(response
+                            .zip_code);
+                        $("#edit-address-dialog textarea[name=address]").val(
+                            `${response.address_line_1}\n${response.address_line_2}`);
+                        editAddressDialog.showModal();
+                    }
+                }
+            });
+        });
+
+        function showFlashMessage(message, type) {
+            var flashMessage = $('.flash-message');
+            flashMessage.addClass(type);
+            var messageElement = flashMessage.find('#message');
+            messageElement.text(message);
+            flashMessage.show();
+            setTimeout(function() {
+                flashMessage.hide();
+            }, 3000);
+        }
+
+        $("#add-address").click(function() {
+            addAddressDialog.showModal();
+        });
+
+        $("#close-add-dialog").click(function() {
+            addAddressDialog.close();
+        });
+
+        $("#close-edit-dialog").click(function() {
+            editAddressDialog.close();
+        });
+
+        $(".default-btn").click(function() {
+            addressCard = $(this).closest('.address-card');
+            addressID = addressCard.attr("data-addressID");
+            $("#setAsDefaultForm input[name=address_id]").val(addressID);
+            $("#setAsDefaultForm").submit();
+        });
+    });
+</script>

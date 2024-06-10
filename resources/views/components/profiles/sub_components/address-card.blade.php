@@ -1,5 +1,5 @@
 @props(['address'])
-<div class="address-card">
+<div class="address-card" data-addressID="{{ $address->id }}">
     <div class="address-preview">
         <h2 class="address-line">{{ $address->address_line_1 }}</h2>
         <h2 class="address-line">{{ $address->address_line_2 }}</h2>

@@ -87,7 +87,7 @@
 
 
 /* Add New Address Form */
-.add-address-dialog {
+.address-dialog {
     top: 50%;
     /* Position the dialog at the center vertically */
     left: 50%;
@@ -104,7 +104,7 @@
     /* Add scrollbars if content overflows */
 }
 
-.add-address-form {
+.address-form {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     grid-column-gap: 1rem;
@@ -112,64 +112,64 @@
     padding: 1rem;
 }
 
-.add-address-form>p {
+.address-form>p {
     font-size: 1.2rem;
     font-weight: bold;
     grid-column: span 4;
 }
 
-.add-address-form>input[type="text"],
-.add-address-form>textarea {
+.address-form>input[type="text"],
+.address-form>textarea {
     padding: 0.5rem 1rem;
 }
 
-.add-address-form>input[name="city"],
-.add-address-form>input[name="state"] {
+.address-form>input[name="city"],
+.address-form>input[name="state"] {
     grid-column: span 2;
 }
 
 
-.add-address-form>input[name="postal_code"] {
+.address-form>input[name="postal_code"] {
     grid-column: span 4;
 }
 
-.add-address-form>textarea[name="address"] {
+.address-form>textarea[name="address"] {
     width: 100%;
     grid-column: span 4;
     grid-row: span 4;
     resize: none;
 }
 
-.add-address-form>#checkbox-container {
+.address-form>.checkbox-container {
     grid-column: span 4;
 }
 
-.add-address-form>#checkbox-container>input[type="checkbox"] {
+.address-form>.checkbox-container>input[type="checkbox"] {
     margin-right: 0.5rem;
 }
 
-.add-address-form>button {
+.address-form>button {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
 }
 
-.add-address-form>button:hover {
+.address-form>button:hover {
     opacity: 0.8;
 }
 
-.add-address-form>#submit-btn:active {
+.address-form>#submit-btn:active {
     background-color: #29292e;
 }
 
 
-.add-address-form>#cancel-btn {
+.address-form>.cancel-btn {
     grid-column: 3;
     background: transparent;
     color: #52525C;
 }
 
-.add-address-form>#submit-btn {
+.address-form>.submit-btn {
     grid-column: 4;
     color: white;
     background-color: #52525C;
