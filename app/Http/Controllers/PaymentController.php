@@ -54,11 +54,29 @@ class PaymentController extends Controller
         $dateTime = $request->DateTime;
 
         $payment = Payment::where('transaction_no',$transacno)->first();
+
         if ($status == 'Success'){
+            $productID = $payment->order->product->id;
+
+            $cart = $user->cart;
+            $product = $cart->products()->where('product_id', $productID)->first();
+    
+            if ($product) {
+                //Detach product from cart since is purchased
+                $cart->products()->detach($productID);
+            }
+
             $payment->payment_status = 'success';
             $payment->save();
             
             $payment->order()->update(['order_status' => 'processing']);
+
+            $order = $payment->order;
+            $product = $order->product;
+
+            $new_quantity = $product->quantity_available - $order->quantity;
+            $product->update(['quantity_available' => $new_quantity]);
+            
             return view('payments.receipt',compact('status','name','phone','transacno','issue_bank','transac_amount','dateTime'));
         }else if($status == 'Failed'){
             $payment->payment_status = 'failed';
@@ -69,5 +87,17 @@ class PaymentController extends Controller
 
     public function showTestCallBack(){
         return view('payments.testcallback');
+    }
+
+    public function updateIsPaidStatus(Request $request){
+        $transac_no = $request->input('transaction_no');
+
+        $payment = Payment::where('transaction_no',$transac_no)->first();
+
+        if ($payment){
+            $payment->isPaid = true;
+            $payment->save();
+            return response()->json(['success' => true, 'payment' => $payment->toArray(), 'transaction_no' => $transac_no]);
+        }
     }
 }

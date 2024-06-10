@@ -241,5 +241,15 @@ class DummySeeder extends Seeder
             'isPaid' => false,
             'payment_status' => 'success',
         ]);
+
+        $admin = User::create([
+            'first_name' => "Admin",
+            'last_name' => "Super",
+            'email' => 'admin@gmail.com',
+            'phone_num' => '0196043388',
+            'password' => bcrypt('admin12345'),
+            'approve_status' => 'approved',
+            'types' => 'admin',
+        ]);
     }
 }

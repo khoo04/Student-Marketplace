@@ -18,6 +18,11 @@ class ProductController extends Controller
 
     public function create()
     {
+        //Check the seller have bank account or not before they add product
+        $user = auth()->user();
+        if ($user->bank_name == null || $user->bank_acc_name == null|| $user->bank_acc_num == null){
+            return redirect()->route('profile.createBankDetails')->with(['message' => 'Please add your bank details before adding product.','type'=>'alert']);
+        }
         $categories = Category::all();
         return view('products.create', ['categories' => $categories]);
     }
@@ -200,5 +205,16 @@ class ProductController extends Controller
 
     public function redirectManageProduct(){
         return redirect()->route('profile')->with(['pageIndex' => 1]);
+    }
+
+    public function updateProductStatus(Request $request){
+        $productID = $request->input('productID');
+        $status = $request->input('status');
+
+        $product = Product::find($productID);
+
+        $product->update(['approve_status' => $status]);
+
+        return response()->json(['success' => true]);
     }
 }
