@@ -190,7 +190,6 @@
         }
 
         function resetFilter() {
- 
             fromDate = undefined;
             toDate = undefined;
             status = 'all';

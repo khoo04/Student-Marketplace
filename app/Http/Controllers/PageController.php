@@ -243,8 +243,10 @@ class PageController extends Controller
             $toDate = Carbon::parse($toDate)->endOfDay();
             $dataQuery = $dataQuery->where('orders.created_at', '<=', $toDate);
         }
+
         $data = $dataQuery->groupBy('products.name', 'products.price')->first();
         $tableDataView = view('components.profiles.sub_components.sales-data', ["data" => $data])->render();
+
         return response()->json([
             'html' => $tableDataView
         ]);
@@ -293,7 +295,6 @@ class PageController extends Controller
         return response()->json($response);
     }
 
-
     public function adminIndex()
     {
         if (auth()->user()->types == 'admin'){
@@ -339,4 +340,5 @@ class PageController extends Controller
         $salesPaybackPanel = view('components.admin.sales-payback-panel',['paymentToPayData' => $paymentToPayData])->render();
         return response()->json(['panel' => $salesPaybackPanel]);
     }
+
 }
