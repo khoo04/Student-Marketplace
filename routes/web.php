@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 use App\Models\Payment;
 use Illuminate\Routing\RouteGroup;
 
@@ -114,14 +115,13 @@ Route::middleware(['auth','seller_only'])->group(function(){
 Route::post('/payments',[PaymentController::class,'create'])->name('payments.create');
 Route::get('/payments/testcallback',[PaymentController::class,'showTestCallBack']);
 Route::post('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
-Route::post('/payments/payToSeller',[PaymentController::class,'updateIsPaidStatus'])->middleware(['auth','admin_only'])->name('payments.updateIsPaid');
-//Admin Route
-Route::middleware(['auth', 'admin_only'])->group(function () {
-    Route::get('/admin',[PageController::class,'adminIndex'])->name('admin');
-}); 
 
-Route::middleware(['auth','ajax','admin_only'])->group(function(){
-    Route::get('/adminAjax/AccApprovalPanel',[PageController::class,'getAccApprovalPanel'])->name('admin.accApprovePanel');
-    Route::get('/adminAjax/ProductApprovalPanel',[PageController::class,'getProductApprovalPanel'])->name('admin.productApprovePanel');
-    Route::get('/adminAjax/salesPaybackPanel',[PageController::class,'getSalesPaybackPanel'])->name('admin.salesPaybackPanel');
+
+
+Route::middleware(['auth','buyer_only'])->group(function(){
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add',[CartController::class,'update'])->name('cart.update');
+    Route::post('/cart/updateQuantity',[CartController::class,'updateQuantity'])->name('cart.updateQuantity');
+    Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
+
 });

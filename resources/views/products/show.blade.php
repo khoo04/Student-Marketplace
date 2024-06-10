@@ -68,8 +68,10 @@
                         <i class="fa-solid fa-money-bill-wave"></i> Buy Now
                     </button>
                 </form>
-                <form method="post" action="">
+                <form method="post" action="{{route('cart.update')}}">
                     @csrf
+                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                    <input type="hidden" name="quantity" value="1">
                     <button type="submit" class="action-btn" id="add-to-cart">
                         <i class="fa-solid fa-cart-plus"></i> Add to Cart
                     </button>
@@ -118,13 +120,13 @@
 
     @if (auth()->user() != null)
         @if (auth()->user()->types == 'buyer')
-            <a href="cart.html" id="cart-button">
+            <a href="{{route('cart')}}" id="cart-button">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <h2>My Cart</h2>
             </a>
         @endif
     @else
-        <a href="cart.html" id="cart-button">
+        <a href="{{route('cart')}}" id="cart-button">
             <i class="fa-solid fa-cart-shopping"></i>
             <h2>My Cart</h2>
         </a>
