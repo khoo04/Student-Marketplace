@@ -9,6 +9,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -101,3 +102,11 @@ Route::get('/payments/testcallback',[PaymentController::class,'showTestCallBack'
 Route::post('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
 
 
+
+Route::middleware(['auth','buyer_only'])->group(function(){
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart/add',[CartController::class,'update'])->name('cart.update');
+    Route::post('/cart/updateQuantity',[CartController::class,'updateQuantity'])->name('cart.updateQuantity');
+    Route::delete('/cart', [CartController::class, 'destroy'])->name('cart.destroy');
+
+});

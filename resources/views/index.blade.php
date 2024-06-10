@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <a href="cart.html" id="cart-button">
+    <a href="/cart" id="cart-button">
         <i class="fa-solid fa-cart-shopping"></i><h2>My Cart</h2>
     </a>
 
