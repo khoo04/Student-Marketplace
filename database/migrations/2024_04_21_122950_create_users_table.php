@@ -20,8 +20,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone_num')->unique();
-            $table->enum('types',['buyer','seller']);
+            $table->enum('types',['buyer','seller','admin']);
             $table->enum('approve_status',['approved','pending','rejected'])->default('pending');
+            $table->string('bank_name')->nullable();
+            $table->string('bank_acc_num')->nullable();
+            $table->string('bank_acc_name')->nullable();
             $table->timestamp('created_at')->nullable(); 
             $table->timestamp('updated_at')->nullable(); 
         });
