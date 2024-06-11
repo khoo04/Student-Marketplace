@@ -105,7 +105,8 @@ class PageController extends Controller
     {
         //TODO: Retrieve Data from DB
         $user = Auth::user();
-        $addressControl = view('components.profiles.address-control')->render();
+        $addresses = $user->addresses;
+        $addressControl = view('components.profiles.address-control', ['addresses' => $addresses])->render();
         return response()->json(['control' => $addressControl]);
     }
 

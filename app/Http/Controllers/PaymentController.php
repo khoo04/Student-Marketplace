@@ -56,6 +56,16 @@ class PaymentController extends Controller
         $payment = Payment::where('transaction_no',$transacno)->first();
 
         if ($status == 'Success'){
+            $productID = $payment->order->product->id;
+
+            $cart = $user->cart;
+            $product = $cart->products()->where('product_id', $productID)->first();
+    
+            if ($product) {
+                //Detach product from cart since is purchased
+                $cart->products()->detach($productID);
+            }
+
             $payment->payment_status = 'success';
             $payment->save();
             

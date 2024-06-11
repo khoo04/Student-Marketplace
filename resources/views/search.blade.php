@@ -86,10 +86,19 @@
         <!-- END RESULT -->
     </div>
     </div>
-    <a href="cart.html" id="cart-button">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <h2>My Cart</h2>
-    </a>
+    @if (auth()->user() != null)
+        @if (auth()->user()->types == 'buyer')
+            <a href="{{route('cart')}}" id="cart-button">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h2>My Cart</h2>
+            </a>
+        @endif
+    @else
+        <a href="{{route('cart')}}" id="cart-button">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <h2>My Cart</h2>
+        </a>
+    @endif
 @endsection
 
 @section('js')
