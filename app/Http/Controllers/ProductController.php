@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -20,8 +21,8 @@ class ProductController extends Controller
     {
         //Check the seller have bank account or not before they add product
         $user = auth()->user();
-        if ($user->bank_name == null || $user->bank_acc_name == null|| $user->bank_acc_num == null){
-            return redirect()->route('profile.createBankDetails')->with(['message' => 'Please add your bank details before adding product.','type'=>'alert']);
+        if ($user->bank_name == null || $user->bank_acc_name == null || $user->bank_acc_num == null) {
+            return redirect()->route('profile.createBankDetails')->with(['message' => 'Please add your bank details before adding product.', 'type' => 'alert']);
         }
         $categories = Category::all();
         return view('products.create', ['categories' => $categories]);
@@ -203,11 +204,13 @@ class ProductController extends Controller
         }
     }
 
-    public function redirectManageProduct(){
+    public function redirectManageProduct()
+    {
         return redirect()->route('profile')->with(['pageIndex' => 1]);
     }
 
-    public function updateProductStatus(Request $request){
+    public function updateProductStatus(Request $request)
+    {
         $productID = $request->input('productID');
         $status = $request->input('status');
 
@@ -216,5 +219,23 @@ class ProductController extends Controller
         $product->update(['approve_status' => $status]);
 
         return response()->json(['success' => true]);
+    }
+
+    public function getDetails(Request $request)
+    {
+        $orderID = $request->orderID;
+
+        $product = Order::find($orderID)->product;
+
+        if ($product) {
+            return response()->json(
+                [
+                    'status' => 'success',
+                    'productName' => $product->name,
+                    'orderID' => $orderID,
+                ]
+            );
+        }
+        return response()->json(['status' => 'failed']);
     }
 }

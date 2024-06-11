@@ -42,7 +42,7 @@
                             $productImagePaths = [];
                             if ($product->images != null) {
                                 $productImagePaths = explode(',', $product->images);
-                                $productImagePaths = array_map(function () {
+                                $productImagePaths = array_map(function ($item) {
                                     return asset('storage/' . $item);
                                 }, $productImagePaths);
                             } else {

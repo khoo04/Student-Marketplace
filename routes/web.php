@@ -45,6 +45,8 @@ Route::middleware(['auth', 'admin_only'])->group(function () {
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+//Paginate the Data on Index Page
+Route::get('/product_data',[PageController::class,'paginateData']);
 
 //Paginate the Data on Index Page
 Route::get('/product_data', [PageController::class, 'paginateData']);
@@ -60,10 +62,12 @@ Route::middleware(['auth', 'seller_only'])->group(function () {
     Route::delete('/products/delete', [ProductController::class, 'destory'])->name('products.destory');
 });
 
-Route::post('/products/updateStatus', [ProductController::class, 'updateProductStatus'])->middleware(['auth', 'admin_only'])->name('products.updateStatus');
+Route::get('/products/getDetails',[ProductController::class,'getDetails'])->middleware(['auth','buyer_only','ajax'])->name('products.details');
+
+Route::post('/products/updateStatus',[ProductController::class,'updateProductStatus'])->middleware(['auth','admin_only'])->name('products.updateStatus');
 
 //Note: Wild Card route must be the last one
-Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/products/{product}',[ProductController::class,'show'])->name('products.show');
 
 
 Route::get('/search', [SearchController::class, 'show']);
@@ -75,11 +79,11 @@ Route::get('/categories/{category}', [PageController::class, 'categoryPage']);
 //Profile Routes
 Route::get('/profile', [PageController::class, 'showProfile'])->middleware('auth')->name('profile');
 
-Route::middleware(['auth', 'seller_only'])->group(function () {
-    Route::get('/profile/updateBank', [UserController::class, 'createBankDetails'])->name('profile.createBankDetails');
-    Route::post('profile/updateBank', [UserController::class, 'updateBankDetails'])->name('profile.updateBankDetails');
+Route::middleware(['auth','seller_only'])->group(function(){
+    Route::get('/profile/updateBank',[UserController::class,'createBankDetails'])->name('profile.createBankDetails');
+    Route::post('profile/updateBank',[UserController::class,'updateBankDetails'])->name('profile.updateBankDetails');
 });
-Route::get('/ajax/profile_control', [PageController::class, 'showProfileControl'])
+Route::get('/ajax/profile_control',[PageController::class,'showProfileControl'])
     ->name('ajax.profile-control')
     ->middleware(['auth', 'ajax']);
 
@@ -112,6 +116,28 @@ Route::middleware(['auth', 'seller_only'])->group(function () {
     Route::put('/orders/updateStatus', [OrderController::class, 'updateStatus'])->name('order.updateStatus');
 });
 
+Route::middleware(['auth','buyer_only'])->group(function(){
+    Route::put('/orders/comments',[OrderController::class,'updateComment'])->name('order.leaveComment');
+});
+
+//Buyer Update Order Status
+Route::post('/orders/receive',[OrderController::class,'receiveOrder'])->middleware(['auth','buyer_only'])->name('order.receiveOrder');
+
+//Payment Route
+Route::post('/payments',[PaymentController::class,'create'])->name('payments.create');
+Route::get('/payments/testcallback',[PaymentController::class,'showTestCallBack']);
+Route::post('/payments/callback',[PaymentController::class,'callback'])->name('payments.callback');
+Route::post('/payments/payToSeller',[PaymentController::class,'updateIsPaidStatus'])->middleware(['auth','admin_only'])->name('payments.updateIsPaid');
+//Admin Route
+Route::middleware(['auth', 'admin_only'])->group(function () {
+    Route::get('/admin',[PageController::class,'adminIndex'])->name('admin');
+}); 
+
+Route::middleware(['auth','ajax','admin_only'])->group(function(){
+    Route::get('/adminAjax/AccApprovalPanel',[PageController::class,'getAccApprovalPanel'])->name('admin.accApprovePanel');
+    Route::get('/adminAjax/ProductApprovalPanel',[PageController::class,'getProductApprovalPanel'])->name('admin.productApprovePanel');
+    Route::get('/adminAjax/salesPaybackPanel',[PageController::class,'getSalesPaybackPanel'])->name('admin.salesPaybackPanel');
+});
 //Payment Route
 Route::post('/payments', [PaymentController::class, 'create'])->name('payments.create');
 Route::get('/payments/testcallback', [PaymentController::class, 'showTestCallBack']);

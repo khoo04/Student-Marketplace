@@ -31,7 +31,7 @@ class ProductFactory extends Factory
             'condition' => $this->faker->randomElement(['new','used']),
             'approve_status' => 'pending',
             'category_id' => $this->faker->randomElement($categoryIds),
-            'user_id' => 1,
+            'user_id' => 3,
         ];
     }
 }
