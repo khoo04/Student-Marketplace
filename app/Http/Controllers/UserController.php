@@ -21,14 +21,14 @@ class UserController extends Controller
                 'first_name' => ['required', 'string', 'max:255'],
                 'last_name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'email', 'unique:users,email'],
-                'phone_num' => ['required','unique:users,phone_num'],
+                'phone_num' => ['required', 'unique:users,phone_num'],
                 'password' => ['required', 'confirmed', 'min:8'],
                 'types' => ['required'],
             ]
         );
 
         //If buyer the approve status is true
-        if ($formFields['types'] == 'buyer'){
+        if ($formFields['types'] == 'buyer') {
             $formFields['approve_status'] = true;
         }
 
@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $user = User::create($formFields);
 
-        if($user->types == 'buyer'){
+        if ($user->types == 'buyer') {
             auth()->login($user);
             return redirect('/')->with([
                 'message' => 'Account created successfully!',
@@ -44,16 +44,17 @@ class UserController extends Controller
             ]);
         }
         //Seller
-        else{
+        else {
             return redirect('/')->with([
                 'message' => 'Account created and pending approval',
                 'type' => 'success',
             ]);
         }
-        
+
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         auth()->logout();
 
         $request->session()->invalidate();
@@ -76,24 +77,66 @@ class UserController extends Controller
             ]
         );
 
-        if (auth()->attempt($formFields)){
-            if (auth()->user()->approve_status == 'approved'){
+        if (auth()->attempt($formFields)) {
+            if (auth()->user()->approve_status == 'approved') {
                 $request->session()->regenerate();
                 return redirect('/')->with(['message' => 'Login successfully!', 'type' => 'success']);
-            }
-            else if (auth()->user()->approve_status == 'pending'){
+            } else if (auth()->user()->approve_status == 'pending') {
                 auth()->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                return back()->with(['message' => 'Your account is pending approval','type'=>'alert']);
-            }
-            else{
+                return back()->with(['message' => 'Your account is pending approval', 'type' => 'alert']);
+            } else {
                 auth()->logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
-                return back()->with(['message' => 'Your account registration is rejected','type'=>'alert']);
+                return back()->with(['message' => 'Your account registration is rejected', 'type' => 'alert']);
             }
         }
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
+
+    public function updateDetails(Request $request)
+    {
+        $user = auth()->user();
+        $formFields = $request->validate(
+            [
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            ]
+        );
+
+        $user->update($formFields);
+
+        return redirect()->back()->with([
+            'message' => 'Account updated successfully!',
+            'type' => 'success',
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'old_password' => ['required'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ]);
+
+        // Check if the old password is correct
+        if (!\Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'The provided password does not match your current password.']);
+        }
+
+        // Update the password
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with([
+            'message' => 'Password updated successfully!',
+            'type' => 'success',
+        ]);
+    }
+
 }

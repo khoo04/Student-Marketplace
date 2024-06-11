@@ -170,10 +170,9 @@ class PageController extends Controller
         if ($order_status != null && $order_status != 'All'){
             $orderQuery = $orderQuery->where('order_status','=','status');
         }
-        if
 
-        $manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
-        return response()->json(['control' => $manageOrderControl]);
+        //$manageOrderControl = view('components.profiles.manage-order-control', ['orders' => $orders])->render();
+        //return response()->json(['control' => $manageOrderControl]);
     }
 
     public function showSalesReportControl()

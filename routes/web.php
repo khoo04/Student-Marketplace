@@ -36,6 +36,8 @@ Route::middleware('guest')->group(function(){
 
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
 
+Route::put('/user/updateDetails',[UserController::class,'updateDetails'])->name('user.updateDetails');
+Route::put('/user/updatePass',[UserController::class,'updatePassword'])->name('user.updatePassword');
 Route::get('/product_data',[PageController::class,'paginateData']);
 
 
