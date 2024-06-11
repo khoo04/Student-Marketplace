@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $user = Auth::user();
         $full_name = $user->first_name . ' ' . $user->last_name;
         $email = $user->email;
@@ -19,32 +20,33 @@ class OrderController extends Controller
         $quantity = $request->quantity;
 
 
-        if ($user->types != 'buyer'){
+        if ($user->types != 'buyer') {
             return back()->with(['message' => 'Only buyer can perform this action.', 'type' => 'alert']);
         }
 
         $stocks = Product::find($product_id)->quantity_available;
 
-        if ($stocks <= 0){
+        if ($stocks <= 0) {
             return back()->with(['message' => 'The product is out of stock!', 'type' => 'alert']);
         }
 
         $order = $user->orders()->create(['product_id' => $product_id, 'quantity' => $quantity]);
-        
+
         $product_price = Product::find($product_id)->price;
 
         $price_total = ($product_price) * ($quantity);
 
-        return view('order',compact('user','full_name','email','order','price_total'));
+        return view('order', compact('user', 'full_name', 'email', 'order', 'price_total'));
     }
 
-    public function updateStatus(Request $request){
+    public function updateStatus(Request $request)
+    {
         $request->validate([
             'oID' => 'required',
             'tracking_num' => 'nullable|string|max:255',
         ]);
 
- 
+
         $order = Order::find($request->oID);
         $currentDate = Carbon::now();
         $tracking_num = $request->tracking_num ?? null;
@@ -58,16 +60,69 @@ class OrderController extends Controller
         return redirect()->route('profile')->with(['message' => 'Shipping status updated successfully.', 'type' => 'success', 'pageIndex' => 2]);
     }
 
-    public function destroy(Request $request){
+    public function updateComment(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'orderID' => 'required',
+            'rating' => 'required|numeric|min:0|max:5',
+            'comment' => 'required|string',
+        ]);
+
+        $order = Order::find($validatedRequest['orderID']);
+        if ($order) {
+            $product = $order->product;
+            $user = auth()->user();
+
+            $product->comments()->create([
+                'description' => $validatedRequest['comment'],
+                'rating' => $validatedRequest['rating'],
+                'user_id' => $user->id,
+            ]);
+            $order->comment_status = true;
+            $order->save();
+
+            $comments = $product->comments;
+            $totalRating = $comments->sum('rating');
+            $commentCount = $comments->count();
+            $averageRating = $commentCount > 0 ? $totalRating / $commentCount : 0;
+
+            // Update the product's average rating
+            $product->rating = $averageRating;
+            $product->save();
+            
+            return redirect()->route('profile')->with(['message' => 'Comment added successfully.', 'type' => 'success', 'pageIndex' => 2]);
+        }
+        return redirect()->route('profile')->with(['message' => 'Action failed.', 'type' => 'alert', 'pageIndex' => 2]);
+    }
+
+    public function receiveOrder(Request $request)
+    {
+        //For buyer page
+        $request->validate([
+            'order_id' => 'required',
+        ]);
+
+        $order = Order::find($request->order_id);
+
+        if ($order && $order->user_id == auth()->user()->id) {
+            $order->order_status = 'completed';
+            $order->save();
+            return redirect()->route('profile')->with(['message' => 'Order received.', 'type' => 'success', 'pageIndex' => 2]);
+        }
+        return redirect()->route('profile')->with(['message' => 'Failed action.', 'type' => 'alert', 'pageIndex' => 2]);
+    }
+
+    public function destroy(Request $request)
+    {
         $user = Auth::user();
 
         $order = Order::find($request->Oid);
 
-        if ($user->id != $order->buyer->id){
-            return abort(403,"Unauthorized Action");
+        if ($user->id != $order->buyer->id) {
+            return abort(403, "Unauthorized Action");
         }
 
         $order->delete();
-        return redirect()->route('main')->with(['message' =>'Order canceled successfully', 'type' => 'success']);
+        return redirect()->route('main')->with(['message' => 'Order canceled successfully', 'type' => 'success']);
     }
 }

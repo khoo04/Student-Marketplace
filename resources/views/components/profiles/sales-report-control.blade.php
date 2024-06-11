@@ -173,6 +173,13 @@
             });
         }
 
-
+        $("#sales-from-date, #sales-to-date").on("change", function() {
+            let fromDate = $("#sales-from-date").val();
+            let toDate = $("#sales-to-date").val();
+            if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                alert("To date must be larger than from date");
+                $(this).val(''); // Clear the incorrect date input
+            }
+        });
     });
 </script>

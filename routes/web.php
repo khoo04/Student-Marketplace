@@ -58,10 +58,12 @@ Route::middleware(['auth','seller_only'])->group(function () {
     Route::delete('/products/delete',[ProductController::class,'destory'])->name('products.destory');
 });
 
+Route::get('/products/getDetails',[ProductController::class,'getDetails'])->middleware(['auth','buyer_only','ajax'])->name('products.details');
+
 Route::post('/products/updateStatus',[ProductController::class,'updateProductStatus'])->middleware(['auth','admin_only'])->name('products.updateStatus');
 
 //Note: Wild Card route must be the last one
-Route::get('/products/{product}',[ProductController::class,'show']);
+Route::get('/products/{product}',[ProductController::class,'show'])->name('products.show');
 
 
 Route::get('/search',[SearchController::class,'show']);
@@ -109,6 +111,13 @@ Route::middleware(['auth'])->group(function(){
 Route::middleware(['auth','seller_only'])->group(function(){
     Route::put('/orders/updateStatus',[OrderController::class,'updateStatus'])->name('order.updateStatus');
 });
+
+Route::middleware(['auth','buyer_only'])->group(function(){
+    Route::put('/orders/comments',[OrderController::class,'updateComment'])->name('order.leaveComment');
+});
+
+//Buyer Update Order Status
+Route::post('/orders/receive',[OrderController::class,'receiveOrder'])->middleware(['auth','buyer_only'])->name('order.receiveOrder');
 
 //Payment Route
 Route::post('/payments',[PaymentController::class,'create'])->name('payments.create');

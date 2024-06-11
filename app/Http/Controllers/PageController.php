@@ -111,9 +111,27 @@ class PageController extends Controller
 
     public function showUserOrderControl()
     {
-        //TODO: Retrieve Data from DB
-        $user = Auth::user();
-        $userOrderControl = view('components.profiles.user-order-control')->render();
+        $user = auth()->user();
+        //Retrieve All Order for Current User
+        $userOrderData = Order::select(
+            DB::raw('orders.id as order_id'),
+            DB::raw('products.images as product_images'),
+            DB::raw('products.id as product_id'),
+            DB::raw('products.name as product_name'),
+            DB::raw('orders.quantity as order_quantity'),
+            DB::raw('products.price as product_unit_price'),
+            DB::raw('(products.price * orders.quantity) as total_price'),
+            DB::raw('orders.order_status as order_status'),
+            DB::raw('orders.comment_status as comment_status'),
+            DB::raw('orders.tracking_num as tracking_num'),
+        )
+        ->join('payments','orders.id','=','payments.order_id')
+        ->join('products', 'orders.product_id', '=', 'products.id')
+        ->join('users','orders.user_id','=','users.id')
+        ->where('payments.payment_status','success')
+        ->where('users.id',$user->id)
+        ->get();
+        $userOrderControl = view('components.profiles.user-order-control',['userOrderData' => $userOrderData])->render();
         return response()->json(['control' => $userOrderControl]);
     }
 
