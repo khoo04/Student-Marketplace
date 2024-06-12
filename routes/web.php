@@ -43,6 +43,8 @@ Route::middleware(['auth', 'admin_only'])->group(function () {
     Route::post('/user/getDetails', [UserController::class, 'getSellerDetails'])->name('users.getDetails');
 });
 
+Route::put('/user/updateDetails',[UserController::class,'updateDetails'])->name('user.updateDetails');
+Route::put('/user/updatePass',[UserController::class,'updatePassword'])->name('user.updatePassword');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 //Paginate the Data on Index Page
