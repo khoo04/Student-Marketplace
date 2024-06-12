@@ -28,6 +28,9 @@ class User extends Authenticatable
         'approve_status',
         'phone_num',
         'types',
+        'bank_name',
+        'bank_acc_name',
+        'bank_acc_num'
     ];
 
     /**

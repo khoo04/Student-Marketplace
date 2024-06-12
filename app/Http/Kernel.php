@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'seller_only' => \App\Http\Middleware\SellerOnly::class,
         'buyer_only' => \App\Http\Middleware\BuyerOnly::class,
         'ajax' => \App\Http\Middleware\EnsureAjaxRequest::class,
+        'admin_only' => \App\Http\Middleware\AdminOnly::class,
     ];
 }

@@ -52,6 +52,7 @@ function applyFilter(){
         error: function(xhr, status, error) {
             if(xhr.status == 500){
                 $('.result-container').html("<p> No result found </p>");
+                $('#pagination').html('');
             }
           }
     });

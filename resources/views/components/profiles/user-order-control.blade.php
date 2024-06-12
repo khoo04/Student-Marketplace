@@ -1,3 +1,4 @@
+@props(['userOrderData'])
 <div class="title-container">
     <h1>My Order</h1>
 </div>
@@ -5,48 +6,155 @@
     <table class="my-order-list">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Image</th>
-                <th>Product Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Status</th>
+                <th class="order-num-column">No</th>
+                <th class="product-image-column">Image</th>
+                <th class="product-name-column">Product Name</th>
+                <th class="order-quantity-column">Quantity</th>
+                <th class="unit-price-column">Unit Price</th>
+                <th class="total-price-column">Total Price</th>
+                <th class="order-status-column">Status</th>
+                <th class="tracking-number-column">Tracking Number</th>
+                <th class="action-column">Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td><img src="images/demo.png" alt="product image"></td>
-                <td>Earphone</td>
-                <td>120</td>
-                <td>RM 130.00</td>
-                <td>
-                   <a href="status.html" title="Shipping Status">Completed</a>
-                   <button type="button" data-productId = title="Shipping Status">Leave Comment</a>
-                </td>
-            </tr>
-
-            <tr>
-                <td>2</td>
-                <td class="image-column"><img src="images/glasses.jpg" alt="product image"></td>
-                <td class="product-name-column">Earphone Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sequi assumenda et sed, vitae quae eligendi dolore cupiditate blanditiis exercitationem consequuntur necessitatibus adipisci architecto enim alias eaque, obcaecati officia odio provident!</td>
-                <td>120</td>
-                <td>RM 130.00</td>
-                <td>
-                    <a href="status.html" title="Shipping Status">Cancelled</a>
-                </td>
-            </tr>
-
-            <tr>
-                <td>3</td>
-                <td><img src="images/shoes.jpg" alt="product image"></td>
-                <td>Shoes</td>
-                <td>120</td>
-                <td>RM 130.00</td>
-                <td>
-                    <a href="status.html" title="Shipping Status">Shipping</a>
-                </td>
-            </tr>
+            @if ($userOrderData->isEmpty())
+                <td colspan="9">No Order Found</td>
+            @else
+                @php
+                    $count = 1;
+                @endphp
+                @foreach ($userOrderData as $data)
+                    @php
+                        if ($data->product_images == null) {
+                            $imagePaths = [];
+                            $imagePaths[0] = asset('images/No-Image-Placeholder.svg');
+                        } else {
+                            $imagePaths = explode(',', $data->product_images);
+                            $imagePaths = array_map(function ($path) {
+                                return asset('storage/' . $path);
+                            }, $imagePaths);
+                        }
+                    @endphp
+                    <tr>
+                        <td class="order-num-column">{{ $count++ }}</td>
+                        <td class="product-image-column"><img src={{ $imagePaths[0] }} alt="Product Image"></td>
+                        <td class="product-name-column"><a
+                                href="{{ route('products.show', ['product' => $data->product_id]) }}">{{ $data->product_name }}</a>
+                        </td>
+                        <td class="order-quantity-column">{{ $data->order_quantity }}</td>
+                        <td class="unit-price-column">RM {{ $data->product_unit_price }}</td>
+                        <td class="total-price-column">RM {{ $data->total_price }}</td>
+                        <td class="order-status-column {{ $data->order_status }}">{{ ucfirst($data->order_status) }}
+                        </td>
+                        <td class="tracking-number-column">{{ $data->tracking_num  ?? "No Provided"}}</td>
+                        @if ($data->order_status == 'shipping')
+                            <td class="action-column">
+                                <button type="button" class="action-button" data-type="complete" data-oid="{{$data->order_id}}">Order
+                                    Completed</button>
+                            </td>
+                        @elseif ($data->order_status == 'completed' && $data->comment_status == 0)
+                            <td class="action-column"><button type="button" class="action-button" data-type="comment"
+                                    data-oid="{{ $data->order_id }}">Leave Comment</button></td>
+                        @else
+                            <td class="action-column"></td>
+                        @endif
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 </div>
+
+<dialog class="comment-dialog">
+    <div class="dialog-container">
+        <form method="POST" action="{{route('order.leaveComment')}}">
+            @csrf
+            @method('PUT')
+            <h2>Leave Comment</h2>
+            <input type="hidden" name="orderID">
+            <p>Product Name: <span class="content" id="productName"></span></p>
+            <p>Rating: <input type="number" id="ratingInput" name="rating" min="0" max="5"
+                    step="0.1"></input></p>
+            <p>Comment:
+                <textarea id="commentInput" name="comment"></textarea>
+            </p>
+            <div class="button-container">
+                <button type="button" class="action-button" data-close-comment-dialog>Cancel</button>
+                <button type="submit" class="action-button">Submit</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<form action="{{route('order.receiveOrder')}}" method="POST" id="receiveOrderForm">
+    @csrf
+    <input type="hidden" name="order_id"> 
+</form>
+
+<script>
+    $(document).ready(function() {
+
+        const commentDialog = document.querySelector('dialog.comment-dialog');
+        $("#ratingInput").on('input', function() {
+            let value = parseFloat($(this).val());
+            if (value < 0) {
+                $(this).val(0);
+            } else if (value > 5) {
+                $(this).val(5);
+            }
+        })
+        $(".action-button").click(function() {
+            let actionType = $(this).data("type");
+            let orderID = $(this).data("oid");
+
+            if (actionType == 'complete') {
+                updateOrderStatus(orderID);
+            } else if (actionType == 'comment') {
+                addComment(orderID);
+            } else {
+                console.error('Unknown Action');
+            }
+        });
+
+        $("[data-close-comment-dialog]").click(function(e) {
+            commentDialog.close();
+        });
+
+        commentDialog.addEventListener("click", e => {
+            const dialogDimensions = commentDialog.getBoundingClientRect()
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                commentDialog.close()
+            }
+        })
+
+        function updateOrderStatus(orderID) {
+            if (window.confirm("Do you received the order?")) {
+                $("#receiveOrderForm input[name=order_id]").val(orderID);
+                $("#receiveOrderForm").submit();
+            }
+        }
+
+        function addComment(orderID) {
+            $.ajax({
+                type: "GET",
+                url: "{{route('products.details')}}",
+                data: {
+                    orderID: orderID
+                },
+                success: function (response) {
+                    if (response.status){
+                        $(".dialog-container input[name=orderID]").val(response.orderID);
+                        $(".dialog-container #productName").text(response.productName);  
+                        commentDialog.showModal();
+                    }
+                }
+            });
+        }
+    });
+</script>

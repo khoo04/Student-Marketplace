@@ -10,8 +10,8 @@
     <form action="{{route("payments.callback")}}" method="post">
         @csrf
         <input type="hidden" name="Status" value="Success" />
-        <input type="hidden" name="Fpx_SellerOrderNo" value="TRANSC_2024060100006" />
-        <input type="hidden" name="TransactionAmount" value="1.00" />
+        <input type="text" name="Fpx_SellerOrderNo" value="TRANSC_2024060800012" />
+        <input type="text" name="TransactionAmount" value="1.70" />
         <input type="hidden" name="Fpx_SellerExOrderNo" value="DirectPayTest20231227201201" />
         <input type="hidden" name="Fpx_DebitAuthCode" value="00" />
         <input type="hidden" name="Fpx_BuyerBankBranch" value="BANK ISLAM" />

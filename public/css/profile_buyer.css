@@ -1,17 +1,16 @@
-
 /* Buyer Page */
 
 /* My Address Page */
 
 /* My Address */
-.title-container > #add-address{
+.title-container>#add-address {
     border-radius: 0.5rem;
     background-color: #d9d9d9;
     padding: 8px 15px;
     color: black;
 }
 
-#address-container{
+#address-container {
     display: grid;
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -19,70 +18,67 @@
 }
 
 /* Add Address Button */
-#add-address > i{
+#add-address>i {
     margin-right: 0.2rem;
 }
 
 /* Address Card */
-.address-card{
+.address-card {
     padding: 1rem;
     border: 1px solid black;
     display: grid;
     grid-column-gap: 1rem;
-    grid-template-columns: minmax(200px,3fr) minmax(100px,1fr);
+    grid-template-columns: minmax(200px, 3fr) minmax(100px, 1fr);
     grid-auto-rows: auto
 }
 
-.address-preview{
+.address-preview {
     min-width: 200px;
     overflow: hidden;
     max-width: 3fr;
 }
- .phone-num{
-    color: rgb(121, 119, 119);
-}
 
-.name {
+
+.address-line {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.address-preview > p{
-    color: rgba(121, 119, 119,0.8);
+.address-preview>p {
+    color: rgba(121, 119, 119, 0.8);
 }
 
 /* Button Container */
-.button-container{
+.button-container {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
 /* Action Button */
-.action-btn{
+.action-btn {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0.5rem;
 
 }
-.button-container button{
+
+.button-container button {
     cursor: pointer;
 }
 
-.action-btn > button
-{
+.action-btn>button {
     font-size: 1.5rem;
 }
 
 /* Edit Button Override*/
-.action-btn > button:first-child{
+.action-btn>button:first-child {
     margin-right: 0.5rem;
 }
 
-.default-btn
-{
+.default-btn {
     width: 100%;
     background-color: #F4F4F4;
     padding: 0.5rem 0.8rem;
@@ -91,93 +87,89 @@
 
 
 /* Add New Address Form */
-.add-address-dialog{
-    top: 50%; /* Position the dialog at the center vertically */
-    left: 50%; /* Position the dialog at the center horizontally */
-    transform: translate(-50%, -50%); /* Center the dialog */
+.address-dialog {
+    top: 50%;
+    /* Position the dialog at the center vertically */
+    left: 50%;
+    /* Position the dialog at the center horizontally */
+    transform: translate(-50%, -50%);
+    /* Center the dialog */
     z-index: 10;
     border: 2px solid black;
     background-color: #D9D9D9;
     border-radius: 0.5rem;
     min-width: 50%;
     max-width: 90%;
-    overflow: auto; /* Add scrollbars if content overflows */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
 }
 
-.add-address-form{
+.address-form {
     display: grid;
-    grid-template-rows: repeat(6,1fr);
+    grid-template-rows: repeat(6, 1fr);
     grid-column-gap: 1rem;
     grid-row-gap: 1rem;
     padding: 1rem;
 }
 
-.add-address-form > p
-{
+.address-form>p {
     font-size: 1.2rem;
     font-weight: bold;
     grid-column: span 4;
 }
 
-.add-address-form > input[type="text"],
-.add-address-form > textarea{
+.address-form>input[type="text"],
+.address-form>textarea {
     padding: 0.5rem 1rem;
 }
 
-.add-address-form > input[name="name"],
-.add-address-form > input[name="phone_num"]
-{
+.address-form>input[name="city"],
+.address-form>input[name="state"] {
     grid-column: span 2;
 }
 
-.add-address-form > input[name="state"],
-.add-address-form > input[name="postal_code"]
-{
-   grid-column: span 4;
+
+.address-form>input[name="postal_code"] {
+    grid-column: span 4;
 }
 
-.add-address-form > textarea[name="address"]
-{
+.address-form>textarea[name="address"] {
     width: 100%;
     grid-column: span 4;
     grid-row: span 4;
     resize: none;
 }
 
-.add-address-form > #checkbox-container
-{
+.address-form>.checkbox-container {
     grid-column: span 4;
 }
 
-.add-address-form > #checkbox-container > input[type="checkbox"]
-{
+.address-form>.checkbox-container>input[type="checkbox"] {
     margin-right: 0.5rem;
 }
 
-.add-address-form > button{
+.address-form>button {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     cursor: pointer;
 }
 
-.add-address-form > button:hover{
+.address-form>button:hover {
     opacity: 0.8;
 }
 
-.add-address-form > #submit-btn:active{
+.address-form>#submit-btn:active {
     background-color: #29292e;
 }
 
 
-.add-address-form > #cancel-btn
-{
+.address-form>.cancel-btn {
     grid-column: 3;
-    background:transparent;
+    background: transparent;
     color: #52525C;
 }
 
-.add-address-form > #submit-btn
-{
+.address-form>.submit-btn {
     grid-column: 4;
     color: white;
     background-color: #52525C;
@@ -186,44 +178,142 @@
 
 /*----------  My Order Table  ----------*/
 
-.my-order-list{
+.my-order-list {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
 }
 
-.my-order-list > thead > tr > th{
+.my-order-list>thead>tr>th {
     padding: 1rem 0;
     border-top: 2px solid #D9D9D9;
     border-bottom: 2px solid #D9D9D9;
 }
 
-.my-order-list > tbody > tr > td{
+.my-order-list>tbody>tr>td {
     padding: 1rem;
 }
 
-.my-order-list > tbody > tr:not(:last-child){
+.my-order-list>tbody>tr:not(:last-child) {
     border-bottom: 2px solid #D9D9D9;
 }
 
-.my-order-list > tbody > tr > td{
-    height: 150px;
+.my-order-list .order-num-column{
+    width: 5%;
 }
 
-.my-order-list > tbody > tr > td > img{
-    width: 120px;
+.my-order-list .product-image-column{
+    width: 15%;
+}
+.product-image-column > img{
+    width: 100%;
     height: 120px;
-    object-fit: cover;
+    object-fit: contain;
+}
+.my-order-list .product-name-column{
+    width: 15%;
+}
+.my-order-list .order-quantity-column{
+    width: 10%;
 }
 
-.product-name-column{
-    height: 150px;
+.my-order-list  .unit-price-column{
+    width: 10%;
+}
+.my-order-list  .total-price-column{
+    width: 10%;
+}
+.my-order-list .order-status-column{
+    width: 5%;
 }
 
-.product-name-column > p{
-    height: 126px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 21px;
+.my-order-list .tracking-number-column{
+    width: 10%;
 }
 
+.my-order-list .action-column{
+    width: 15%;
+}
+
+.order-status-column.processing{
+    color:red;
+}
+
+.order-status-column.shipping{
+    color:blue;
+}
+
+.order-status-column.completed{
+    color: green;
+}
+
+.action-column .action-button{
+    display: inline-block;
+    padding: 8px 10px;
+    border-radius: 0.25rem;
+    background-color: #4f4f5c;
+    color: white;
+    cursor: pointer;
+}
+
+.action-column .action-button:hover{
+    background-color: #29292e;
+}
+
+.comment-dialog{
+    top: 50%; /* Position the dialog at the center vertically */
+    left: 50%; /* Position the dialog at the center horizontally */
+    transform: translate(-50%, -50%); /* Center the dialog */
+    z-index: 10;
+    border: 2px solid black;
+    background-color: #D9D9D9;
+    border-radius: 0.5rem;
+    overflow: auto; /* Add scrollbars if content overflows */
+}
+
+.dialog-container{
+    padding: 1rem;;
+    min-width: 300px;
+    max-width: 800px;
+}
+
+.dialog-container h2{
+    margin-bottom: 0.5rem;
+}
+
+.dialog-container p{
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.dialog-container .content{
+    font-weight: normal;
+}
+
+.comment-dialog .button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.comment-dialog .button-container .action-button{
+    padding: 10px 12px;
+    border-radius: 0.5rem;
+}
+
+.comment-dialog .button-container .action-button:not(:last-child){
+    margin-right: 0.5rem;
+}
+
+.comment-dialog #ratingInput{
+    padding: 2px 4px;
+    border-radius: 0.25rem;
+}
+
+.comment-dialog #commentInput{
+    margin-top: 0.5rem;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border-radius: 0.25rem;
+}

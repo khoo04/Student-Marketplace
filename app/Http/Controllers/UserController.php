@@ -50,7 +50,6 @@ class UserController extends Controller
                 'type' => 'success',
             ]);
         }
-
     }
 
     public function logout(Request $request)
@@ -78,6 +77,9 @@ class UserController extends Controller
         );
 
         if (auth()->attempt($formFields)) {
+            if (auth()->user()->types == 'admin') {
+                return redirect()->route('admin');
+            }
             if (auth()->user()->approve_status == 'approved') {
                 $request->session()->regenerate();
                 return redirect('/')->with(['message' => 'Login successfully!', 'type' => 'success']);
@@ -139,4 +141,66 @@ class UserController extends Controller
         ]);
     }
 
+}
+    public function updateAccountStatus(Request $request)
+    {
+        $userID = $request->input('userID');
+        $status = $request->input('status');
+
+        $user = User::find($userID);
+
+        $user->update(['approve_status' => $status]);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function getSellerDetails(Request $request)
+    {
+        $userID = $request->input('userID');
+        $user = User::find($userID);
+
+        return response()->json([
+            'sellerName' => $user->first_name . ' ' . $user->last_name,
+            'phoneNum' => $user->phone_num,
+            'email' => $user->email,
+            'bank_name' => $user->bank_name,
+            'bank_acc_name' => $user->bank_acc_name,
+            'bank_acc_num' => $user->bank_acc_num,
+        ]);
+    }
+
+    public function createBankDetails()
+    {
+        $user = auth()->user();
+        if ($user->bank_name == null || $user->bank_acc_name == null || $user->bank_acc_num == null){
+            return view('profiles.update_bank');
+        }
+        return redirect()->route('main');
+    }
+
+    public function updateBankDetails(Request $request)
+    {
+        $formFields = $request->validate(
+            [
+                'issue_bank' => ['required'],
+                'bankAccHolderName' => ['required', 'string', 'max:255'],
+                'bankAccNum' => ['required', function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[0-9\-]+$/', $value)) {
+                        return $fail('The bank account number can only contain numbers and hyphens.');
+                    }
+                }],
+            ]
+        );
+
+        //Current User
+        $user = auth()->user();
+
+        $user->update([
+            'bank_name' => $formFields['issue_bank'],
+            'bank_acc_name' => $formFields['bankAccHolderName'],
+            'bank_acc_num' => $formFields['bankAccNum'],
+        ]);
+
+        return redirect()->route('profile')->with(['message' => 'Bank details updated successfully.', 'type' => 'success']);
+    }
 }

@@ -1,7 +1,7 @@
 @props(['orders'])
-@if (empty($orders))
-<td colspan="8">
-<td style="text-align:center">Not record found
+@if (empty($orders) || $orders->isEmpty())
+<tr>
+<td style="text-align:center" colspan="8">Not record found
 </td>
 </tr>
 @else
