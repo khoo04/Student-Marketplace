@@ -98,6 +98,50 @@ class UserController extends Controller
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
 
+    public function updateDetails(Request $request)
+    {
+        $user = auth()->user();
+        $formFields = $request->validate(
+            [
+                'first_name' => ['required', 'string', 'max:255'],
+                'last_name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            ]
+        );
+
+        $user->update($formFields);
+
+        return redirect()->back()->with([
+            'message' => 'Account updated successfully!',
+            'type' => 'success',
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'old_password' => ['required'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ]);
+
+        // Check if the old password is correct
+        if (!\Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->withErrors(['old_password' => 'The provided password does not match your current password.']);
+        }
+
+        // Update the password
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return redirect()->back()->with([
+            'message' => 'Password updated successfully!',
+            'type' => 'success',
+        ]);
+    }
+
+}
     public function updateAccountStatus(Request $request)
     {
         $userID = $request->input('userID');
