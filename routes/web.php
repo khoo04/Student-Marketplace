@@ -78,6 +78,7 @@ Route::get('/categories/{category}', [PageController::class, 'categoryPage']);
 
 //Profile Routes
 Route::get('/profile', [PageController::class, 'showProfile'])->middleware('auth')->name('profile');
+Route::get('/redirectToOrderPage',[OrderController::class,'view'])->middleware('auth')->name('view.order');
 
 Route::middleware(['auth','seller_only'])->group(function(){
     Route::get('/profile/updateBank',[UserController::class,'createBankDetails'])->name('profile.createBankDetails');
