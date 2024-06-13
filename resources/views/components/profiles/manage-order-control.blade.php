@@ -5,7 +5,6 @@
 
 <div class="control-container">
     <div class="view-selector" id="manage-order-selector">
-        <!--TODO: Retrieve Filter data-->
         <section class="search-filter">
             <div class="search-filter-col-left">
                 <div id="order-date-container">
@@ -96,6 +95,7 @@
 
 <script>
     $(document).ready(function() {
+        
         const statusDialog = document.querySelector(".delivery-dialog");
         $("#filter-btn").on("click", function() {
             let fromDate = $("#order-form-date").val().length == 0 ? undefined : $("#order-form-date")
@@ -108,23 +108,56 @@
             updateView(fromDate, toDate, status, keyword);
         });
 
-        $("#reset-btn").on("click", resetFilter);
+        const detailsDialog = document.querySelector('.view-details-dialog');
 
-        $('.arrange-shipment').click(function() {
-            var json = $(this).closest("tr").data("details");
-            modifyDeliveryModal(json);
-            statusDialog.showModal();
-        });
+        function attachEventListener() {
+            $("#reset-btn").on("click", resetFilter);
 
-        $("[data-close-status-dialog]").click(function() {
-            statusDialog.close();
-        });
+            $('.arrange-shipment').click(function() {
+                var json = $(this).closest("tr").data("details");
+                modifyDeliveryModal(json);
+                statusDialog.showModal();
+            });
 
-        $('.submit-btn').click(function() {
-            if (confirm("Are you confirm to perform this action?") == true) {
-                $(".shipping-form").submit();
+            $("[data-close-status-dialog]").click(function() {
+                statusDialog.close();
+            });
+
+            $('.submit-btn').click(function() {
+                if (confirm("Are you confirm to perform this action?") == true) {
+                    $(".shipping-form").submit();
+                }
+            });
+            $(".view-details").click(function() {
+                console.log("Clicked");
+                var json = $(this).closest("tr").data("details");
+                modifyDetailsModal(json);
+                detailsDialog.showModal();
+            });
+
+            $('[data-close-details-dialog]').click(() => {
+                detailsDialog.close();
+            });
+
+            function dialogBackDropClose(dialog) {
+                dialog.addEventListener("click", e => {
+                    const dialogDimensions = dialog.getBoundingClientRect()
+                    if (
+                        e.clientX < dialogDimensions.left ||
+                        e.clientX > dialogDimensions.right ||
+                        e.clientY < dialogDimensions.top ||
+                        e.clientY > dialogDimensions.bottom
+                    ) {
+                        dialog.close()
+                    }
+                });
             }
-        });
+
+            dialogBackDropClose(statusDialog);
+            dialogBackDropClose(detailsDialog);
+        }
+
+        attachEventListener();
 
         function modifyDeliveryModal(json) {
             $('.shipping-form #orderID').text(json.orderID);
@@ -134,14 +167,6 @@
             $('.shipping-form #oID').val(json.orderID);
         }
 
-        const detailsDialog = document.querySelector('.view-details-dialog');
-
-        $(".view-details").click(function() {
-            var json = $(this).closest("tr").data("details");
-            modifyDetailsModal(json);
-            detailsDialog.showModal();
-        });
-
         function modifyDetailsModal(json) {
             $('.view-details-dialog #orderID').text(json.orderID);
             $('.view-details-dialog #customerName').text(json.name);
@@ -150,26 +175,6 @@
             $('.view-details-dialog #tracking_num').text(json.tracking_num ?? "No Tracking Number");
         }
 
-        $('[data-close-details-dialog]').click(() => {
-            detailsDialog.close()
-        });
-
-        function dialogBackDropClose(dialog) {
-            dialog.addEventListener("click", e => {
-                const dialogDimensions = dialog.getBoundingClientRect()
-                if (
-                    e.clientX < dialogDimensions.left ||
-                    e.clientX > dialogDimensions.right ||
-                    e.clientY < dialogDimensions.top ||
-                    e.clientY > dialogDimensions.bottom
-                ) {
-                    dialog.close()
-                }
-            });
-        }
-
-        dialogBackDropClose(statusDialog);
-        dialogBackDropClose(detailsDialog);
 
         function updateView(fromDate, toDate, status, keyword) {
             let data = {};
@@ -179,12 +184,11 @@
             if (typeof keyword !== 'undefined') data.keyword = keyword;
             $.ajax({
                 type: "GET",
-                url: "{{route('ajax.manage-order-filter')}}",
+                url: "{{ route('ajax.manage-order-filter') }}",
                 data: data,
                 success: function(response) {
-                    console.log(response);
-                    console.log(response.orderList);
                     $("tbody").html(response.orderList);
+                    attachEventListener();
                 }
             });
         }
@@ -202,8 +206,8 @@
             updateView(fromDate, toDate, status, keyword);
         }
 
-         // Add event listener to check date validation
-         $("#order-form-date, #order-to-date").on("change", function() {
+        // Add event listener to check date validation
+        $("#order-form-date, #order-to-date").on("change", function() {
             let fromDate = $("#order-form-date").val();
             let toDate = $("#order-to-date").val();
             if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {

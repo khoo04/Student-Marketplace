@@ -4,7 +4,6 @@
 </div>
 <div class="control-container" id="report">
     <div class="view-selector" id="report-view-selector">
-        <!--TODO: Add Action and Method to this form-->
         <div class="filter-container">
             <select name="product" class="dropdown-box" id="product_sales_dropdown" title="product">
                 @if (empty($products))
@@ -47,17 +46,6 @@
                     @endif
                 </td>
             </tr>
-
-            {{-- Prompt User to Select --}}
-            {{--
-                <tr>
-                    <td>{{$products[0]->name}}</td>
-                    <td>120</td>
-                    <td>RM 130.00</td>
-                    <td>RM 15600</td>
-                </tr>
-                --}}
-
 
         </tbody>
     </table>
@@ -114,7 +102,6 @@
                 toDate: toDate,
             };
 
-            console.log(requestData);
             requestTableData(requestData);
         });
 

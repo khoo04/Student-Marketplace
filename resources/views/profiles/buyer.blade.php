@@ -124,7 +124,6 @@
                 url: '{{ route('ajax.address-control') }}',
                 success: function(response) {
                     $(".control-panel").html(response.control);
-                    attachAddressControlEventListener();
                 },
                 error: function(xhr) {
                     console.error(xhr.responseText);
@@ -149,7 +148,6 @@
             $("#logoutForm").submit();
         };
     </script>
-    <script src="{{ asset('js/layout.js') }}" defer></script>
     <script src="{{ asset('js/profile.js') }}" defer></script>
     <script src="{{ asset('js/profile_buyer.js') }}" defer></script>
 @endsection

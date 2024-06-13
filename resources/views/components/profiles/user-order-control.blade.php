@@ -47,15 +47,37 @@
                         <td class="total-price-column">RM {{ $data->total_price }}</td>
                         <td class="order-status-column {{ $data->order_status }}">{{ ucfirst($data->order_status) }}
                         </td>
-                        <td class="tracking-number-column">{{ $data->tracking_num  ?? "No Provided"}}</td>
+                        @if ($data->order_status == 'shipping' || $data->order_status == 'completed')
+                            <td class="tracking-number-column">{{ $data->tracking_num ?? 'No Provided' }}</td>
+                        @else
+                            <td class="tracking-number-column">{{ $data->tracking_num ?? 'Waiting for shipment' }}
+                            </td>
+                        @endif
+
                         @if ($data->order_status == 'shipping')
                             <td class="action-column">
-                                <button type="button" class="action-button" data-type="complete" data-oid="{{$data->order_id}}">Order
+                                <button type="button" class="action-button" data-type="complete"
+                                    data-oid="{{ $data->order_id }}">Order
                                     Completed</button>
                             </td>
                         @elseif ($data->order_status == 'completed' && $data->comment_status == 0)
                             <td class="action-column"><button type="button" class="action-button" data-type="comment"
                                     data-oid="{{ $data->order_id }}">Leave Comment</button></td>
+                        @elseif($data->order_status == 'processing' || ($data->order_status == 'shipping' && $data->is_deleted))
+                            <td class="action-column">
+                                <div style="font-size: 0.8rem">
+                                    <p style="color:red; font-weight:bold">Seller has deleted this product</p>
+                                    </br>
+                                    <p>Please contact seller for further information:</p>
+                                    </br>
+                                    <p style="font-weight: bold">Seller Name </br> <span
+                                            style="font-weight: normal">{{ $data->seller_name }} </span></p>
+                                    <p style="font-weight: bold">Seller Email: </br> <span
+                                            style="font-weight: normal">{{ $data->seller_email }} </span></p>
+                                    <p style="font-weight: bold">Seller Phone: </br> <span
+                                            style="font-weight: normal">{{ $data->seller_phone }} </span></p>
+                                </div>
+                            </td>
                         @else
                             <td class="action-column"></td>
                         @endif
@@ -68,7 +90,7 @@
 
 <dialog class="comment-dialog">
     <div class="dialog-container">
-        <form method="POST" action="{{route('order.leaveComment')}}">
+        <form method="POST" action="{{ route('order.leaveComment') }}">
             @csrf
             @method('PUT')
             <h2>Leave Comment</h2>
@@ -87,9 +109,9 @@
     </div>
 </dialog>
 
-<form action="{{route('order.receiveOrder')}}" method="POST" id="receiveOrderForm">
+<form action="{{ route('order.receiveOrder') }}" method="POST" id="receiveOrderForm">
     @csrf
-    <input type="hidden" name="order_id"> 
+    <input type="hidden" name="order_id">
 </form>
 
 <script>
@@ -143,14 +165,14 @@
         function addComment(orderID) {
             $.ajax({
                 type: "GET",
-                url: "{{route('products.details')}}",
+                url: "{{ route('products.details') }}",
                 data: {
                     orderID: orderID
                 },
-                success: function (response) {
-                    if (response.status){
+                success: function(response) {
+                    if (response.status) {
                         $(".dialog-container input[name=orderID]").val(response.orderID);
-                        $(".dialog-container #productName").text(response.productName);  
+                        $(".dialog-container #productName").text(response.productName);
                         commentDialog.showModal();
                     }
                 }

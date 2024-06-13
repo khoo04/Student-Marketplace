@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -127,7 +127,7 @@ class UserController extends Controller
         ]);
 
         // Check if the old password is correct
-        if (!\Hash::check($request->old_password, $user->password)) {
+        if (!Hash::check($request->old_password, $user->password)) {
             return redirect()->back()->withErrors(['old_password' => 'The provided password does not match your current password.']);
         }
 
@@ -141,7 +141,6 @@ class UserController extends Controller
         ]);
     }
 
-}
     public function updateAccountStatus(Request $request)
     {
         $userID = $request->input('userID');
