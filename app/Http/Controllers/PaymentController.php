@@ -11,7 +11,7 @@ class PaymentController extends Controller
     public function create(Request $request){
         $fpx_buyerEmail = $request->email;
         $fpx_buyerName = $request->name;
-        $private_key = "6258342C-47BA-4AD5-9135-9144FBD09395";
+        $private_key = env('PRIVATE_KEY');
         $fpx_txnAmount = $request->amount;
         $buyer_id = auth()->user()->id;
         $order_id = $request->Oid;
