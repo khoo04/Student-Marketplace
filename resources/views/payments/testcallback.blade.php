@@ -8,7 +8,8 @@
 </head>
 <body>
     <form action="{{route("payments.callback")}}" method="post">
-        <input type="hidden" name="Status" value="Success" />
+        @csrf
+        <input type="text" name="Status" value="Success" />
         <input type="text" name="Fpx_SellerOrderNo" value="TRANSC_2024060800012" />
         <input type="text" name="TransactionAmount" value="1.70" />
         <input type="hidden" name="Fpx_SellerExOrderNo" value="DirectPayTest20231227201201" />
