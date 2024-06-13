@@ -81,7 +81,7 @@ class PaymentController extends Controller
         }else if($status == 'Failed'){
             $payment->payment_status = 'failed';
             $payment->save();
-            redirect()->route('main')->with(['message' =>'Payment failed!', 'type' => 'alert']);
+            return redirect()->route('main')->with(['message' =>'Payment failed!', 'type' => 'alert']);
         }
     }
 
