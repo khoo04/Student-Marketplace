@@ -10,6 +10,8 @@ class ShippingAddressController extends Controller
 {
     public function store(Request $request)
     {
+        $user = auth()->user();
+
         $validatedFields = $request->validate([
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
@@ -22,11 +24,15 @@ class ShippingAddressController extends Controller
         $addressLines = explode("\n", $request->address);
         $addressLine1 = isset($addressLines[0]) ? $addressLines[0] : '';
         $addressLine2 = isset($addressLines[1]) ? $addressLines[1] : '';
+
+        if (count($user->addresses) == 0) {
+            $defaultAddress = true;
+        }
+        //If user does not have address before, the first address added is set as default.
         if ($defaultAddress) {
             ShippingAddress::where('user_id', Auth::id())->update(['default' => false]);
         }
-
-        $user = auth()->user();
+        
         $user->addresses()->create([
             'address_line_1' => $addressLine1,
             'address_line_2' => $addressLine2,

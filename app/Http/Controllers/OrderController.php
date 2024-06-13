@@ -33,7 +33,11 @@ class OrderController extends Controller
         if ($stocks <= 0) {
             return back()->with(['message' => 'The product is out of stock!', 'type' => 'alert']);
         }
-
+        
+        //Check user have address or not before order
+        if (count($user->addresses) == 0){
+            return redirect()->route('profile')->with(['message' => 'Please add at least one address before buying', 'type' => 'alert', 'pageIndex' => 1]);
+        }
         $order = $user->orders()->create(['product_id' => $product_id, 'quantity' => $quantity]);
 
         $product_price = Product::find($product_id)->price;

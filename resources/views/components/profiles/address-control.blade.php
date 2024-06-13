@@ -5,8 +5,11 @@
             class="fa-solid fa-circle-plus"></i>Add New Address</button>
 </div>
 <div class="control-container" id="address-container">
-    @if (empty($addresses))
+    @if (count($addresses) == 0)
         {{-- HANDLE USER WITH NOT ADDRESS --}}
+        <div style="padding: 1rem; text-align:center;">
+            <p>No Address Available</p>
+        </div>
     @else
         @foreach ($addresses as $address)
             <x-profiles.sub_components.address-card :address=$address />

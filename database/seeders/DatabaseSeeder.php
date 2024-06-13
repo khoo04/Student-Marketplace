@@ -22,18 +22,8 @@ class DatabaseSeeder extends Seeder
             DummySeeder::class,
         ]);
 
-        $admin = User::create([
-            'first_name' => "Admin",
-            'last_name' => "Super",
-            'email' => 'admin@gmail.com',
-            'phone_num' => '0196043388',
-            'password' => bcrypt('admin12345'),
-            'approve_status' => 'approved',
-            'types' => 'admin',
-        ]);
-
-      //  User::factory(10)->create();
-     //   Product::factory(20)->create();
+        //User::factory(10)->create();
+        //Product::factory(20)->create();
    
     }
 }

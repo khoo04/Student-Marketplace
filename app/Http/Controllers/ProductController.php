@@ -33,7 +33,7 @@ class ProductController extends Controller
         $formFields = $request->validate([
             'productName' => 'required|string|max:255',
             'productDescription' => 'required|string',
-            'productQuantity' => 'required|integer|min:1',
+            'productQuantity' => 'required|integer|min:1|max:5000',
             'productPrice' => 'required|numeric|min:1',
             'productCategory' => 'required',
             'condition' => 'required',
@@ -84,7 +84,7 @@ class ProductController extends Controller
         $formFields = $request->validate([
             'productName' => 'required|string|max:255',
             'productDescription' => 'required|string',
-            'productQuantity' => 'required|integer|min:1',
+            'productQuantity' => 'required|integer|min:1|max:5000',
             'productPrice' => 'required|numeric|min:0.01',
             'productCategory' => 'required',
             'condition' => 'required',
