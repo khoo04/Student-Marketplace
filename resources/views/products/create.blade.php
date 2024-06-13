@@ -147,8 +147,8 @@
             </div>
             <div class="form-group">
                 <label for="productQuantity">Quantity</label>
-                <input type="number" id="productQuantity" name="productQuantity" required placeholder="e.g., 10" min="1" value="{{old('productQuantity')}}">
-                <div class="text-hint">Number of items available for sale.</div>
+                <input type="number" id="productQuantity" name="productQuantity" required placeholder="e.g., 10" min="1" max="5000" value="{{old('productQuantity')}}">
+                <div class="text-hint">Number of items available for sale. Minimum: 1 and Maximum: 5000</div>
                 @error('productQuantity')
                 <p class="form-error-message">{{ $message }}</p>
                 @enderror
