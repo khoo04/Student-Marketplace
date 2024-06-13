@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('approve_status',['approved','pending','rejected'])->default('pending');
             $table->timestamp('created_at')->nullable(); 
             $table->timestamp('updated_at')->nullable(); 
+            $table->softDeletes();
             //Foreign Key
             $table->unsignedBigInteger("category_id");
             $table->unsignedBigInteger("user_id");

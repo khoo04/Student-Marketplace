@@ -125,14 +125,21 @@ class PageController extends Controller
             DB::raw('orders.order_status as order_status'),
             DB::raw('orders.comment_status as comment_status'),
             DB::raw('orders.tracking_num as tracking_num'),
+            DB::raw('CASE WHEN products.deleted_at IS NULL THEN 0 ELSE 1 END as is_deleted'),
+            DB::raw('CONCAT(sellers.first_name, " ", sellers.last_name)  as seller_name'),
+            DB::raw('sellers.email as seller_email'),
+            DB::raw('sellers.phone_num as seller_phone')
         )
-        ->join('payments','orders.id','=','payments.order_id')
-        ->join('products', 'orders.product_id', '=', 'products.id')
-        ->join('users','orders.user_id','=','users.id')
-        ->where('payments.payment_status','success')
-        ->where('users.id',$user->id)
-        ->get();
-        $userOrderControl = view('components.profiles.user-order-control',['userOrderData' => $userOrderData])->render();
+            ->join('payments', 'orders.id', '=', 'payments.order_id')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->join('users as sellers', function ($join) {
+                $join->on('products.user_id', '=', 'sellers.id');
+            })
+            ->where('payments.payment_status', 'success')
+            ->where('users.id', $user->id)
+            ->get();
+        $userOrderControl = view('components.profiles.user-order-control', ['userOrderData' => $userOrderData])->render();
         return response()->json(['control' => $userOrderControl]);
     }
 
@@ -149,11 +156,20 @@ class PageController extends Controller
     public function showManageOrderControl()
     {
         //Retrieve all record related to the current seller
-        $orders = Order::with(['address', 'product.seller', 'buyer', 'payment'])
-            ->whereHas('product.seller', function ($query) {
-                $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
+        $orders = Order::with([
+            'address' => function ($query) {
+                $query->withTrashed();
+            },
+            'product' => function ($query) {
+                $query->withTrashed();  // Include soft-deleted products
+            },
+            'buyer',
+            'payment'
+        ])
+            ->whereHas('product', function ($query) {
+                $query->withTrashed()->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
             })
-            //Check whether the payment is success or not, only order with success payment will show on seller view
+            // Check whether the payment is successful, only orders with successful payment will show on seller view
             ->whereHas('payment', function ($query) {
                 $query->where('payment_status', '=', 'success');
             })
@@ -173,9 +189,15 @@ class PageController extends Controller
         $order_status = $request->input('status');
         $keyword = $request->input('keyword');
 
-        $orderQuery = Order::with(['address', 'product', 'product.seller', 'buyer', 'payment'])
-            ->whereHas('product.seller', function ($query) {
-                $query->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
+        $orderQuery = Order::with([
+            'address' => function ($query) {
+                $query->withTrashed();
+            }, 'product' => function ($query) {
+                $query->withTrashed();
+            }, 'buyer', 'payment'
+        ])
+            ->whereHas('product', function ($query) {
+                $query->withTrashed()->where('user_id', auth()->user()->id); // user_id here refers to the seller_id
             })
             //Check whether the payment is success or not, only order with success payment will show on seller view
             ->whereHas('payment', function ($query) {
@@ -210,9 +232,11 @@ class PageController extends Controller
     {
         $currentUser = Auth::user();
 
-        $products = auth()->user()->products;
+        $products = auth()->user()->products()->withTrashed()->get();
 
-        $ordersQuery = Order::with(['product', 'payment'])
+        $ordersQuery = Order::with(['product' => function ($query) {
+            $query->withTrashed();
+        }, 'payment'])
             ->whereHas('product', function ($query) use ($currentUser) {
                 $query->where('user_id', $currentUser->id);
             })
@@ -278,20 +302,20 @@ class PageController extends Controller
         $productID = $request->input('productID');
         $year = $request->input('year');
 
-        $product = Product::find($productID);
+        $product = Product::withTrashed()->find($productID);
         // Fetch orders for the given product and user, grouped by month and filtered by the selected year
         $ordersQuery = Order::select(
             DB::raw('MONTH(created_at) as month'),
             DB::raw('SUM(quantity) as total_quantity')
         )
             ->whereHas('product', function ($query) use ($currentUser) {
+                $query->withTrashed();
                 $query->where('user_id', $currentUser->id);
             })
             ->whereHas('payment', function ($query) {
                 $query->where('payment_status', 'success');
             })
             ->where('order_status', 'completed')
-            //Add Where the order_status is completed?
             ->where('product_id', $productID)
             ->whereYear('created_at', $year)  // Filter by the selected year
             ->groupBy('month')
@@ -316,28 +340,30 @@ class PageController extends Controller
 
     public function adminIndex()
     {
-        if (auth()->user()->types == 'admin'){
-            $usersPendingApprove = User::all()->where('approve_status','pending');
-            return view('admin.index',['usersPendingApprove' => $usersPendingApprove]);
+        if (auth()->user()->types == 'admin') {
+            $usersPendingApprove = User::all()->where('approve_status', 'pending');
+            return view('admin.index', ['usersPendingApprove' => $usersPendingApprove]);
+        } else {
+            return abort(403, 'Unauthorized Action');
         }
-        else{
-            return abort(403,'Unauthorized Action');
-        } 
     }
 
-    public function getAccApprovalPanel(){
-        $usersPendingApprove = User::all()->where('approve_status','pending');
-        $usersPendingApprovePanel = view('components.admin.account-approval-panel',['usersPendingApprove' => $usersPendingApprove])->render();
+    public function getAccApprovalPanel()
+    {
+        $usersPendingApprove = User::all()->where('approve_status', 'pending');
+        $usersPendingApprovePanel = view('components.admin.account-approval-panel', ['usersPendingApprove' => $usersPendingApprove])->render();
         return response()->json(['panel' => $usersPendingApprovePanel]);
     }
 
-    public function getProductApprovalPanel(){
-        $productsPendingApprove = Product::all()->where('approve_status','pending');
-        $productsPendingApprovePanel = view('components.admin.product-approval-panel',['productsPendingApprove' => $productsPendingApprove])->render();
+    public function getProductApprovalPanel()
+    {
+        $productsPendingApprove = Product::all()->where('approve_status', 'pending');
+        $productsPendingApprovePanel = view('components.admin.product-approval-panel', ['productsPendingApprove' => $productsPendingApprove])->render();
         return response()->json(['panel' => $productsPendingApprovePanel]);
     }
 
-    public function getSalesPaybackPanel(){
+    public function getSalesPaybackPanel()
+    {
         $paymentToPayData = Order::select(
             DB::raw('orders.id as order_id'),
             DB::raw('payments.transaction_no as transaction_no'),
@@ -349,15 +375,14 @@ class PageController extends Controller
             DB::raw('users.bank_name as bank_name'),
             DB::raw('users.bank_acc_num as bank_acc_num')
         )
-        ->join('payments','orders.id','=','payments.order_id')
-        ->join('products', 'orders.product_id', '=', 'products.id')
-        ->join('users','products.user_id','=','users.id')
-        ->where('payments.isPaid',false)
-        ->where('payments.payment_status','success')
-        ->where('orders.order_status', 'completed')
-        ->get();
-        $salesPaybackPanel = view('components.admin.sales-payback-panel',['paymentToPayData' => $paymentToPayData])->render();
+            ->join('payments', 'orders.id', '=', 'payments.order_id')
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->where('payments.isPaid', false)
+            ->where('payments.payment_status', 'success')
+            ->where('orders.order_status', 'completed')
+            ->get();
+        $salesPaybackPanel = view('components.admin.sales-payback-panel', ['paymentToPayData' => $paymentToPayData])->render();
         return response()->json(['panel' => $salesPaybackPanel]);
     }
-
 }

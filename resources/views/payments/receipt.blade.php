@@ -99,3 +99,20 @@
         </div>
     </div>
 @endsection
+
+
+@section('js')
+<script>
+    $(document).ready(function () {
+        $("#main-page-btn").click(function (e) { 
+            e.preventDefault();
+            window.location.href = "{{route('main')}}";
+        });
+        
+        $("#view-order-btn").click(function (e) { 
+            e.preventDefault();
+            window.location.href = "{{route('view.order')}}";
+        });
+    });
+</script>
+@endsection

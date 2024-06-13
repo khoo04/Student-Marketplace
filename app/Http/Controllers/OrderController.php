@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
+    public function view(){
+        return redirect()->route('profile')->with(['pageIndex' => 2]);
+    }
+
     public function store(Request $request)
     {
         $user = Auth::user();
