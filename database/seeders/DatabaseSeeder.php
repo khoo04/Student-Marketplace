@@ -18,12 +18,22 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-            CategorySeeder::class,
+       //     CategorySeeder::class,
             DummySeeder::class,
         ]);
 
-        User::factory(10)->create();
-        Product::factory(20)->create();
+        $admin = User::create([
+            'first_name' => "Admin",
+            'last_name' => "Super",
+            'email' => 'admin@gmail.com',
+            'phone_num' => '0196043388',
+            'password' => bcrypt('admin12345'),
+            'approve_status' => 'approved',
+            'types' => 'admin',
+        ]);
+
+      //  User::factory(10)->create();
+     //   Product::factory(20)->create();
    
     }
 }
