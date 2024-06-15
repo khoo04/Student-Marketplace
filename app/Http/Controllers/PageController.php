@@ -338,6 +338,30 @@ class PageController extends Controller
         return response()->json($response);
     }
 
+    public function getAllProductSalesData(Request $request)
+    {
+        $currentUser = auth()->user();
+        $month = $request->input('month');
+        $year = $request->input('year');
+
+        $allProductOrderQuery =  Order::select(
+            DB::raw('products.name as product_name'),
+            DB::raw('SUM(orders.quantity) as sales_quantity'),
+        )
+            ->join('products', 'orders.product_id', '=', 'products.id')
+            ->groupBy('products.name')
+            ->where('products.user_id', $currentUser->id)
+            ->where('orders.order_status', 'completed')
+            ->whereHas('payment', function ($query) {
+                $query->where('payment_status', 'success');
+            })
+            ->whereMonth('orders.created_at', $month)
+            ->whereYear('orders.created_at', $year)
+            ->get();
+
+        return response()->json($allProductOrderQuery);
+    }
+
     public function adminIndex()
     {
         if (auth()->user()->types == 'admin') {

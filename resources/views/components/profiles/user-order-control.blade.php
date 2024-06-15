@@ -63,7 +63,7 @@
                         @elseif ($data->order_status == 'completed' && $data->comment_status == 0)
                             <td class="action-column"><button type="button" class="action-button" data-type="comment"
                                     data-oid="{{ $data->order_id }}">Leave Comment</button></td>
-                        @elseif($data->order_status == 'processing' || ($data->order_status == 'shipping' && $data->is_deleted))
+                        @elseif(($data->order_status == 'processing' || $data->order_status == 'shipping') && $data->is_deleted)
                             <td class="action-column">
                                 <div style="font-size: 0.8rem">
                                     <p style="color:red; font-weight:bold">Seller has deleted this product</p>
@@ -96,8 +96,17 @@
             <h2>Leave Comment</h2>
             <input type="hidden" name="orderID">
             <p>Product Name: <span class="content" id="productName"></span></p>
-            <p>Rating: <input type="number" id="ratingInput" name="rating" min="0" max="5"
-                    step="0.1"></input></p>
+            <div class="ratings-section">
+                <p>Ratings: </p>
+                <div class="comment-ratings">
+                    <i class="fa-regular fa-star" data-rating="5"></i>
+                    <i class="fa-regular fa-star" data-rating="4"></i>
+                    <i class="fa-regular fa-star" data-rating="3"></i>
+                    <i class="fa-regular fa-star" data-rating="2"></i>
+                    <i class="fa-regular fa-star" data-rating="1"></i>
+                </div>
+            </div>
+            <input type="hidden" name="rating">
             <p>Comment:
                 <textarea id="commentInput" name="comment"></textarea>
             </p>
@@ -173,10 +182,19 @@
                     if (response.status) {
                         $(".dialog-container input[name=orderID]").val(response.orderID);
                         $(".dialog-container #productName").text(response.productName);
+                        $('.comment-ratings i').removeAttr("data-clicked");
+                        $('.dialog-container textarea[name=comment]').val('');
+                        $('.dialog-container input[name=rating]').val(0);
                         commentDialog.showModal();
                     }
                 }
             });
         }
+
+        $('.comment-ratings i').click(function () { 
+            $('.comment-ratings i').removeAttr("data-clicked");
+            $(this).attr("data-clicked", true);
+            $('.dialog-container input[name=rating]').val($(this).data('rating'));
+        });
     });
-</script>
+</script>   

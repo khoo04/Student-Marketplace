@@ -70,6 +70,13 @@ class OrderController extends Controller
 
     public function updateComment(Request $request)
     {
+        $orderID = $request->input('orderID');
+        $comment = $request->input('comment');
+
+        if ($orderID == null ||  $comment == null){
+            return redirect()->route('profile')->with(['message' => 'All field must be filled', 'type' => 'alert', 'pageIndex' => 2]);
+        }
+
         $validatedRequest = $request->validate([
             'orderID' => 'required',
             'rating' => 'required|numeric|min:0|max:5',
