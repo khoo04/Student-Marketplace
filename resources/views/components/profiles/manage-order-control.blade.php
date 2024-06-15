@@ -78,7 +78,7 @@
         <input type="hidden" name="oID" id="oID">
         <div class="delivery-action-button">
             <button type="button" data-close-status-dialog>Cancel</button>
-            <button type="submit" class="submit-btn">Submit</button>
+            <button type="button" class="submit-btn">Submit</button>
         </div>
     </form>
 </dialog>
@@ -129,7 +129,6 @@
                 }
             });
             $(".view-details").click(function() {
-                console.log("Clicked");
                 var json = $(this).closest("tr").data("details");
                 modifyDetailsModal(json);
                 detailsDialog.showModal();

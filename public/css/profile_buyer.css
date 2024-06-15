@@ -198,56 +198,61 @@
     border-bottom: 2px solid #D9D9D9;
 }
 
-.my-order-list .order-num-column{
+.my-order-list .order-num-column {
     width: 5%;
 }
 
-.my-order-list .product-image-column{
+.my-order-list .product-image-column {
     width: 15%;
 }
-.product-image-column > img{
+
+.product-image-column>img {
     width: 100%;
     height: 120px;
     object-fit: contain;
 }
-.my-order-list .product-name-column{
+
+.my-order-list .product-name-column {
     width: 15%;
 }
-.my-order-list .order-quantity-column{
+
+.my-order-list .order-quantity-column {
     width: 10%;
 }
 
-.my-order-list  .unit-price-column{
+.my-order-list .unit-price-column {
     width: 10%;
 }
-.my-order-list  .total-price-column{
+
+.my-order-list .total-price-column {
     width: 10%;
 }
-.my-order-list .order-status-column{
+
+.my-order-list .order-status-column {
     width: 5%;
 }
 
-.my-order-list .tracking-number-column{
+.my-order-list .tracking-number-column {
     width: 10%;
 }
 
-.my-order-list .action-column{
+.my-order-list .action-column {
     width: 15%;
 }
 
-.order-status-column.processing{
-    color:red;
+.order-status-column.processing {
+    color: red;
 }
 
-.order-status-column.shipping{
-    color:blue;
+.order-status-column.shipping {
+    color: blue;
 }
 
-.order-status-column.completed{
+.order-status-column.completed {
     color: green;
 }
 
-.action-column .action-button{
+.action-column .action-button {
     display: inline-block;
     padding: 8px 10px;
     border-radius: 0.25rem;
@@ -256,61 +261,117 @@
     cursor: pointer;
 }
 
-.action-column .action-button:hover{
+.action-column .action-button:hover {
     background-color: #29292e;
 }
 
-.comment-dialog{
-    top: 50%; /* Position the dialog at the center vertically */
-    left: 50%; /* Position the dialog at the center horizontally */
-    transform: translate(-50%, -50%); /* Center the dialog */
+.comment-dialog {
+    top: 50%;
+    /* Position the dialog at the center vertically */
+    left: 50%;
+    /* Position the dialog at the center horizontally */
+    transform: translate(-50%, -50%);
+    /* Center the dialog */
     z-index: 10;
     border: 2px solid black;
     background-color: #D9D9D9;
     border-radius: 0.5rem;
-    overflow: auto; /* Add scrollbars if content overflows */
+    overflow: auto;
+    /* Add scrollbars if content overflows */
 }
 
-.dialog-container{
-    padding: 1rem;;
+.dialog-container {
+    padding: 1rem;
+    ;
     min-width: 300px;
     max-width: 800px;
 }
 
-.dialog-container h2{
+.dialog-container h2 {
     margin-bottom: 0.5rem;
 }
 
-.dialog-container p{
+.dialog-container p {
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
 
-.dialog-container .content{
+.dialog-container .content {
     font-weight: normal;
 }
 
-.comment-dialog .button-container{
+.comment-dialog .button-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
 
-.comment-dialog .button-container .action-button{
+.comment-dialog .button-container .action-button {
     padding: 10px 12px;
     border-radius: 0.5rem;
 }
 
-.comment-dialog .button-container .action-button:not(:last-child){
+.comment-dialog .button-container .action-button:not(:last-child) {
     margin-right: 0.5rem;
 }
 
-.comment-dialog #ratingInput{
-    padding: 2px 4px;
-    border-radius: 0.25rem;
+/* Ratings */
+.ratings-section{
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
 }
 
-.comment-dialog #commentInput{
+.ratings-section > p{
+    margin: 0;
+    margin-right: 0.3rem;
+    font-weight: bold;
+}
+
+.comment-ratings{
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+.comment-ratings i {
+    cursor: pointer;
+    transition: color .2s transform .2s;
+    font-size: 1rem;
+}
+
+.comment-ratings i:hover {
+    color: orange;
+    transform: scale(1.3);
+    /* Change from regular to solid */
+    content: "\f005"; 
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900; 
+}
+
+.comment-ratings i[data-clicked]:before,
+.comment-ratings i[data-clicked] ~ i:before{
+    content: "\f005";
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 900;
+    color: orange;
+}
+
+.comment-ratings i:hover:before,
+.comment-ratings i:hover ~ i:before {
+    content: "\f005"; 
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900;
+    color: orange;
+}
+
+/* Reset regular icons */
+.comment-ratings i:before {
+    content: "\f006";
+    font-family: "Font Awesome 6 Free"; 
+    font-weight: 400; 
+}
+
+.comment-dialog #commentInput {
     margin-top: 0.5rem;
     width: 100%;
     height: 100px;
