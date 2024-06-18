@@ -89,6 +89,7 @@
     padding: 0 0.25rem;
 }
 
+
 .search-filter {
     display: flex;
     padding-top: 0.5rem;
@@ -387,7 +388,6 @@ td[data-status="completed"] {
     padding: 1rem;
 }
 
-
 .view-details-dialog>p {
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -417,6 +417,7 @@ td[data-status="completed"] {
 .view-details-dialog>button:active{
     background-color: var(--clr-secondary-900);
     color: white;
+
 }
 
 
