@@ -3,54 +3,57 @@
     <h1>View Sales Report</h1>
 </div>
 <div class="control-container" id="report">
-    <div class="view-selector" id="report-view-selector">
-        <div class="filter-container">
-            <select name="product" class="dropdown-box" id="product_sales_dropdown" title="product">
-                @if (empty($products))
-                    <option>NO PRODUCT FOUND</option>
-                @else
-                    @foreach ($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
-                    @endforeach
-                @endif
-            </select>
-            <div class="form-date-container">
-                <label for="form-date">From Date : </label>
-                <input type="date" id="sales-from-date" name="Start Date">
-            </div>
-            <div class="end-date-container">
-                <label for="to-date">To Date : </label>
-                <input type="date" id="sales-to-date" name="End Date">
-            </div>
-            <button type="button" class="view-button" id="product_sales_view_button">VIEW</button>
-        </div>
-    </div>
-
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Quantity Sold</th>
-                <th>Unit Price</th>
-                <th>Total Sales</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr id="data-row">
-                <td colspan="4">
+    <div class="section-container">
+        <h2 class="title">View Product Sales In Date Range</h2>
+        <div class="view-selector" id="report-view-selector"> 
+            <div class="filter-container">
+                <select name="product" class="dropdown-box" id="product_sales_dropdown" title="product">
                     @if (empty($products))
-                        No Product Found
+                        <option>NO PRODUCT FOUND</option>
                     @else
-                        Select a product and date range to view report
+                        @foreach ($products as $product)
+                            <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        @endforeach
                     @endif
-                </td>
-            </tr>
+                </select>
+                <div class="form-date-container">
+                    <label for="form-date">From Date : </label>
+                    <input type="date" id="sales-from-date" name="Start Date">
+                </div>
+                <div class="end-date-container">
+                    <label for="to-date">To Date : </label>
+                    <input type="date" id="sales-to-date" name="End Date">
+                </div>
+                <button type="button" class="view-button" id="product_sales_view_button">VIEW</button>
+            </div>
+        </div>
 
-        </tbody>
-    </table>
-    <div id="graph-section">
-        <h2>SALES EACH MONTH</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity Sold</th>
+                    <th>Unit Price</th>
+                    <th>Total Sales</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr id="data-row">
+                    <td colspan="4">
+                        @if (empty($products))
+                            No Product Found
+                        @else
+                            Select a product and date range to view report
+                        @endif
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="section-container">
+        <h2 class="title">PRODUCT SALES EACH MONTH</h2>
         <div class="view-selector" id="graph-view-selector">
             <div class="filter-container">
                 <select id="product-dropdown" class="dropdown-box" title="product">
@@ -77,7 +80,9 @@
                 <canvas id="proSalesChart"></canvas>
             </div>
         </div>
-        <h2 style="margin-top: 1.5rem;">ALL PRODUCTS SALES PER MONTH</h2>
+    </div>
+    <div class="section-container">
+        <h2 class="title">ALL PRODUCTS SALES PER MONTH</h2>
         <div class="view-selector" id="ps-graph-view-selector">
             <div class="filter-container">
                 <div class="month-selector">
@@ -155,7 +160,7 @@
         $("#view-graph-button").click(function() {
             productID = $('#product-dropdown').val();
             year = $("#year-dropdown").val();
-            requestGraph(productID, year);
+            requestProSalesGraph(productID, year);
         });
 
 
@@ -216,7 +221,7 @@
                 const k = (n + h / 30) % 12;
                 const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
                 return Math.round(255 * color).toString(16).padStart(2,
-                '0'); // convert to Hex and prefix "0" if needed
+                    '0'); // convert to Hex and prefix "0" if needed
             };
             return `#${f(0)}${f(8)}${f(4)}`;
         }
@@ -255,12 +260,12 @@
                     let dataset = response.map(item => item.sales_quantity);
                     let backgroundColors = labels.map(name => getProductColor(name));
 
-                    renderAllProSalesMonthGraph(labels, dataset,backgroundColors, month, year);
+                    renderAllProSalesMonthGraph(labels, dataset, backgroundColors, month, year);
                 }
             });
         }
 
-        function renderAllProSalesMonthGraph(labels, dataset,backgroundColors, month, year) {
+        function renderAllProSalesMonthGraph(labels, dataset, backgroundColors, month, year) {
             if (allProSalesMonthChart != undefined) {
                 allProSalesMonthChart.destroy();
             }

@@ -29,7 +29,8 @@
     justify-content: space-between;
     width: 88%;
     margin: 0 auto;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--clr-secondary-background);
+    box-shadow: 2px 2px 8px var(--clr-secondary);
     border-radius: 0.5rem;
     height: 60vh;
     margin-bottom: 1.5rem;
@@ -51,7 +52,6 @@
 
 .slide{
     position: absolute;
-    border: 1px solid black;
     margin: 1rem;
     inset: 0;
     opacity: 0;
@@ -78,7 +78,7 @@
     top: 50%;
     z-index: 2;                 
     transform: translateY(-50%);
-    color:rgba(255, 255, .5);
+    color: white;
     cursor: pointer;
     border-radius: .25rem;
     padding: 0 .5rem;
@@ -172,15 +172,23 @@ details > .rating{
 
 .action-btn{
     font-size: 2rem;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--clr-primary);
+    border: 1px solid transparent;
     color: white;
     padding: 15px 30px;
     border-radius: 0.5rem;
     cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-btn:focus{
+    background-color: var(--clr-primary-800);
+    border: 1px solid var(--clr-primary-900);
 }
 
 .action-btn:hover{
-    background-color: rgb(0, 0, 0,0.6);
+    background-color: var(--clr-primary-800);
+    box-shadow: 0 2px 8px var(--clr-primary-800);
 }
 
 #buy-now{
@@ -191,7 +199,8 @@ details > .rating{
 .section-container{
     margin: 0 auto;
     width: 88%;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--clr-secondary-background);
+    box-shadow: 2px 2px 8px var(--clr-secondary);
     padding: 1rem;
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
@@ -200,7 +209,6 @@ details > .rating{
 /*Contact Section*/
 #contact-section > h1{
     margin-bottom: 0.5rem;
-    text-decoration: underline;
 }
 .contact-card{
     display: flex;
@@ -220,10 +228,27 @@ details > .rating{
     font-weight: bold;
     font-size: 1.2rem;
 }
+
+.contact-card > ul > li > a:hover{
+    font-weight: 600;
+}
+
+hr {
+    display: block;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    unicode-bidi: isolate;
+    overflow: hidden;
+    border-style: inset;
+    border-width: 1px;
+}
+
+
 /* Description */
 #description-section > h1{
-    margin-bottom: 1rem;
-    text-decoration: underline;
+    margin-bottom: 0.5rem;
 }
 
 #description-section > p {
@@ -233,7 +258,6 @@ details > .rating{
 /* Comments Section */
 #comments-section > h1{
     margin-bottom: 0.5rem;
-    text-decoration: underline;
 }
 
 /* Comment Card */

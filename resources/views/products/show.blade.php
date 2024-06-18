@@ -57,8 +57,8 @@
                     <div class="stars-inner" style="width: {{ round((($product->rating / 5) * 100) / 10) * 10 }}%"></div>
                 </div>
             </div>
-            <p>Price : RM {{ $product->price }}</p>
-            <p>Quantity Available : {{ $product->quantity_available }}</p>
+            <p><b>Price : </b> RM {{ $product->price }}</p>
+            <p><b> Quantity Available : </b> {{ $product->quantity_available }}</p>
             <div id="action-btn-container">
                 <form method="post" action="{{ route('order.store') }}">
                     @csrf
@@ -83,6 +83,7 @@
     <!--Seller Contact Section-->
     <div class="section-container" id="contact-section">
         <h1>Contact Seller</h1>
+        <hr>
         <div class="contact-card">
             <ul>
                 <li id="seller-name">
@@ -102,13 +103,14 @@
 
     <div class="section-container" id="description-section">
         <h1>Description</h1>
-        <p><b>Category:</b> {{ $product->category->name }}</p>
+        <hr>
+        <p style="margin-bottom:1rem; font-size:1.25rem;"><b>Category:</b> {{ $product->category->name }}</p>
         <p>{{ $product->description }}</p>
     </div>
 
     <div class="section-container" id="comments-section">
         <h1>Comments</h1>
-
+        <hr>
         @if ($comments->isNotEmpty())
             @foreach ($comments as $comment)
                 <x-comment-card :comment=$comment />

@@ -82,16 +82,17 @@
         .form-group .submit-btn {
             width: 100%;
             padding: 10px;
-            background-color: #006bf7;
+            background-color: var(--clr-primary);
             border: none;
             border-radius: 4px;
             color: #fff;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color .2s;
         }
 
         .form-group .submit-btn:hover {
-            background-color: #0247a0;
+            background-color: var(--clr-primary-dark);
         }
 
         
@@ -99,16 +100,18 @@
             margin-top: 0.5rem;
             width: 100%;
             padding: 10px;
-            background-color: #9FA6B2;
-            border: none;
+            background-color: transparent;
+            border: 1px solid var(--clr-secondary);
             border-radius: 4px;
-            color: #fff;
+            color: black;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color .2s;
         }
 
         .cancel-btn:hover{
-            background-color: #8e939d;
+            background-color: var(--clr-secondary-600);
+            color: white;
         }
 
         .text-hint {
