@@ -74,18 +74,33 @@
 
 <script>
     $(document).ready(function() {
-        const openModalButton = document.querySelector("[data-open-modal]");
-        const closeModalButton = document.querySelector("[data-close-modal]");
-        const modal = document.querySelector("[data-modal]");
+        const deleteDialog = document.querySelector('.delete-confirm-dialog');
 
         $("[data-open-modal]").on("click", function() {
 
             $("input[name=pID]").val($(this).data("id"));
-            modal.showModal();
+            deleteDialog.showModal();
         });
 
         $("[data-close-modal]").on("click", function() {
-            modal.close();
+            deleteDialog.close();
         })
+
+        function dialogBackDropClose(dialog) {
+            dialog.addEventListener("click", e => {
+                const dialogDimensions = dialog.getBoundingClientRect()
+                if (
+                    e.clientX < dialogDimensions.left ||
+                    e.clientX > dialogDimensions.right ||
+                    e.clientY < dialogDimensions.top ||
+                    e.clientY > dialogDimensions.bottom
+                ) {
+                    dialog.close()
+                }
+            });
+        }
+        
+        dialogBackDropClose(deleteDialog);
+
     });
 </script>

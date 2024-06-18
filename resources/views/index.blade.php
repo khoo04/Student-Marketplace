@@ -2,6 +2,18 @@
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <style>
+        #hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('{{asset('images/marketplace_hero.png')}}')  no-repeat center center/cover;
+            filter: blur(6px);
+            z-index: 0;
+        }
+    </style>
 @endsection
 
 @section('title')
@@ -11,8 +23,11 @@
 @section('content')
     @include('components.flash-message')
     <section id="hero">
-        <h1>Student <span>Marketplace</span></h1>
-        <p>Find What Your Love, Sell What You Make.</p>
+        <div id="hero-background"></div>
+        <div id="hero-content">
+            <h1>Student <span>Marketplace</span></h1>
+            <p>Find What You Love, Sell What You Make.</p>
+        </div>
     </section>
     <div id="category-section">
         <h1>Categories</h1>
@@ -31,13 +46,13 @@
 
     @if (auth()->user() != null)
         @if (auth()->user()->types == 'buyer')
-            <a href="{{route('cart')}}" id="cart-button">
+            <a href="{{ route('cart') }}" id="cart-button">
                 <i class="fa-solid fa-cart-shopping"></i>
                 <h2>My Cart</h2>
             </a>
         @endif
     @else
-        <a href="{{route('cart')}}" id="cart-button">
+        <a href="{{ route('cart') }}" id="cart-button">
             <i class="fa-solid fa-cart-shopping"></i>
             <h2>My Cart</h2>
         </a>

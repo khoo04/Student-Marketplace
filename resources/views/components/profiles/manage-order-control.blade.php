@@ -6,6 +6,7 @@
 <div class="control-container">
     <div class="view-selector" id="manage-order-selector">
         <section class="search-filter">
+            <h2 id="filter-title">Order Filter</h2>
             <div class="search-filter-col-left">
                 <div id="order-date-container">
                     <p id="order-date">Order Date</p>
@@ -66,11 +67,12 @@
         @csrf
         @method('PUT')
         <h2>Arrange Shipment</h2>
+        <hr>
         <p>Order ID: <span class="content" id="orderID">1</span></p>
         <p>Customer Name: <span class="content" id="customerName">Customer Name</span></p>
         <p>Contact Number: <span class="content" id="phoneNum">Phone Number</span></p>
         <p>Shipping Address: <span class="content" id="address">Address</span></p>
-        <label for="tracking_num">Tracking Number</label>
+        <label for="tracking_num"><b>Tracking Number</b></label>
         <div class="input-container">
             <input type="text" id="tracking_num" name="tracking_num"
                 placeholder="Parcel Tracking Number (Can be null)">
@@ -85,6 +87,7 @@
 
 <dialog class="view-details-dialog">
     <h2>View Shipment Details</h2>
+    <hr>
     <p>Order ID: <span class="content" id="orderID">1</span></p>
     <p>Customer Name: <span class="content" id="customerName">Customer Name</span></p>
     <p>Contact Number: <span class="content" id="phoneNum">Phone Number</span></p>
