@@ -216,11 +216,15 @@
     bottom: 2.5rem;
     right: 2.5rem;
     text-decoration: none;
-    background-color: black;
+    background-color: var(--clr-primary);
     color: white;
     padding: 10px 20px;
     border-radius: 0.5rem;
     z-index: 10;
+}
+
+#cart-button:hover{
+    background-color: var(--clr-primary-dark);
 }
 
 #cart-button > i {

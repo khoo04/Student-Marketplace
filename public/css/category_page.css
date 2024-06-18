@@ -11,7 +11,7 @@ hr{
 }
 
 .category-name{
-    color: #220ce6;
+    color: var(--clr-primary-900);
 }
 
 .container{
@@ -20,7 +20,7 @@ hr{
 
 .filter-operator-container{
     display: grid;
-    grid-template-columns: repeat(3,1fr)
+    grid-template-columns: repeat(3,1fr);
 }
 
 .price-filter{
@@ -34,7 +34,7 @@ hr{
 .price-input-box{
     padding: 4px 8px;
     border-radius: 0.25rem;
-    border: 1px solid #666666;
+    border: 1px solid var(--clr-secondary-400);
 }
 
 .price-input-box:focus{
@@ -66,7 +66,7 @@ hr{
 .input-field{
     padding: 4px 8px;
     border-radius: 0.25rem;
-    border: 1px solid #666666;
+    border: 1px solid var(--clr-secondary-400);
     width: 100%;
 }
 
@@ -84,27 +84,40 @@ hr{
 }
 
 .apply-filter-btn{
-    background-color: #3B71CA;
     color: white;
+    background-color: var(--clr-primary);
     border-radius: 0.25rem;
     padding: 0.5rem 0.8rem;
     border: 1px solid white;
+    cursor: pointer;
+    transition: background-color .2s;
 }
 
 .apply-filter-btn:hover{
-    border: 1px solid black;
+    background-color: var(--clr-primary-dark);
+}
+
+.apply-filter-btn:active{
+    background-color: var(--clr-primary-dark);
 }
 
 .reset-filter-btn {
-    background-color: #6C757D;
-    color: white;
+    background-color: var(--clr-secondary-100);
+    border: 1px solid black;
     border-radius: 0.25rem;
     padding: 0.5rem 0.8rem;
-    border: 1px solid white;
+    cursor: pointer;
+    transition: background-color .2s;
 }
 
 .reset-filter-btn:hover {
     border: 1px solid black;
+}
+
+.reset-filter-btn:hover{
+    background-color: var(--clr-secondary-900);
+    border: 1px solid var(--clr-secondary-400);
+    color: white;
 }
 
 .result-container{

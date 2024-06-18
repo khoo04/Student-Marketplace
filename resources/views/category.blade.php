@@ -2,16 +2,16 @@
 
 @section('head')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/category_page.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/category_page.css') }}">
 @endsection
 
 @section('title')
-    <title>Student Marketplace | {{$category->name}}</title>
+    <title>Student Marketplace | {{ $category->name }}</title>
 @endsection
 
 @section('content')
     <div class="container">
-        <h2>Category: <span class="category-name">{{$category->name}}</span></h2>
+        <h2>Category: <span class="category-name">{{ $category->name }}</span></h2>
         <hr />
         <div class="filter-row">
             <div class="filter-operator-container">
@@ -53,20 +53,29 @@
         <div class="result-row">
             <div class="result-container">
                 @foreach ($products as $product)
-                    <x-product-card :product=$product/>
+                    <x-product-card :product=$product />
                 @endforeach
             </div>
             <div id="pagination">
-                {{$products->links()}}
+                {{ $products->links() }}
             </div>
         </div>
     </div>
-     <a href="/cart" id="cart-button">
-        <i class="fa-solid fa-cart-shopping"></i>
-        <h2>My Cart</h2>
-    </a>
+    @if (auth()->user() != null)
+        @if (auth()->user()->types == 'buyer')
+            <a href="{{ route('cart') }}" id="cart-button">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <h2>My Cart</h2>
+            </a>
+        @endif
+    @else
+        <a href="{{ route('cart') }}" id="cart-button">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <h2>My Cart</h2>
+        </a>
+    @endif
 @endsection
 
 @section('js')
-<script src="{{asset('js/category_page.js')}}"></script>
+    <script src="{{ asset('js/category_page.js') }}"></script>
 @endsection
