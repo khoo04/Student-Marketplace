@@ -29,7 +29,9 @@
     --clr-primary-dark: var(--clr-primary-800);
     --clr-secondary-background: var(--clr-secondary-200);
     --clr-secondary-text: var(--clr-secondary-600);
-
+    --clr-urgent: #db4537;
+    --clr-urgent-hover:#ae2e29;
+    --clr-urgent-focus:#a0241e;
 
 }
 

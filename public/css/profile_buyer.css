@@ -5,9 +5,19 @@
 /* My Address */
 .title-container>#add-address {
     border-radius: 0.5rem;
-    background-color: #d9d9d9;
+    background-color: var(--clr-primary);
+    color: white;
     padding: 8px 15px;
-    color: black;
+    cursor: pointer;
+}
+
+.title-container > #add-address:hover{
+    background-color: var(--clr-primary-dark);
+}
+
+.title-container>#add-address:focus{
+    background-color: var(--clr-primary-dark);
+    border: 1px solid var(--clr-primary-900);
 }
 
 #address-container {
@@ -19,7 +29,7 @@
 
 /* Add Address Button */
 #add-address>i {
-    margin-right: 0.2rem;
+    margin-right: 0.5rem;
 }
 
 /* Address Card */
@@ -62,7 +72,6 @@
     display: flex;
     justify-content: flex-end;
     margin-bottom: 0.5rem;
-
 }
 
 .button-container button {
@@ -80,9 +89,18 @@
 
 .default-btn {
     width: 100%;
-    background-color: #F4F4F4;
+    background-color: var(--clr-secondary-background);
     padding: 0.5rem 0.8rem;
-    border: 1px solid #52525C;
+    border: 1px solid var(--clr-secondary-text);
+}
+
+.default-btn:disabled{
+    cursor: default;
+}
+
+.default-btn:not(:disabled):hover{
+    background-color: var(--clr-secondary-800);
+    color: white;
 }
 
 
@@ -95,8 +113,9 @@
     transform: translate(-50%, -50%);
     /* Center the dialog */
     z-index: 10;
-    border: 2px solid black;
-    background-color: #D9D9D9;
+    border: 1px solid var(--clr-secondary-400);
+    box-shadow: 2px 2px 12px var(--clr-secondary-400);
+    background-color: white;
     border-radius: 0.5rem;
     min-width: 50%;
     max-width: 90%;
@@ -116,6 +135,11 @@
     font-size: 1.2rem;
     font-weight: bold;
     grid-column: span 4;
+}
+
+.address-form>input,.address-form>textarea{
+    background-color: var(--clr-secondary-background);
+    color: var(--clr-secondary-900);
 }
 
 .address-form>input[type="text"],
@@ -154,27 +178,42 @@
     cursor: pointer;
 }
 
-.address-form>button:hover {
-    opacity: 0.8;
-}
-
-.address-form>#submit-btn:active {
-    background-color: #29292e;
-}
-
-
 .address-form>.cancel-btn {
     grid-column: 3;
-    background: transparent;
-    color: #52525C;
+    border: 1px solid black;
+    background-color: var(--clr-secondary-100);
+}
+
+.address-form>.cancel-btn:hover{
+    background-color: var(--clr-secondary-900);
+    border: 1px solid var(--clr-secondary-400);
+    color: white;
 }
 
 .address-form>.submit-btn {
     grid-column: 4;
     color: white;
-    background-color: #52525C;
+    background-color: var(--clr-primary);
+    border: 1px solid transparent;
 }
 
+.address-form>.submit-btn:hover{
+    background-color: var(--clr-primary-dark);
+    border: 1px solid var(--clr-primary-900);
+}
+
+.address-form>.submit-btn:active {
+    background-color: var(--clr-primary-dark);
+}
+
+.address-form>#checkbox-container{
+    display: flex;
+    align-items: center;
+}
+
+#checkbox-container > input[type=checkbox]{
+    margin-right: 0.5rem;
+}
 
 /*----------  My Order Table  ----------*/
 
@@ -186,8 +225,8 @@
 
 .my-order-list>thead>tr>th {
     padding: 1rem 0;
-    border-top: 2px solid #D9D9D9;
-    border-bottom: 2px solid #D9D9D9;
+    border-top: 1px solid var(--clr-secondary-400);
+    border-bottom: 1px solid var(--clr-secondary-400);
 }
 
 .my-order-list>tbody>tr>td {
@@ -195,7 +234,7 @@
 }
 
 .my-order-list>tbody>tr:not(:last-child) {
-    border-bottom: 2px solid #D9D9D9;
+    border-bottom: 1px solid var(--clr-secondary-400);
 }
 
 .my-order-list .order-num-column {
@@ -256,13 +295,13 @@
     display: inline-block;
     padding: 8px 10px;
     border-radius: 0.25rem;
-    background-color: #4f4f5c;
+    background-color: var(--clr-primary);
     color: white;
     cursor: pointer;
 }
 
 .action-column .action-button:hover {
-    background-color: #29292e;
+    background-color: var(--clr-primary-dark);
 }
 
 .comment-dialog {
@@ -273,8 +312,9 @@
     transform: translate(-50%, -50%);
     /* Center the dialog */
     z-index: 10;
-    border: 2px solid black;
-    background-color: #D9D9D9;
+    border: 1px solid var(--clr-secondary-400);
+    box-shadow: 2px 2px 12px var(--clr-secondary-400);
+    background-color: white;
     border-radius: 0.5rem;
     overflow: auto;
     /* Add scrollbars if content overflows */
@@ -282,7 +322,6 @@
 
 .dialog-container {
     padding: 1rem;
-    ;
     min-width: 300px;
     max-width: 800px;
 }
@@ -300,6 +339,12 @@
     font-weight: normal;
 }
 
+.dialog-container textarea{
+    background-color: var(--clr-secondary-background);
+    color: var(--clr-secondary-text);
+    padding: 0.25rem;
+}
+
 .comment-dialog .button-container {
     display: flex;
     flex-direction: row;
@@ -307,13 +352,44 @@
 }
 
 .comment-dialog .button-container .action-button {
+    border: 1px solid transparent;
     padding: 10px 12px;
     border-radius: 0.5rem;
 }
 
-.comment-dialog .button-container .action-button:not(:last-child) {
+.comment-dialog .button-container .action-button:first-child {
     margin-right: 0.5rem;
+    background-color: var(--clr-secondary-100);
+    border: 1px solid black;
 }
+
+.comment-dialog .button-container .action-button:first-child:hover {
+    background-color: var(--clr-secondary-900);
+    border: 1px solid var(--clr-secondary-400);
+    color: white;
+}
+
+.comment-dialog .button-container .action-button:first-child:active {
+    background-color: var(--clr-secondary-900);
+    color: white;
+}
+
+.comment-dialog .button-container .action-button:last-child{
+    color: white;
+    background-color: var(--clr-primary);
+    font-weight: bold;
+}
+
+.comment-dialog .button-container .action-button:last-child:hover{
+    background-color: var(--clr-primary-dark);
+    border: 1px solid var(--clr-primary-900);
+}
+
+.comment-dialog .button-container .action-button:last-child:active{
+    background-color: var(--clr-primary-dark);
+}
+
+
 
 /* Ratings */
 .ratings-section{

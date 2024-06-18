@@ -5,8 +5,6 @@
         #navigation {
             width: 88%;
             margin: auto;
-            padding: 0.8rem 1rem;
-            background-color: bisque;
             border-radius: 1rem;
             margin-bottom: 2rem;
         }
@@ -15,9 +13,14 @@
             display: inline-block;
             padding: 8px 10px;
             border-radius: 0.25rem;
-            color: white;
-            background-color: rgb(72, 80, 80);
+            background: transparent;
+            border: 1px solid var(--clr-secondary-900);
+            box-shadow: 0px 0px 8px var(--clr-secondary-400);
             cursor: pointer;
+        }
+
+        .admin-nav-btn:hover {
+            background-color: var(--clr-secondary-400);
         }
 
         .admin-nav-btn:not(:last-child) {
@@ -187,11 +190,12 @@
         }
 
         .admin-nav-btn[data-active=true] {
-            color: black;
-            background-color: #f2f2f2;
+            background-color: var(--clr-primary);
+            border: 1px solid var(--clr-primary-dark);
+            color: white;
         }
 
-        .view-seller-info-btn{
+        .view-seller-info-btn {
             background: transparent;
             font-size: 1rem;
             text-decoration: underline;
@@ -199,8 +203,8 @@
             cursor: pointer;
         }
 
-        .view-seller-info-btn:hover{
-            color:rgb(0, 0, 192);
+        .view-seller-info-btn:hover {
+            color: rgb(0, 0, 192);
         }
 
         .seller-info {
@@ -208,42 +212,45 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
-            border: 2px solid black;
-            background-color: #D9D9D9;
+            border: 1px solid var(--clr-secondary-400);
+            box-shadow: 2px 2px 12px var(--clr-secondary-400);
+            background-color: white;
             border-radius: 0.5rem;
-            width:50%;
+            width: 50%;
             padding: 1rem;
             overflow: auto;
         }
 
-        .seller-info h2{
+        .seller-info h2 {
             text-decoration: underline;
             margin-bottom: 1rem;
         }
 
-        .seller-info p{
+        .seller-info p {
             font-weight: bold;
             margin-bottom: 0.5rem;
         }
-        .seller-info .content{
+
+        .seller-info .content {
             font-weight: normal;
         }
 
-        .seller-info .button-container{
+        .seller-info .button-container {
             display: flex;
             justify-content: center;
         }
-        
-        .seller-info .button-container > button{
+
+        .seller-info .button-container>button {
             padding: 8px 12px;
             border-radius: 0.25rem;
-            color:white;
-            background-color: gray;
+            color: white;
+            background-color: var(--clr-primary);
             display: inline-block;
             cursor: pointer;
         }
-        .seller-info .button-container > button:hover{
-            background-color: rgb(97, 95, 95);
+
+        .seller-info .button-container>button:hover {
+            background-color: var(--clr-primary-dark);
         }
     </style>
 @endsection

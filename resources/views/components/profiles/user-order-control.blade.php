@@ -94,6 +94,7 @@
             @csrf
             @method('PUT')
             <h2>Leave Comment</h2>
+            <hr>
             <input type="hidden" name="orderID">
             <p>Product Name: <span class="content" id="productName"></span></p>
             <div class="ratings-section">

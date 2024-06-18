@@ -1,6 +1,6 @@
 @extends('components.layout')
 
-
+@include('components.flash-message')
 @section('content')
     <div class="container">
         <h2>Your Shopping Cart</h2>
@@ -35,7 +35,7 @@
             <img src="${item.images[0]}" alt="${item.name}">
             <div>
                 <h3>${item.name}</h3>
-                <p class="price">$${item.price}</p>
+                <p class="price">RM ${item.price}</p>
                 <p class="stock-info">Stock left: <span id="stock${item.id}" class="stock">${Number(item.stock) - Number(item.order_quantity)}</span></p>
 
                 <div class="quantity-control">
@@ -43,7 +43,7 @@
                     <span id="quantity${item.id}" class="quantity">${item.order_quantity}</span>
                     <button class="btn btn-sm" onclick="increaseQuantity(${item.id})">+</button>
                 </div>
-                <h4 class="item-total"><b>Total: $${itemTotal}</b></h4>
+                <h4 class="item-total"><b>Total: RM ${itemTotal}</b></h4>
                 <div class="button-group">
                     <button class="btn btn-checkout" onclick="checkout(${item.id})">Checkout</button>
                     <button class="btn btn-remove" data-pid=${item.id} onclick="removeItem(${item.id})">Remove</button>
@@ -218,7 +218,7 @@
         }
 
         .btn {
-            background-color: #007bff;
+            background-color: var(--clr-primary);
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -233,27 +233,27 @@
         }
 
         .btn-remove {
-            background-color: #ff4d4d;
+            background-color: var(--danger);
             float: right;
         }
 
         .btn-checkout {
-            background-color: #28a745;
+            background-color: var(--success);
             float: right;
         }
 
         .btn:hover {
-            background-color: #0056b3;
+            background-color: var(--clr-primary-dark);
             transform: scale(1.05);
         }
 
         .btn-remove:hover {
-            background-color: #e60000;
+            background-color:  var(--danger_hover);
             transform: scale(1.05);
         }
 
         .btn-checkout:hover {
-            background-color: #218838;
+            background-color: var(--success_hover);
             transform: scale(1.05);
         }
 
@@ -276,18 +276,14 @@
             margin: 0 10px;
         }
 
-        p,
-        h4 {
-            margin-top: 15px;
-            color: #666;
-        }
-
         .price {
             font-size: 1.2em;
+            margin-top: 15px;
             color: #000;
         }
 
         .stock-info {
+            margin-top: 15px;
             font-size: 0.9em;
             color: #777;
         }
@@ -295,6 +291,7 @@
         .item-total {
             font-size: 1.1em;
             color: #000;
+            margin-top: 15px;
         }
 
         .cart-total {

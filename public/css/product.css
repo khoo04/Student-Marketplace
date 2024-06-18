@@ -260,11 +260,16 @@ hr {
     margin-bottom: 0.5rem;
 }
 
+#comments-section > hr{
+    margin-bottom: 1.5rem;
+}
+
 /* Comment Card */
 .comment-card{
     border-radius: 0.5rem;
     padding: 1rem;
-    background-color: rgba(0,0,0,0.2);
+    background:transparent;
+    border: 1px solid var(--clr-secondary-400);
     margin-bottom: 1.5rem;
 }
 
@@ -283,7 +288,7 @@ hr {
 
 .comment-card > .date{
     font-size: 0.8rem;
-    color: rgba(0,0,0,0.3);
+    color: var(--clr-secondary-600);
 }
 
 
