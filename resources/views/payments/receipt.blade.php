@@ -79,7 +79,7 @@
             <div class="details customer">
                 <p><span class="bold">Customer Name:</span> {{$name}}</p>
                 <p><span class="bold">Phone Number:</span> {{$phone}}</p>
-                <p><span class="bold">Address:</span> Address</p>
+                <p><span class="bold">Address:</span> {{$full_address}}</p>
             </div>
             <hr />
             <div class="details payment">

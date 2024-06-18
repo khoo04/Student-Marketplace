@@ -76,8 +76,16 @@ class PaymentController extends Controller
 
             $new_quantity = $product->quantity_available - $order->quantity;
             $product->update(['quantity_available' => $new_quantity]);
+
+            //Get address
+            $address = $order->address;
+            $full_address = $address->address_line_1 . ', ';
+            $full_address .= $address->address_line_2 == null ? '' : $address->address_line_2 . ', ';
+            $full_address .= $address->zip_code . ' ';
+            $full_address .= $address->city . ', ';
+            $full_address .= $address->state;
             
-            return view('payments.receipt',compact('status','name','phone','transacno','issue_bank','transac_amount','dateTime'));
+            return view('payments.receipt',compact('status','name','full_address','phone','transacno','issue_bank','transac_amount','dateTime'));
         }else if($status == 'Failed'){
             $payment->payment_status = 'failed';
             $payment->save();
