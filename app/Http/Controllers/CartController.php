@@ -16,7 +16,9 @@ class CartController extends Controller
             $cart = $user->cart;
         }
 
-        $cartItems = $cart->products()->get(['id', 'name', 'price', 'quantity as order_quantity', 'quantity_available as stock', 'images']);
+        //Only show the approved product in cart
+        //If user have add this item before but it turn to pending again due to update
+        $cartItems = $cart->products()->where('approve_status','approved')->get(['id', 'name', 'price', 'quantity as order_quantity', 'quantity_available as stock', 'images']);
 
         $arrayItems = array();
         $arrayItems = [];
