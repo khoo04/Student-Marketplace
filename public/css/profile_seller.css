@@ -244,6 +244,18 @@ td[data-status="completed"] {
     width: auto;
 }
 
+.action-column>.arrange-shipment{
+    background-color: var(--clr-urgent);
+}
+
+.action-column>.arrange-shipment:hover {
+    background-color: var(--clr-urgent-hover);
+}
+
+.action-column>.arrange-shipment:focus {
+    background-color: var(--clr-urgent-focus);
+}
+
 .action-column>button {
     width: 100%;
     padding: 8px 10px;

@@ -38,6 +38,15 @@ class OrderController extends Controller
         if (count($user->addresses) == 0){
             return redirect()->route('profile')->with(['message' => 'Please add at least one address before buying', 'type' => 'alert', 'pageIndex' => 1]);
         }
+
+        //Check the product status 
+        $product_status = Product::find($product_id)->approve_status;
+        if ($product_status == "pending"){
+            return back()->with(['message' => 'This product is pending approval.', 'type' => 'alert']);
+        }
+        else if ($product_status == "rejected"){
+            return back()->with(['message' => 'This product is rejected', 'type' => 'alert']);
+        }
         $order = $user->orders()->create(['product_id' => $product_id, 'quantity' => $quantity]);
 
         $product_price = Product::find($product_id)->price;

@@ -15,7 +15,8 @@ hr{
 }
 
 .container{
-    border: 2px solid #ddd;
+    border: 1px solid var(--clr-secondary-background);
+    box-shadow: 0px 0px 8px var(--clr-secondary-400);
     width: 88%;
     padding: 1rem;
     margin: auto;
@@ -49,8 +50,8 @@ hr{
 }
 
 .order-details thead > tr{
-    background-color: beige;
-    border: 1px solid black;
+    background-color: var(--clr-secondary-background);
+    border: 1px solid var(--clr-secondary-400);
 }
 
 .order-details thead th{
@@ -59,7 +60,7 @@ hr{
 
 .order-details tbody > tr {
     padding-bottom: 2rem; 
-    border: 1px solid black;
+    border: 1px solid var(--clr-secondary-400);
 }
 
 .order-details td {
@@ -67,7 +68,7 @@ hr{
 }
 
 .order-details tbody > tr:not(:last-child) td{
-    border-bottom: 1px solid #ddd; 
+    border-bottom: 1px solid var(--clr-secondary-400); 
 }
 .product-image{
     display: block;
@@ -131,23 +132,24 @@ hr{
 }
 
 .primary{
-    background-color: #3B71CA;
+    background-color: var(--clr-primary);
     color: white;
+    transition: background-color .2s;
 }
 
 .button.primary:hover{
-    background-color: #175bc9;
-    border: 1px solid black;
+    background-color: var(--clr-primary-dark);
+    border: 1px solid var(--clr-primary-800);
 }
 
 .secondary{
     background-color: transparent;
-    color: black;
-    border: 1px solid black;
+    border: 1px solid var(--clr-secondary-400);
+    transition: background-color .2s;
 }
 
 .button.secondary:hover{
-    background-color: #9FA6B2;
+    background-color: var(--clr-secondary-800);
     color: white;
-    border: 1px solid transparent;
+    border: 1px solid var(--clr-secondary-400);
 }

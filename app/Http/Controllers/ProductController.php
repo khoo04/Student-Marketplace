@@ -12,6 +12,10 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
+        //Return 404 if product is not approved
+        if ($product->approve_status != "approved"){
+            return abort(404);
+        }
         $seller = $product->seller;
         $comments = $product->comments;
         return view('products.show', ['product' => $product, 'seller' => $seller, 'comments' => $comments]);
@@ -127,6 +131,7 @@ class ProductController extends Controller
 
         if ($imagePaths != []) {
             //Update Product with Image
+            $imagePaths = array_filter($imagePaths);
             $product->update([
                 'name' => $formFields['productName'],
                 'description' => $formFields['productDescription'],
