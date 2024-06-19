@@ -263,9 +263,9 @@
         <p id="message"></p>
     </div>
     <div id="navigation">
-        <button type="button" class="admin-nav-btn" id="acc-approve-panel" data-active=true>Account Approval</button>
-        <button type="button" class="admin-nav-btn" id="product-approve-panel" data-active="false">Product Approval</button>
-        <button type="button" class="admin-nav-btn" id="sales-payback-panel" data-active="false">Sales Payback</button>
+        <button type="button" class="admin-nav-btn" id="acc-approve-panel" data-active=true><i class="fa-solid fa-user"></i> Account Approval</button>
+        <button type="button" class="admin-nav-btn" id="product-approve-panel" data-active="false"><i class="fa-solid fa-briefcase"></i> Product Approval</button>
+        <button type="button" class="admin-nav-btn" id="sales-payback-panel" data-active="false"><i class="fa-solid fa-money-bill"></i> Sales Payback</button>
     </div>
 
     <section class="action-panel">

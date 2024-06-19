@@ -7,20 +7,20 @@
     bottom: 2.5rem;
     right: 2.5rem;
     text-decoration: none;
-    background-color: rgb(0, 0, 0);
+    background-color: var(--clr-primary);
     color: white;
     padding: 10px 20px;
     border-radius: 0.5rem;
     z-index: 10;
 }
 
+#cart-button:hover{
+    background-color: var(--clr-primary-dark);
+}
+
 #cart-button > i {
     margin-right: 1rem;
     font-size: 1.3rem;
-}
-
-#cart-button:hover{
-    background-color: rgba(0,0,0,0.8);
 }
 
 /* Product Details */

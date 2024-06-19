@@ -39,7 +39,7 @@
         .form-group .submit-btn {
             width: 100%;
             padding: 10px;
-            background-color: #006bf7;
+            background-color: var(--clr-primary);
             border: none;
             border-radius: 4px;
             color: #fff;
@@ -48,7 +48,7 @@
         }
 
         .form-group .submit-btn:hover {
-            background-color: #0247a0;
+            background-color: var(--clr-primary-dark);
         }
 
         .text-hint {

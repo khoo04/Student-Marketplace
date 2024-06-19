@@ -47,7 +47,7 @@
             <div class="profile-form-field">
                 <label for="oldpass">Old Password</label>
                 <div class="input-box">
-                    <input type="password" name="oldpass" id="oldpass">
+                    <input type="password" name="old_password" id="oldpass">
                     <i class="fa-solid fa-eye-slash"></i>
                 </div>
                 @error('old_password')

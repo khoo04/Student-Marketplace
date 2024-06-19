@@ -95,7 +95,7 @@
                         title="Seller Contact Email">{{ $seller->email }}</a>
                 </li>
             </ul>
-            <a aria-label="Chat on WhatsApp" href="https://wa.me/+6{{ $seller->phone_num }}"><img alt="Chat on WhatsApp"
+            <a aria-label="Chat on WhatsApp" href="https://wa.me/+6{{ preg_replace('/\D+/', '',"012-234 3233") }}"><img alt="Chat on WhatsApp"
                     src="{{ asset('images/WhatsAppButtonGreenLarge.svg') }}" />
             </a>
         </div>
