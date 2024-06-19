@@ -192,17 +192,25 @@ main {
 .dropdown-nav-bar>ul>li>a {
     text-decoration: none;
     font-size: 1.2rem;
-    color: white;
+    color: black;
     width: 100%;
     text-align: center;
+}
+
+.dropdown-nav-bar>ul>li>a:hover {
+    color: var(--clr-primary);
 }
 
 .dropdown-nav-bar button {
     background: transparent;
     font-size: 1.2rem;
-    color: white;
+    color: black;
     cursor: pointer;
     width: 100%;
+}
+
+.dropdown-nav-bar button:hover {
+    color: var(--clr-primary);
 }
 
 #search-area {
