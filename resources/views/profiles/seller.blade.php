@@ -18,11 +18,11 @@
     <div id="profile-section">
         <!--Side Navigation Bar-->
         <div id="navigate">
-            <button id="my-profile" class="navigation-btn" data-index="0" data-active>My Profile</button>
-            <button id="manage-product" class="navigation-btn" data-index="1">Manage Product</button>
-            <button id="manage-order"" class="navigation-btn" data-index="2">Manage Order</button>
-            <button id="sales-report" class="navigation-btn" data-index="3">Sales Report</button>
-            <button id="logout" class="navigation-btn" data-index="4">Log out</button>
+            <button id="my-profile" class="navigation-btn" data-index="0" data-active><i class="fa-solid fa-user"></i> My Profile</button>
+            <button id="manage-product" class="navigation-btn" data-index="1"><i class="fa-solid fa-briefcase"></i> Manage Product</button>
+            <button id="manage-order"" class="navigation-btn" data-index="2"><i class="fa-solid fa-clipboard-list"></i> Manage Order</button>
+            <button id="sales-report" class="navigation-btn" data-index="3"><i class="fa-solid fa-chart-simple"></i> Sales Report</button>
+            <button id="logout" class="navigation-btn" data-index="4"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
         </div>
 
         <!--My Profile-->

@@ -142,15 +142,22 @@ main {
     text-decoration: none;
     list-style: none;
     color: black;
+    transition: color .2s;
+}
+
+#list>li>a:hover{
+    color: var(--clr-primary);
 }
 
 #list>li form>button {
     background-color: transparent;
     font-size: 1rem;
+    transition: color .2s;
 }
 
 #list>li form>button:hover {
     cursor: pointer;
+    color: red;
 }
 
 #toggle-menu-btn {

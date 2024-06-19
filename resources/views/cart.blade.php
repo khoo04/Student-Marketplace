@@ -9,7 +9,7 @@
         <div id="cart-total" class="cart-total"></div>
     </div>
 
-    <form method="post" action="{{route('order.store')}}" id="checkoutForm">
+    <form method="post" action="{{ route('order.store') }}" id="checkoutForm">
         @csrf
         <input type="hidden" name="product_id" value="">
         <input type="hidden" name="quantity" value="">
@@ -26,12 +26,21 @@
             cartList.innerHTML = '';
             let total = 0;
 
-            cartItems.forEach(item => {
-                const itemTotal = item.price * item.order_quantity;
-                total += itemTotal;
+            if (cartItems.length == 0) {
                 const li = document.createElement('li');
-                li.classList.add('cart-item');
                 li.innerHTML = `
+                <div>
+                    <p style="text-align:center; color: var(--clr-secondary-600)"> No Items Found </p>
+                </div>
+                `;
+                cartList.appendChild(li);
+            } else {
+                cartItems.forEach(item => {
+                    const itemTotal = item.price * item.order_quantity;
+                    total += itemTotal;
+                    const li = document.createElement('li');
+                    li.classList.add('cart-item');
+                    li.innerHTML = `
             <img src="${item.images[0]}" alt="${item.name}">
             <div>
                 <h3>${item.name}</h3>
@@ -50,8 +59,9 @@
                 </div>
             </div>
         `;
-                cartList.appendChild(li);
-            });
+                    cartList.appendChild(li);
+                });
+            }
         }
 
 
@@ -65,14 +75,14 @@
                 renderCart();
                 $.ajax({
                     type: "POST",
-                    url: "{{route('cart.updateQuantity')}}",
+                    url: "{{ route('cart.updateQuantity') }}",
                     data: {
-                        _token: "{{csrf_token()}}",
+                        _token: "{{ csrf_token() }}",
                         productID: selectedItem.id,
                         quantity: selectedItem.order_quantity,
                     },
-                    success: function (response) {
-                        if (response.status == 'failed'){
+                    success: function(response) {
+                        if (response.status == 'failed') {
                             alert(response.message);
                         }
                     }
@@ -91,14 +101,14 @@
                 renderCart();
                 $.ajax({
                     type: "POST",
-                    url: "{{route('cart.updateQuantity')}}",
+                    url: "{{ route('cart.updateQuantity') }}",
                     data: {
-                        _token: "{{csrf_token()}}",
+                        _token: "{{ csrf_token() }}",
                         productID: selectedItem.id,
                         quantity: selectedItem.order_quantity,
                     },
-                    success: function (response) {
-                        if (response.status == 'failed'){
+                    success: function(response) {
+                        if (response.status == 'failed') {
                             alert(response.message);
                         }
                     }
@@ -111,10 +121,10 @@
 
             if (confirm('Are you sure you want to remove this item from your cart?')) {
                 $.ajax({
-                    url: "{{route('cart.destroy')}}",
+                    url: "{{ route('cart.destroy') }}",
                     type: 'DELETE',
                     data: {
-                        _token: "{{csrf_token()}}",
+                        _token: "{{ csrf_token() }}",
                         productID: productID,
                     },
                     success: function(response) {
@@ -248,7 +258,7 @@
         }
 
         .btn-remove:hover {
-            background-color:  var(--danger_hover);
+            background-color: var(--danger_hover);
             transform: scale(1.05);
         }
 

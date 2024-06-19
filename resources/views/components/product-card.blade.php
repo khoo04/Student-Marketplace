@@ -22,7 +22,7 @@
                 <div class="stars-inner"></div>
             </div>
         </div>
-        <p>Price : {{$product->price}}</p>
+        <p>Price : RM {{$product->price}}</p>
         <p>Quantity Available : {{$product->quantity_available}}</p>
     </div>
     <div class="hidden">

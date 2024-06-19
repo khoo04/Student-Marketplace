@@ -23,12 +23,13 @@
         }
 
         .container {
-            border: 2px solid #ddd;
             width: 500px;
             padding: 1rem;
             margin: auto;
             border-radius: 0.5rem;
             margin-bottom: 2rem;
+            background-color: white;
+            box-shadow: 2px 2px 16px var(--clr-secondary-400);
         }
 
         .details p {
@@ -49,22 +50,27 @@
         }
 
         #main-page-btn {
-            color: white;
-            background-color: #9FA6B2;
+            border: 1px solid var(--clr-secondary);
+            background-color: transparent;
+            transition: background-color .2s;
         }
 
         #main-page-btn:hover {
-            background-color: #868d99;
+            color: white;
+            background-color: var(--clr-secondary-800);
         }
 
         #view-order-btn {
+            border: 1px solid transparent;
             color: white;
-            background-color: #3B71CA;
+            background-color: var(--clr-primary);
+            transition: background-color .2s;
         }
 
         #view-order-btn:hover {
-            color: white;
-            background-color: #2e5da8;
+            border: 1px solid var(--clr-primary-dark);
+            background-color: var(--clr-primary-dark);
+            
         }
     </style>
 @endsection
@@ -77,16 +83,16 @@
         <hr />
         <div class="content">
             <div class="details customer">
-                <p><span class="bold">Customer Name:</span> {{$name}}</p>
-                <p><span class="bold">Phone Number:</span> {{$phone}}</p>
-                <p><span class="bold">Address:</span> {{$full_address}}</p>
+                <p><span class="bold">Customer Name:</span> {{ $name }}</p>
+                <p><span class="bold">Phone Number:</span> {{ $phone }}</p>
+                <p><span class="bold">Address:</span> {{ $full_address }}</p>
             </div>
             <hr />
             <div class="details payment">
-                <p><span class="bold">Transaction No: </span>{{$transacno}}</p>
-                <p><span class="bold">Issue Bank:</span> {{$issue_bank}}</p>
-                <p><span class="bold">Transcation Amount:</span> RM {{$transac_amount}}</p>
-                <p><span class="bold">Date Time:</span> {{$dateTime}}</p>
+                <p><span class="bold">Transaction No: </span>{{ $transacno }}</p>
+                <p><span class="bold">Issue Bank:</span> {{ $issue_bank }}</p>
+                <p><span class="bold">Transcation Amount:</span> RM {{ $transac_amount }}</p>
+                <p><span class="bold">Date Time:</span> {{ $dateTime }}</p>
             </div>
             <hr />
             <div class="details order">
@@ -102,17 +108,17 @@
 
 
 @section('js')
-<script>
-    $(document).ready(function () {
-        $("#main-page-btn").click(function (e) { 
-            e.preventDefault();
-            window.location.href = "{{route('main')}}";
+    <script>
+        $(document).ready(function() {
+            $("#main-page-btn").click(function(e) {
+                e.preventDefault();
+                window.location.href = "{{ route('main') }}";
+            });
+
+            $("#view-order-btn").click(function(e) {
+                e.preventDefault();
+                window.location.href = "{{ route('view.order') }}";
+            });
         });
-        
-        $("#view-order-btn").click(function (e) { 
-            e.preventDefault();
-            window.location.href = "{{route('view.order')}}";
-        });
-    });
-</script>
+    </script>
 @endsection

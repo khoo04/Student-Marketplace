@@ -9,9 +9,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('{{asset('images/marketplace_hero.png')}}')  no-repeat center center/cover;
+            background: url('{{ asset('images/marketplace_hero.png') }}') no-repeat center center/cover;
             filter: blur(6px);
             z-index: 0;
+        }
+
+        #hero-background::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
     </style>
 @endsection
@@ -26,7 +37,7 @@
         <div id="hero-background"></div>
         <div id="hero-content">
             <h1>Student <span>Marketplace</span></h1>
-            <p>Find What You Love, Sell What You Make.</p>
+            <p>Find What You <span style="color: #FF3131;">Love</span>, Sell What You <span style="color:#76FF7A;">Make</span></p>
         </div>
     </section>
     <div id="category-section">

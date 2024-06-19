@@ -13,10 +13,10 @@
 @section('content')
     <div id="profile-section">
         <div id="navigate">
-            <button id="my-profile" class="navigation-btn" data-index="0" data-active>My Profile</button>
-            <button id="my-address" class="navigation-btn" data-index="1">My Address</button>
-            <button id="my-order" class="navigation-btn" data-index="2">My Order</button>
-            <button id="logout" class="navigation-btn" data-index="3">Log out</button>
+            <button id="my-profile" class="navigation-btn" data-index="0" data-active><i class="fa-solid fa-user"></i> My Profile</button>
+            <button id="my-address" class="navigation-btn" data-index="1"><i class="fa-solid fa-map-location-dot"></i> My Address</button>
+            <button id="my-order" class="navigation-btn" data-index="2"><i class="fa-solid fa-clipboard-list"></i> My Order</button>
+            <button id="logout" class="navigation-btn" data-index="3"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
         </div>
 
         <!-- My Profile (User / Seller)-->
