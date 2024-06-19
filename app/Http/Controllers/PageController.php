@@ -23,7 +23,7 @@ class PageController extends Controller
 
     public function paginateData()
     {
-        $products = Product::latest()->where('approve_status', '=', 'approved')->paginate(10);
+        $products = Product::latest()->where('approve_status', '=', 'approved')->paginate(12);
 
         $productCards = [];
 

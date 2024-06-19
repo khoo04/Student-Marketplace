@@ -54,7 +54,7 @@
                         <td class="product-image-column"><img src="{{ $productImagePaths[0] }}" alt="Product Image">
                         </td>
                         <td class="product-name-column">{{ $product->name }}</td>
-                        <td class="product-desc-column">{{ $product->description }}</td>
+                        <td class="product-desc-column" style="white-space: pre-wrap">{{ $product->description }}</td>
                         <td class="product-price-column">{{ $product->price }}</td>
                         <td class="product-category-column">{{ $product->category->name }}</td>
                         <td class="product-seller-column"><button type="button" class="view-seller-info-btn"

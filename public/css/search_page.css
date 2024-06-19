@@ -186,6 +186,7 @@ h4 {
     text-overflow: ellipsis;
     height: 4.5rem;
     line-height: 1.5rem;
+    white-space: pre-wrap;
 }
 
 .product-ratings {
